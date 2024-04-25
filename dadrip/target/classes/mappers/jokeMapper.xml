@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="JokeMapper">
+
+	<insert id="create">
+		INSERT	INTO joke (joke_id, member_id, question, answer)
+		VALUES	(joke_seq.nextval, #{member_id}, #{question}, #{answer})
+	</insert>
+	
+	<select id="read" resultType="kr.co.dadrip.domain.JokeDTO">
+		SELECT  joke_id, 
+				member_id, 
+				created, 
+				modified, 
+				question, 
+				answer, 
+				views
+		FROM    joke
+		WHERE   joke_id = #{joke_id}
+	</select>
+	
+	<update id="update">
+		UPDATE  joke
+		SET     modified = sysdate, question = #{question}, answer = #{answer}
+		WHERE   joke_id = #{joke_id}
+	</update>
+	
+	<delete id="delete">
+		DELETE
+		FROM	joke
+		WHERE	joke_id = #{joke_id}
+	</delete>
+	
+	<select id="listAllJokes" resultType="kr.co.dadrip.domain.JokeDTO">
+	<!-- 부등호를 문자로 인식하도록 해주는 CDATA -->
+		<![CDATA[	
+			SELECT	joke_id, 
+					member_id, 
+					created, 
+					modified, 
+					question, 
+					answer, 
+					views
+			FROM	joke
+			WHERE	joke_id > 0
+			ORDER BY joke_id DESC, created DESC
+		]]>
+	</select>
+	
+</mapper>

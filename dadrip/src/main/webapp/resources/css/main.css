@@ -1,0 +1,89 @@
+@charset "utf-8";
+
+/* 2. ================개별요소 적용 클래스================= */
+
+
+/* 2-1. ================ header ================= */
+
+
+
+/* 2-2. ================ main ================= */
+
+body {
+    background-color: #F5F0ED;
+}
+
+main {
+    width: 100%;
+}
+
+main #container {
+    width: 1024px;
+    height: fit-content;
+    top: 10px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #F5F0ED;
+}
+
+#main-phrase {
+    position: absolute;
+    padding-top: 120px;
+    font-size: 52px;
+    color:#383838;
+}
+
+.main-image img {
+    position: absolute;
+    padding-top: 50px;
+    width: 900px;
+}
+
+.cf {
+    width: 600px;
+    height: 360px;
+    margin-top: 30px;
+}
+
+.poster {
+    width: 600px;
+    height: 220px;
+    font-size: 0;
+}
+
+.style-sanda {
+    padding-left: 20px;
+}
+
+.leaderboard {
+    position: absolute;
+    right: 50px;
+    top: 100px;
+    width: 450px;
+    background-color: #ffffff45;
+    background-repeat: no-repeat;
+    background-size: 804px 685px;
+}
+/* 2-3. ================ footer ================= */
+
+.tel {
+    color: #d075c3;
+    font-size: 20px;
+}
+
+.ko-address {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.copyright {
+    color: whitesmoke;
+    height: 80px;
+    line-height: 80px;
+    font-size: 12px;
+}
+
+.bg_copyright {
+    background-color: black;
+    margin-top: 30px;
+}

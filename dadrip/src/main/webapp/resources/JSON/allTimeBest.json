@@ -1,0 +1,52 @@
+[
+    {
+        "joke_id": "1",
+        "joke_date": "2024-04-13",
+        "joke_question": "아마존의 설립자는?",
+        "joke_answer": "아마 존",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3561"
+    },
+    {
+        "joke_id": "2",
+        "joke_date": "2024-04-13",
+        "joke_question": "침묵을 영어로 하면?",
+        "joke_answer": "노말",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "1423"
+    },
+    {
+        "joke_id": "1",
+        "joke_date": "2024-04-13",
+        "joke_question": "11월에 뱀이나 벌이 없는 이유는?",
+        "joke_answer": "노뱀벌",
+        "user_id": "narihwa113",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3556"
+    },
+    {
+        "joke_id": "4",
+        "joke_date": "2024-04-13",
+        "joke_question": "소금의 유통기한은?",
+        "joke_answer": "천일염",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3242"
+    },
+    {
+        "joke_id": "5",
+        "joke_date": "2024-04-13",
+        "joke_question": "최불암?",
+        "joke_answer": "시리즈",
+        "user_id": "narihwa",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "952"
+    }
+]
