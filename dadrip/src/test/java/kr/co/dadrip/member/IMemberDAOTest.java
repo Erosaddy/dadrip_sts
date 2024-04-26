@@ -1,6 +1,8 @@
 package kr.co.dadrip.member;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -21,22 +23,22 @@ public class IMemberDAOTest {
 	@Autowired
 	private IMemberDAO mDao;
 	
-//	@Test
-//	public void testInsertMember() throws Exception {
-//		MemberDTO mDto = new MemberDTO();
-//		mDto.setMember_id("boom3");
-//		mDto.setNickname("jojo");
-//		mDto.setMember_pw("3456qwer");
-//		mDto.setEmail("party@gmail.com");
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//		Date date = sdf.parse("2000/03/03");
-//		
-//		mDto.setBirthday(date);
-//		mDto.setGender("M");
-//		
-//		mDao.insertMember(mDto);
-//	}
+	@Test
+	public void testInsertMember() throws Exception {
+		MemberDTO mDto = new MemberDTO();
+		mDto.setMember_id("boom6");
+		mDto.setNickname("test");
+		mDto.setMember_pw("gorillaz");
+		mDto.setEmail("party@gmail.com");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sdf.parse("1966-03-03");
+		
+		mDto.setBirthday(date);
+		mDto.setGender("M");
+		
+		mDao.insertMember(mDto);
+	}
 //	
 //	@Test
 //	public void testLoginMember() throws Exception {
@@ -44,9 +46,9 @@ public class IMemberDAOTest {
 //		log.info("mDto =============> : " + mDto);
 //	}
 	
-	@Test
-	public void testListAllMembers() throws Exception {
-		List<MemberDTO> memberList = mDao.listAllMembers();
-	}
+//	@Test
+//	public void testListAllMembers() throws Exception {
+//		List<MemberDTO> memberList = mDao.listAllMembers();
+//	}
 
 }
