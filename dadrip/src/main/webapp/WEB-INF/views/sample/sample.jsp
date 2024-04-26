@@ -12,6 +12,6 @@
 	<br>
 	<h1>model.addAttribute("data", sDto); 방식</h1>
 	<h2>${data}</h2>
-
+	
 </body>
 </html>
