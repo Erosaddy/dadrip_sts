@@ -47,9 +47,9 @@ public class JokeControllerTest {
 //	@Test
 //	public void testRegisterPOST() throws Exception {
 //		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/joke/register")
-//				.param("member_id", "boom4")
-//				.param("question", "내가 테스트를 하면?")
-//				.param("answer", "DB에 두 번째도 잘 들어간다"))
+//				.param("member_id", "narihwa")
+//				.param("joke_question", "내가 테스트를 하면?")
+//				.param("joke_answer", "DB에 잘 들어간다"))
 //				.andReturn().getModelAndView().getViewName();
 //		
 //		log.info("resultpage : " + resultPage);
@@ -58,7 +58,7 @@ public class JokeControllerTest {
 //	@Test
 //	public void testRead() throws Exception {
 //		String resultPage = mockMvc.perform(MockMvcRequestBuilders.get("/joke/read")
-//				.param("joke_id", "23"))
+//				.param("joke_id", "43"))
 //				.andReturn().getModelAndView().getViewName();
 //		
 //		log.info("resultpage : " + resultPage);
@@ -67,9 +67,9 @@ public class JokeControllerTest {
 //	@Test
 //	public void testUpdate() throws Exception {
 //		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/joke/modify")
-//				.param("joke_id", "23")
-//				.param("question", "이거 MockMvc로 수정한 거예요?")
-//				.param("answer", "네 맞습니다"))
+//				.param("joke_id", "43")
+//				.param("joke_question", "이거 MockMvc로 수정한 거예요?")
+//				.param("joke_answer", "네 맞습니다"))
 //				.andReturn().getModelAndView().getViewName();
 //		
 //		log.info("resultpage : " + resultPage);
@@ -78,7 +78,7 @@ public class JokeControllerTest {
 //	@Test
 //	public void testDelete() throws Exception {
 //		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/joke/remove")
-//				.param("joke_id", "22"))
+//				.param("joke_id", "43"))
 //				.andReturn().getModelAndView().getViewName();
 //		
 //		log.info("resultpage : " + resultPage);

@@ -48,10 +48,10 @@ CREATE TABLE member
 (
 	member_id varchar2(20) NOT NULL UNIQUE,
 	nickname varchar2(30) NOT NULL,
-	user_pw varchar2(60) NOT NULL,
+	member_pw varchar2(60) NOT NULL,
 	email varchar2(50) NOT NULL UNIQUE,
 	birthday date,
-	gender varchar2(1),
+	sex varchar2(1),
 	registered_on date DEFAULT SYSDATE NOT NULL,
 	CONSTRAINT member_memberId_PK PRIMARY KEY (member_id)
 );

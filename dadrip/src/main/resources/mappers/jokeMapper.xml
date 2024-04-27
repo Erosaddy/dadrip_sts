@@ -6,25 +6,25 @@
 <mapper namespace="JokeMapper">
 
 	<insert id="create">
-		INSERT	INTO joke (joke_id, member_id, question, answer)
-		VALUES	(joke_seq.nextval, #{member_id}, #{question}, #{answer})
+		INSERT	INTO joke (joke_id, member_id, joke_question, joke_answer)
+		VALUES	(joke_seq.nextval, #{member_id}, #{joke_question}, #{joke_answer})
 	</insert>
 	
 	<select id="read" resultType="kr.co.dadrip.domain.JokeDTO">
 		SELECT  joke_id, 
 				member_id, 
-				created, 
-				modified, 
-				question, 
-				answer, 
-				views
+				created_on, 
+				modified_on, 
+				joke_question, 
+				joke_answer, 
+				view_count
 		FROM    joke
 		WHERE   joke_id = #{joke_id}
 	</select>
 	
 	<update id="update">
 		UPDATE  joke
-		SET     modified = sysdate, question = #{question}, answer = #{answer}
+		SET     modified_on = sysdate, joke_question = #{joke_question}, joke_answer = #{joke_answer}
 		WHERE   joke_id = #{joke_id}
 	</update>
 	
@@ -39,14 +39,14 @@
 		<![CDATA[	
 			SELECT	joke_id, 
 					member_id, 
-					created, 
-					modified, 
-					question, 
-					answer, 
-					views
+					created_on, 
+					modified_on, 
+					joke_question, 
+					joke_answer, 
+					view_count
 			FROM	joke
 			WHERE	joke_id > 0
-			ORDER BY joke_id DESC, created DESC
+			ORDER BY joke_id DESC, created_on DESC
 		]]>
 	</select>
 	

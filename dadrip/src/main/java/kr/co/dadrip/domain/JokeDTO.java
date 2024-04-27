@@ -13,10 +13,10 @@ public class JokeDTO {
 	
 	private Integer joke_id;
 	private String member_id;
-	private Date created;
-	private Date modified;
-	private String question;
-	private String answer;
-	private String views;
+	private Date created_on;
+	private Date modified_on;
+	private String joke_question;
+	private String joke_answer;
+	private int view_count;
 	
 }

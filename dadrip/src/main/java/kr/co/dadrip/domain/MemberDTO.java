@@ -19,6 +19,7 @@ public class MemberDTO {
 	private String email;
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date birthday;
-	private String gender;
+	private String sex;
+	private Date registered_on;
 	
 }

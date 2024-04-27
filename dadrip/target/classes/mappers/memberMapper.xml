@@ -5,14 +5,14 @@
 <mapper namespace="kr.co.dadrip.memberMapper">
 	
 	<!-- 회원가입 -->
-	<select id="insertMember">
-		INSERT INTO member (member_id, nickname, member_pw, email, birthday, gender)
-		VALUES (#{member_id}, #{nickname}, #{member_pw}, #{email}, #{birthday}, #{gender})
-	</select>
+	<insert id="insertMember">
+		INSERT INTO member (member_id, nickname, member_pw, email, birthday, sex)
+		VALUES (#{member_id}, #{nickname}, #{member_pw}, #{email}, #{birthday}, #{sex})
+	</insert>
 	
 	<!-- 로그인 -->
 	<select id="loginMember" resultType="kr.co.dadrip.domain.MemberDTO">
-		SELECT  member_id, nickname, member_pw, email, birthday, gender
+		SELECT  member_id, nickname, member_pw, email, birthday, sex, registered_on
 		FROM    member
 		WHERE   member_id = #{member_id}
 		AND     member_pw = #{member_pw}
@@ -20,7 +20,7 @@
 	
 	<!-- 전체 회원 조회 -->
 	<select id="listAllMembers" resultType="kr.co.dadrip.domain.MemberDTO">
-		SELECT  member_id, nickname, member_pw, email, birthday, gender
+		SELECT  member_id, nickname, member_pw, email, birthday, sex, registered_on
 		FROM    member
 	</select>
 	

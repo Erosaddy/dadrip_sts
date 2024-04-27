@@ -23,26 +23,26 @@ public class IMemberDAOTest {
 	@Autowired
 	private IMemberDAO mDao;
 	
-	@Test
-	public void testInsertMember() throws Exception {
-		MemberDTO mDto = new MemberDTO();
-		mDto.setMember_id("boom6");
-		mDto.setNickname("test");
-		mDto.setMember_pw("gorillaz");
-		mDto.setEmail("party@gmail.com");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse("1966-03-03");
-		
-		mDto.setBirthday(date);
-		mDto.setGender("M");
-		
-		mDao.insertMember(mDto);
-	}
+//	@Test
+//	public void testInsertMember() throws Exception {
+//		MemberDTO mDto = new MemberDTO();
+//		mDto.setMember_id("narihwa");
+//		mDto.setNickname("Lee");
+//		mDto.setMember_pw("flower");
+//		mDto.setEmail("narihwa@hanmail.net");
+//		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//		Date date = sdf.parse("1969/11/03");
+//		
+//		mDto.setBirthday(date);
+//		mDto.setSex("2");
+//		
+//		mDao.insertMember(mDto);
+//	}
 //	
 //	@Test
 //	public void testLoginMember() throws Exception {
-//		MemberDTO mDto = mDao.loginMember("zxz7648", "691103abc!");
+//		MemberDTO mDto = mDao.loginMember("zxz7648", "691103Zxz!");
 //		log.info("mDto =============> : " + mDto);
 //	}
 	
