@@ -18,6 +18,27 @@
 		AND     member_pw = #{member_pw}
 	</select>
 	
+	<!-- 내 회원정보 조회 -->
+	<select id="selectMember" resultType="kr.co.dadrip.domain.MemberDTO">
+		SELECT	*
+		FROM	member
+		WHERE	member_id = #{member_id}
+	</select>
+	
+	<!-- 회원정보 변경(이메일은 인증용으로 사용되기 때문에 제외) -->
+	<update id="updateMember">
+		UPDATE	member
+		SET		nickname = #{nickname}, member_pw = #{member_pw}, birthday = #{birthday}, sex = #{sex}
+		WHERE	member_id = #{member_id}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMember">
+		DELETE
+		FROM    member
+		WHERE   member_id = #{member_id}
+	</delete>
+	
 	<!-- 전체 회원 조회 -->
 	<select id="listAllMembers" resultType="kr.co.dadrip.domain.MemberDTO">
 		SELECT  member_id, nickname, member_pw, email, birthday, sex, registered_on

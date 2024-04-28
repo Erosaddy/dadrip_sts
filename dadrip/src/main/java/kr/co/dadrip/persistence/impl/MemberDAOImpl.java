@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.dadrip.domain.MemberDTO;
 import kr.co.dadrip.persistence.IMemberDAO;
+import lombok.extern.log4j.Log4j;
 
 @Repository
+@Log4j
 public class MemberDAOImpl implements IMemberDAO {
 
 	@Autowired
@@ -34,16 +36,27 @@ public class MemberDAOImpl implements IMemberDAO {
 		return sqlSession.selectOne(namespace + ".loginMember", paramMap);
 	}
 
+
+	@Override
+	public MemberDTO selectMember(String member_id) {
+		return sqlSession.selectOne(namespace + ".selectMember", member_id);
+	}
+
+	@Override
+	public int updateMember(MemberDTO mDto) {
+		return sqlSession.update(namespace + ".updateMember", mDto);
+	}
+
+	@Override
+	public int deleteMember(String member_id) {
+		int result = sqlSession.delete(namespace + ".deleteMember", member_id);
+		log.info("Delete operation result =================> : " + result);
+		return result;
+	}
+
 	@Override
 	public List<MemberDTO> listAllMembers() {
 		return sqlSession.selectList(namespace + ".listAllMembers");
-	}
-
-
-	@Override
-	public List<MemberDTO> searchMembers(String member_id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
