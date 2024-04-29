@@ -30,8 +30,8 @@ btnCloseModal.addEventListener("click", ()=>{
     modal.style.display="none";
     
     // 모달 탈출시 로그인 및 회원가입 값 초기화
-    document.getElementById('loginId').value = '';
-    document.getElementById('loginPw').value = '';
+    document.getElementById('member_id').value = '';
+    document.getElementById('member_pw').value = '';
     document.getElementById('id').value = '';
     document.getElementById('nickName').value = '';
     document.getElementById('pw').value = '';

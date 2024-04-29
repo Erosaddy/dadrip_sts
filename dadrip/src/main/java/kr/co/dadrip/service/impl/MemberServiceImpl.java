@@ -31,6 +31,11 @@ public class MemberServiceImpl implements IMemberService {
 		}
 		return mDto;
 	}
+	
+	@Override
+	public void logout(HttpSession session) throws Exception {
+		session.invalidate();	// 세션 초기화
+	}
 
 	@Override
 	public MemberDTO memberInfo(String member_id) throws Exception {
@@ -52,6 +57,7 @@ public class MemberServiceImpl implements IMemberService {
 	public List<MemberDTO> memberList() throws Exception {
 		return mDao.listAllMembers();
 	}
+
 	
 
 }

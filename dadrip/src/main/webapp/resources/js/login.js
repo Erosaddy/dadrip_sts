@@ -21,7 +21,7 @@ $("#login-box-link").click(function () {
 // 로그인 처리
 document.getElementById('login').addEventListener('click', function (e) {
     e.preventDefault(); // 폼 제출 방지
-
+	
     // 사용자 입력 값 가져오기
     var inputUsername = document.querySelector('input[type="text"]').value;
     var inputPassword = document.querySelector('input[type="password"]').value;
@@ -34,9 +34,12 @@ document.getElementById('login').addEventListener('click', function (e) {
         return;
     }
         
-    authenticateUser(inputUsername, inputPassword);
+    document.getElementById('login-error-message').style.display = "block";
+    
+//    authenticateUser(inputUsername, inputPassword);
 });
 
+/*
 function authenticateUser(username, password) {
     // 로딩 상태 표시 추가 가능
     fetch('/resources/JSON/userList.json')
@@ -56,7 +59,7 @@ function authenticateUser(username, password) {
             alert('로그인 처리 중 오류가 발생했습니다.');
         });
 }
-
+*/
 
 // 회원가입 처리
 document.getElementById('signUp').addEventListener('click', function (e) {
