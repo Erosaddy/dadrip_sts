@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class IMemberDAOTest {
 //	@Test
 //	public void testInsertMember() throws Exception {
 //		MemberDTO mDto = new MemberDTO();
-//		mDto.setMember_id("boomer3");
-//		mDto.setNickname("Leak");
-//		mDto.setMember_pw("flower69");
-//		mDto.setEmail("boomer3@hanmail.net");
+//		mDto.setMember_id("zxz7648");
+//		mDto.setNickname("Eros");
+//		mDto.setMember_pw("691103Zxz!");
+//		mDto.setEmail("zxz7648@naver.com");
 //		
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 //		Date date = sdf.parse("1989/12/03");
@@ -40,11 +41,16 @@ public class IMemberDAOTest {
 //		mDao.insertMember(mDto);
 //	}
 //	
-//	@Test
-//	public void testLoginMember() throws Exception {
-//		MemberDTO mDto = mDao.loginMember("zxz7648", "691103Zxz!");
-//		log.info("mDto =============> : " + mDto);
-//	}
+	@Test
+	public void testLoginMember() throws Exception {
+		
+		MemberDTO mDto = new MemberDTO();
+		mDto.setMember_id("zxz7648");
+		mDto.setMember_pw("691103Zxz!");
+		
+		mDao.loginMember(mDto);
+		log.info("mDto =============> : " + mDto);
+	}
 	
 //	@Test
 //	public void testUpdate() throws Exception {

@@ -1,12 +1,15 @@
 package kr.co.dadrip.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import kr.co.dadrip.domain.MemberDTO;
 
 public interface IMemberService {
 	public void register(MemberDTO mDto) throws Exception;
-	public MemberDTO login(String member_id, String member_pw) throws Exception;
+	public MemberDTO login(MemberDTO mDto, HttpSession session) throws Exception;
 	public MemberDTO memberInfo(String member_id)  throws Exception;
 	public boolean modify(MemberDTO mDto) throws Exception;
 	public boolean delete(String member_id) throws Exception;

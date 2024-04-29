@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +17,11 @@
     <link rel="stylesheet" href="/resources/css/leaderboard.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet" />
-
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
+ <c:set var="ctx" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath}" scope="application"/>
  <header>
         <nav>
             <div class="container">
@@ -138,7 +141,7 @@
                         구글로 로그인하기
                     </a>
                 </div>
-                <form class="email-login" method="post">
+                <form name="loginForm" class="email-login" method="post">
                     <div class="u-form-group">
                         <input id="loginId" type="text" placeholder="아이디" required/>
                     </div>
@@ -147,6 +150,15 @@
                     </div>
                     <div class="u-form-group">
                         <p id="login-error-message"></p>
+                        <c:choose>
+                        	<c:when test="${empty memberInfo}">
+								<div style="color:red;"> 아이디 또는 비밀번호가 일치하지 않습니다.</div>
+                        	</c:when>
+                        	<c:otherwise>
+                        		${memberInfo.member_id} 님 반갑습니다.
+                        	</c:otherwise>
+                        </c:choose>
+                        
                         <button id="login" type="submit">로그인</button>
                     </div>
                     <div class="u-form-group">
@@ -174,8 +186,8 @@
                         <input id="birth" type="date" required/>
                     </div>
                     <div class="u-form-group">
-                        <label>남성<input type="radio" name="sex" value="M" checked/></label>
-                        <label>여성<input type="radio" name="sex" value="F" /></label>
+                        <label>남성<input type="radio" name="sex" value="1" checked/></label>
+                        <label>여성<input type="radio" name="sex" value="2" /></label>
                     </div>
                     <div class="u-form-group">
                         <p id="signup-error-message"></p>
@@ -185,9 +197,15 @@
             </div>
         </section>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script>
+	$("#login").click(function() {
+		document.loginForm.action = "${ctx}/login";
+		document.loginForm.submit();
+		
+		
+	})
+	</script>
+    
     <script src="/resources/js/login.js"></script>
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/bestJokes.js"></script>

@@ -27,13 +27,9 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 	
 	@Override
-	public MemberDTO loginMember(String member_id, String member_pw) throws Exception {
-		Map<String, Object> paramMap = new HashMap<>();
-		
-		paramMap.put("member_id", member_id);
-		paramMap.put("member_pw", member_pw);
-		
-		return sqlSession.selectOne(namespace + ".loginMember", paramMap);
+	public MemberDTO loginMember(MemberDTO mDto) throws Exception {
+		log.info("mDto =============> " + mDto);
+		return sqlSession.selectOne(namespace + ".loginMember", mDto);
 	}
 
 

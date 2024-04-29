@@ -12,7 +12,7 @@
 	
 	<!-- 로그인 -->
 	<select id="loginMember" resultType="kr.co.dadrip.domain.MemberDTO">
-		SELECT  member_id, nickname, member_pw, email, birthday, sex, registered_on
+		SELECT  *
 		FROM    member
 		WHERE   member_id = #{member_id}
 		AND     member_pw = #{member_pw}

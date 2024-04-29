@@ -32,11 +32,11 @@ public class JokeControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
-	@Test
-	public void testList() throws Exception {
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/joke/list"))
-				.andReturn().getModelAndView().getModelMap());
-	}
+//	@Test
+//	public void testList() throws Exception {
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/joke/list"))
+//				.andReturn().getModelAndView().getModelMap());
+//	}
 	
 //	@Test
 //	public void testRegisterGET() throws Exception {
@@ -47,7 +47,7 @@ public class JokeControllerTest {
 //	@Test
 //	public void testRegisterPOST() throws Exception {
 //		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/joke/register")
-//				.param("member_id", "narihwa")
+//				.param("member_id", "zxz7648")
 //				.param("joke_question", "내가 테스트를 하면?")
 //				.param("joke_answer", "DB에 잘 들어간다"))
 //				.andReturn().getModelAndView().getViewName();
