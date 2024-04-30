@@ -3,6 +3,7 @@ package kr.co.dadrip;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +32,28 @@ public class MemberController {
 	// 로그인(메인 화면)
 	
 	@PostMapping("/login")
-	public String login(MemberDTO mDto, HttpSession session) throws Exception {
+	public String login(MemberDTO mDto, HttpServletRequest request) throws Exception {
 		log.info("login...............");
 		log.info("mDto =============> " + mDto);
-		
+		HttpSession session = request.getSession();
 		mDto = service.login(mDto, session);
 		
 		return "redirect:/dadrip/main";
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) throws Exception {
-		log.info("before logout..............." + session);
-		service.logout(session);
-		log.info("after logout..............." + session);
+	public String logout(HttpServletRequest request) throws Exception {
+
+		HttpSession session = request.getSession(false); 
+        // session이 null이 아니라는건 기존에 세션이 존재했었다는 뜻이므로
+        // 세션이 null이 아니라면 session.invalidate()로 세션 삭제해주기.
+		if(session != null) {
+			session.removeAttribute("memberInfo");
+			session.invalidate();
+		}
+//		log.info("before logout..............." + session);
+//		service.logout(session);
+
 		
 		return "redirect:/dadrip/main";
 		
@@ -84,7 +93,7 @@ public class MemberController {
 	}
 	
 	// 회원 탈퇴(마이페이지 -> 수정 화면)
-	@PostMapping("mypage/delete")
+	@PostMapping("/mypage/delete")
 	public String delete(@RequestParam("member_id") String member_id, RedirectAttributes rttr) {
 		
 		return "redirect:/mypage";

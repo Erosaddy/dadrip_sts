@@ -32,8 +32,8 @@
                 </div>
                 <div>
                     <input type="search" placeholder="search for dad jokes" class="search">
-                    <button class="btn-signin-modal">마이페이지</button>
-                    <button class="btn-signup-modal">로그아웃</button>
+                    <button class="btn-left">마이페이지</button>
+                    <button class="btn-right">로그아웃</button>
                 </div>
             </div>
         </nav>

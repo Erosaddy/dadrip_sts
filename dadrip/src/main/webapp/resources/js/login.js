@@ -170,3 +170,32 @@ function validateCredentials(inputUsername, inputNickname, inputPassword, inputP
     }
     return true;
 }
+
+/*
+해당 방법은 SessionStorage에 있는 세션을 가져오는 방법. 현재 로그인 시 서버의 세션에 저장되기 때문에 사용할 수 없다.
+
+// 로그인 성공시 로그인 버튼은 마이페이지 버튼으로, 회원가입 버튼은 로그아웃 버튼으로 변경
+$(document).ready(function() {
+	// 세션 상태 확인
+    var session = getSession(); // 세션 정보를 가져오는 함수를 가정합니다.
+	console.log("session =========> " + session);
+    // 세션이 존재할 때
+    if (session != null) {
+        // 로그인 버튼을 로그아웃 버튼으로 변경
+        $("#loginButton").text("마이페이지");
+        $("#loginButton").on("click", function() {
+            // 마이페이지 이동
+            //여기에 로직 추가
+        });
+    }
+});
+
+// 세션 가져오는 메소드
+function getSession() {
+    // localStorage에서 세션 정보 가져오기
+    var sessionData = localStorage.getItem('session');
+
+    // 세션 정보가 있다면 파싱하여 객체로 반환, 없다면 null 반환
+    return sessionData ? JSON.parse(sessionData) : null;
+}
+*/

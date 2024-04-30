@@ -10,7 +10,6 @@ import kr.co.dadrip.domain.MemberDTO;
 public interface IMemberService {
 	public void register(MemberDTO mDto) throws Exception;
 	public MemberDTO login(MemberDTO mDto, HttpSession session) throws Exception;
-	public void logout(HttpSession session)throws Exception;
 	public MemberDTO memberInfo(String member_id)  throws Exception;
 	public boolean modify(MemberDTO mDto) throws Exception;
 	public boolean delete(String member_id) throws Exception;

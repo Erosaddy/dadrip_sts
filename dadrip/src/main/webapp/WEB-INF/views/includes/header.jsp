@@ -36,8 +36,31 @@
                 </div>
                 <div>
                     <input type="search" placeholder="search for dad jokes" class="search">
-                    <button class="btn-signin-modal">로그인</button>
-                    <button class="btn-signup-modal">회원가입</button>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${empty memberInfo}">
+			                    <button id="btn-signin-modal" class="btn-signin-modal" value="1">로그인</button>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<button id="btn-mypage" class="btn-signin-modal" value="2">마이페이지</button>
+	                    	</c:otherwise>
+	                    </c:choose>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${empty memberInfo}">
+                    			<button id="btn-signup-modal" class="btn-signup-modal" value="3">회원가입</button>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<button id="btn-logout" class="btn-signup-modal" value="4">로그아웃</button>
+	                    	</c:otherwise>
+	                    </c:choose>
+                </div>
+                <div>
+                	<c:choose>
+	                	<c:when test="${not empty memberInfo}">
+							<p>${memberInfo.nickname }님 안녕하세요!</p>
+	                    </c:when>
+	                </c:choose>
                 </div>
             </div>
         </nav>

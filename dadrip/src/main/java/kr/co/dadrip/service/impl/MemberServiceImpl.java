@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import kr.co.dadrip.domain.MemberDTO;
 import kr.co.dadrip.persistence.IMemberDAO;
 import kr.co.dadrip.service.IMemberService;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@Log4j
 public class MemberServiceImpl implements IMemberService {
 	@Autowired
 	private IMemberDAO mDao;
@@ -30,11 +32,6 @@ public class MemberServiceImpl implements IMemberService {
 			session.setAttribute("memberInfo", mDto);
 		}
 		return mDto;
-	}
-	
-	@Override
-	public void logout(HttpSession session) throws Exception {
-		session.invalidate();	// 세션 초기화
 	}
 
 	@Override

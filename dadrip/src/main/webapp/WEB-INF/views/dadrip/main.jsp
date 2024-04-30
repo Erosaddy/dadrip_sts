@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@include file="../includes/header.jsp" %> 
-<c:set var="ctx" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath}" scope="application"></c:set>
     <main>
         <div id="container" class="mx-auto">
             
@@ -114,9 +113,6 @@
 	                        	<c:when test="${empty memberInfo}">
 									<p style="display:none;">아이디 또는 비밀번호가 일치하지 않습니다.</p>
 	                        	</c:when>
-	                        	<c:otherwise>
-	                        		${memberInfo.member_id} 님 반갑습니다.
-	                        	</c:otherwise>
 	                        </c:choose>
                         </p>
                         <button id="login" type="submit">로그인</button>
@@ -163,11 +159,87 @@
 		document.loginForm.submit();
 		
 		
-	})
+	});
+	const modal = document.querySelector('#modal');
+
+	const btnSignInModalBtn = document.querySelector('#btn-signin-modal');
+	const btnSignUpModalBtn = document.querySelector('#btn-signup-modal');
+	const btnMypageBtn = document.querySelector('#btn-mypage');
+	const btnCloseModal = document.querySelector('.modal-close');
+
+	const btnLogoutBtn = document.querySelector('#btn-logout');
+
+	let btnSignInModal = null;
+	let btnSignUpModal = null;
+	let btnMypage = null;
+	let btnLogout = null;
+	
+	if(btnSignInModalBtn != null) {
+		btnSignInModal = document.querySelector('#btn-signin-modal');
+		
+		// 로그인 버튼을 눌러 로그인 모달 띄우기 + 스크롤을 막는 css 속성 부여
+		btnSignInModal.addEventListener("click", ()=>{
+		    modal.style.display="flex";
+		    $(".email-signup").hide();
+		    $(".email-login").delay(1).fadeIn(1);
+		    $(".email-signup").fadeOut(1);
+		    $("#login-box-link").addClass("active");
+		    $("#signup-box-link").removeClass("active");
+		});
+		
+	}
+	if(btnSignUpModalBtn != null) {
+		btnSignUpModal = document.querySelector('#btn-signup-modal');
+		
+		// 회원가입 버튼을 눌러 회원가입 모달 띄우기 + 스크롤을 막는 css 속성 부여
+		btnSignUpModal.addEventListener("click", ()=>{
+		    modal.style.display="flex";
+		    $(".email-login").hide();
+		    $(".email-login").fadeOut(1);
+		    $(".email-signup").delay(1).fadeIn(1);
+		    $("#login-box-link").removeClass("active");
+		    $("#signup-box-link").addClass("active");
+		});
+		
+	}
+	if(btnMypageBtn != null) {
+		btnMypage = document.querySelector('#btn-mypage');
+		
+		
+	}
+	
+	if(btnLogoutBtn != null) {
+		btnLogout = document.querySelector('#btn-logout');
+		
+		// 로그아웃 버튼을 클릭 시 로그아웃
+			btnLogout.addEventListener("click", ()=>{
+		    window.location = "${ctx}/logout";
+		});
+		
+	}
+	
+	// X 버튼을 눌러 모달을 탈출 + 스크롤을 막는 css 속성 지우기
+
+	btnCloseModal.addEventListener("click", ()=>{
+		console.log("btnCloseModal..............");
+	    modal.style.display="none";
+	    
+	    // 모달 탈출시 로그인 및 회원가입 값 초기화
+	    document.getElementById('member_id').value = '';
+	    document.getElementById('member_pw').value = '';
+	    document.getElementById('id').value = '';
+	    document.getElementById('nickName').value = '';
+	    document.getElementById('pw').value = '';
+	    document.getElementById('pwCheck').value = '';
+	    document.getElementById('email').value = '';
+	    document.getElementById('birth').value = '';
+	    document.getElementById('login-error-message').innerHTML = '';
+	    document.getElementById('signup-error-message').innerHTML = '';
+	});
+	
 	</script>
     
     <script src="/resources/js/login.js"></script>
-    <script src="/resources/js/main.js"></script>
     <script src="/resources/js/bestJokes.js"></script>
 </body>
 </html>
