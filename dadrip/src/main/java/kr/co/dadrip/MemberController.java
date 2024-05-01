@@ -32,17 +32,20 @@ public class MemberController {
 	// 로그인(메인 화면)
 	
 	@PostMapping("/login")
-	public String login(MemberDTO mDto, HttpServletRequest request) throws Exception {
+	public String login(MemberDTO mDto, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 		log.info("login...............");
-		log.info("mDto =============> " + mDto);
 		HttpSession session = request.getSession();
 		mDto = service.login(mDto, session);
+		
+		if (mDto == null) {
+			rttr.addFlashAttribute("result", "loginFail");
+		}
 		
 		return "redirect:/dadrip/main";
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) throws Exception {
+	public String logout(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 
 		HttpSession session = request.getSession(false); 
         // session이 null이 아니라는건 기존에 세션이 존재했었다는 뜻이므로
@@ -51,13 +54,13 @@ public class MemberController {
 			session.removeAttribute("memberInfo");
 			session.invalidate();
 		}
-//		log.info("before logout..............." + session);
-//		service.logout(session);
-
 		
 		return "redirect:/dadrip/main";
 		
 	}
+	
+//	@RequestMapping()
+//	public 
 	
 	// 회원가입(메인 화면)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -66,9 +69,9 @@ public class MemberController {
 		log.info("mDto ===============> " + mDto);
 		service.register(mDto);
 		
-		rttr.addFlashAttribute("result", mDto.getMember_id());
+		rttr.addFlashAttribute("result", mDto.getNickname());
 		
-		return "/redirect:/dadrip/main";
+		return "redirect:/dadrip/main";
 	}
 	
 	// 회원 정보 보기(마이페이지)

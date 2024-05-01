@@ -108,38 +108,32 @@
                         <input id="member_pw" type="password" placeholder="비밀번호" required name="member_pw"/>
                     </div>
                     <div class="u-form-group">
-                        <p id="login-error-message">
-	                        <c:choose>
-	                        	<c:when test="${empty memberInfo}">
-									<p style="display:none;">아이디 또는 비밀번호가 일치하지 않습니다.</p>
-	                        	</c:when>
-	                        </c:choose>
-                        </p>
-                        <button id="login" type="submit">로그인</button>
+                        <p id="login-error-message"></p>
+                        <button id="login" type="button">로그인</button>
                     </div>
                     <div class="u-form-group">
                         <a href="#" class="forgot-password">비밀번호 찾기</a>
                     </div>
                 </form>
-                <form class="email-signup">
+                <form name="signUpForm" class="email-signup" method="post">
                     <div class="u-form-group">
-                        <input id="id" type="text" placeholder="아이디" required/>
+                        <input id="id" type="text" placeholder="아이디" required name="member_id">
                     </div>
                     <div class="u-form-group">
-                        <input id="nickName" type="text" placeholder="닉네임" required/>
+                        <input id="nickName" type="text" placeholder="닉네임" required name="nickname">
                     </div>
                     <div id="signup-password" class="u-form-group">
-                        <input id="pw" type="password" placeholder="비밀번호" required/>
+                        <input id="pw" type="password" placeholder="비밀번호" required name="member_pw">
                     </div>
                     <div class="u-form-group">
-                        <input id="pwCheck" type="password" placeholder="비밀번호 확인" required/>
+                        <input id="pwCheck" type="password" placeholder="비밀번호 확인" required>
                     </div>
                     <div class="u-form-group">
-                        <input id="email" type="email" placeholder="이메일" required/>
+                        <input id="email" type="email" placeholder="이메일" required name="email">
                     </div>
                     <div class="u-form-group">
                         <label name="birth">생일</label>
-                        <input id="birth" type="date" required/>
+                        <input id="birth" type="date" required name="birthday">
                     </div>
                     <div class="u-form-group">
                         <label>남성<input type="radio" name="sex" value="1" checked/></label>
@@ -147,27 +141,155 @@
                     </div>
                     <div class="u-form-group">
                         <p id="signup-error-message"></p>
-                        <button id="signUp" type="submit">회원가입</button>
+                        <button id="signUp" type="button">회원가입</button>
                     </div> 
                 </form>
             </div>
         </section>
     </div>
 	<script>
+	//메시지 받기
+	
+	
+	
+	//로그인
 	$("#login").click(function() {
+		// 입력값 알아오기
+		var inputUsername = document.querySelector('input[type="text"]').value;
+		var inputPassword = document.querySelector('input[type="password"]').value;
+		// 빈값 여부 검사
+		if(inputUsername == '') {
+	        document.getElementById('login-error-message').innerHTML = '아이디를 입력해 주세요.';
+	        document.getElementById('login-error-message').style.display = "block";
+	        return;
+	    } else if(inputPassword == '') {
+	        document.getElementById('login-error-message').innerHTML = '비밀번호를 입력해 주세요.';
+		    document.getElementById('login-error-message').style.display = "block";
+	        return;
+	    }
+		
 		document.loginForm.action = "${ctx}/login";
 		document.loginForm.submit();
+	});
+
+	//회원가입
+	$("#signUp").click(function() {
 		
+		// 사용자 입력 값 가져오기
+	    var inputUsername = document.getElementById('id').value;
+	    var inputNickname = document.getElementById('nickName').value;
+	    var inputPassword = document.getElementById('pw').value;
+	    var inputPasswordCheck = document.getElementById('pwCheck').value;
+	    var inputEmail = document.getElementById('email').value;
+	    var inputBirth = document.getElementById('birth').value;
+	    // 성별 값 받기
+	    const genderRadios = document.getElementsByName('sex');
+	    let inputGender;
+	    for (const radio of genderRadios) {
+	        if (radio.checked) {
+	            inputGender = radio.value;
+	            break; // 선택된 라디오 버튼이 확인되면 반복문을 종료합니다.
+	        }
+	    }
+	    
+	    const idReg = /^[a-zA-Z0-9]{5,20}$/;
+	    const pwReg1 = /^[A-Za-z\d@$!%*#?&]{7,60}$/;    // 알파벳 대소문자, 숫자, 특수문자만 사용 가능하며 7~60자리 사이일 것
+	    const pwReg2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{7,}$/;  // 알파벳, 숫자, 특수문자 적어도 하나씩 사용해야 함
+	    //const pwReg3 = /([A-Za-z0-9`~!@#\$%\^&\*\(\)\{\}\[\]\-_=\+\\|;:\'\"<>,\./\?])\1{2,}/g;    // 동일문자 3번 이상 반복 금지(동작 안함, 수정 필요)
+	    const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+	    
+	    // 빈값 없도록 제한
+	    if (inputUsername == '') {
+	        document.getElementById('signup-error-message').innerHTML = '아이디를 입력해 주세요.';
+	        document.getElementById('id').focus();
+	        return;
+	    } else if (inputNickname == '') {
+	        document.getElementById('signup-error-message').innerHTML = '닉네임을 입력해 주세요.';
+	        document.getElementById('nickName').focus();
+	        return;
+	    } else if (inputPassword == '') {
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호를 입력해 주세요.';
+	        document.getElementById('pwCheck').value = '';
+	        document.getElementById('pw').focus();
+	        return;
+	    } else if (inputPasswordCheck == '') {
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호 확인을 입력해 주세요.';
+	        document.getElementById('pwCheck').focus();
+	        return;
+	    } else if (inputEmail == '') {
+	        document.getElementById('signup-error-message').innerHTML = '이메일을 입력해 주세요.';
+	        document.getElementById('email').focus();
+	        return;
+	    } else if (inputBirth == '') {
+	        document.getElementById('signup-error-message').innerHTML = '생년월일을 선택해 주세요.';
+	        document.getElementById('birth').focus();
+	        return;
+	    }
+
+	    // 비밀번호 확인 체크
+	    else if (!(inputPassword == inputPasswordCheck)) {
+	        document.getElementById('signup-error-message').innerHTML = '확인용 비밀번호가 입력하신 비밀번호와 일치하지 않습니다.';
+	        document.getElementById('pw').value = '';
+	        document.getElementById('pwCheck').value = '';
+	        document.getElementById('pw').focus();
+	        return;
+	    }
+	    // 아이디 길이, 사용가능 문자
+	    else if (!idReg.test(inputUsername)) {
+	        document.getElementById('signup-error-message').innerHTML = '아이디는 영어 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.';
+	        document.getElementById('id').focus();
+	        return;
+	    }
+	    // 비밀번호 길이, 사용가능 문자
+	    else if (!pwReg1.test(inputPassword)) {
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호는 영어 대소문자와 숫자, 특수문자만 사용 가능하며, 7~60자 사이여야 합니다.';
+	        document.getElementById('pw').value = '';
+	        document.getElementById('pwCheck').value = '';
+	        document.getElementById('pw').focus();
+	        return;
+	    }
+	    // 비밀번호 필수로 들어가야 하는 문자들 지정
+	    else if (!pwReg2.test(inputPassword)) {
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호는 각각 적어도 하나의 영문자, 숫자, 특수문자(@$!%*#?&)를 포함해야 합니다.';
+	        document.getElementById('pw').value = '';
+	        document.getElementById('pwCheck').value = '';
+	        document.getElementById('pw').focus();
+	        return;
+	    }
+	    // 비밀번호 동일 문자 3번 이상 반복 금지
+	    /* else if (!pwReg3.test(inputPassword)) {
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호에 동일한 문자를 연속 3번 이상 사용할 수 없습니다.';
+	        document.getElementById('pw').value = '';
+	        document.getElementById('pwCheck').value = '';
+	        document.getElementById('pw').focus();
+	        return;
+	    } */
+	    // 이메일 유효성 검사
+	    else if (!emailReg.test(inputEmail)) {
+	        document.getElementById('signup-error-message').innerHTML = '올바른 이메일 형식을 입력해 주세요.';
+	        document.getElementById('email').focus();
+	        return;
+	    }
+	    
+		document.signUpForm.action = "${ctx}/signup";
+		document.signUpForm.submit();
 		
 	});
+	
+	// 회원가입 등록 확인 alert
+	if () {
+		alert("회원가입에 성공했습니다.");
+	}
+	
+	
 	const modal = document.querySelector('#modal');
 
 	const btnSignInModalBtn = document.querySelector('#btn-signin-modal');
 	const btnSignUpModalBtn = document.querySelector('#btn-signup-modal');
 	const btnMypageBtn = document.querySelector('#btn-mypage');
-	const btnCloseModal = document.querySelector('.modal-close');
-
 	const btnLogoutBtn = document.querySelector('#btn-logout');
+
+	const btnCloseModal = document.querySelector('.modal-close');
 
 	let btnSignInModal = null;
 	let btnSignUpModal = null;
@@ -186,8 +308,8 @@
 		    $("#login-box-link").addClass("active");
 		    $("#signup-box-link").removeClass("active");
 		});
-		
 	}
+	
 	if(btnSignUpModalBtn != null) {
 		btnSignUpModal = document.querySelector('#btn-signup-modal');
 		
@@ -205,7 +327,6 @@
 	if(btnMypageBtn != null) {
 		btnMypage = document.querySelector('#btn-mypage');
 		
-		
 	}
 	
 	if(btnLogoutBtn != null) {
@@ -221,7 +342,6 @@
 	// X 버튼을 눌러 모달을 탈출 + 스크롤을 막는 css 속성 지우기
 
 	btnCloseModal.addEventListener("click", ()=>{
-		console.log("btnCloseModal..............");
 	    modal.style.display="none";
 	    
 	    // 모달 탈출시 로그인 및 회원가입 값 초기화
@@ -236,6 +356,26 @@
 	    document.getElementById('login-error-message').innerHTML = '';
 	    document.getElementById('signup-error-message').innerHTML = '';
 	});
+	
+	// 로그인 후 일치하는 정보가 없을 때 자동으로 로그인 모달 켜기
+	if("${result}" == "loginFail") {
+	    modal.style.display="flex";
+	    $(".email-signup").hide();
+	    $(".email-login").delay(1).fadeIn(1);
+	    $(".email-signup").fadeOut(1);
+	    $("#login-box-link").addClass("active");
+	    $("#signup-box-link").removeClass("active");
+	    
+	    document.getElementById('login-error-message').innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.';
+        document.getElementById('login-error-message').style.display = "block";
+	}
+	
+	function validateCredentials(inputUsername, inputNickname, inputPassword, inputPasswordCheck, inputEmail, inputBirth) {
+		
+	   
+	    return true;
+	}
+
 	
 	</script>
     
