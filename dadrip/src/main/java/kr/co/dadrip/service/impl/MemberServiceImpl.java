@@ -20,8 +20,8 @@ public class MemberServiceImpl implements IMemberService {
 	private IMemberDAO mDao;
 	
 	@Override
-	public void register(MemberDTO mDto) throws Exception {
-		mDao.insertMember(mDto);
+	public boolean register(MemberDTO mDto) throws Exception {
+		return mDao.insertMember(mDto) == 1;
 	}
 
 	@Override

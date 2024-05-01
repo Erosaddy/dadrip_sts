@@ -7,7 +7,7 @@ import kr.co.dadrip.domain.MemberDTO;
 
 public interface IMemberDAO {
 
-	public void insertMember(MemberDTO mDto)  throws Exception;	// 회원가입
+	public int insertMember(MemberDTO mDto)  throws Exception;	// 회원가입
 	public MemberDTO loginMember(MemberDTO mDto) throws Exception;	// 로그인
 	public MemberDTO selectMember(String member_id) throws Exception;	// 내 회원정보 조회
 	public int updateMember(MemberDTO mDto)  throws Exception;	// 회원정보 변경

@@ -102,10 +102,10 @@
                 </div>
                 <form name="loginForm" class="email-login" method="post">
                     <div class="u-form-group">
-                        <input id="member_id" type="text" placeholder="아이디" required name="member_id"/>
+                        <input id="member_id" type="text" placeholder="아이디" name="member_id">
                     </div>
                     <div class="u-form-group">
-                        <input id="member_pw" type="password" placeholder="비밀번호" required name="member_pw"/>
+                        <input id="member_pw" type="password" placeholder="비밀번호" name="member_pw">
                     </div>
                     <div class="u-form-group">
                         <p id="login-error-message"></p>
@@ -117,23 +117,23 @@
                 </form>
                 <form name="signUpForm" class="email-signup" method="post">
                     <div class="u-form-group">
-                        <input id="id" type="text" placeholder="아이디" required name="member_id">
+                        <input id="id" type="text" placeholder="아이디" name="member_id">
                     </div>
                     <div class="u-form-group">
-                        <input id="nickName" type="text" placeholder="닉네임" required name="nickname">
+                        <input id="nickName" type="text" placeholder="닉네임" name="nickname">
                     </div>
                     <div id="signup-password" class="u-form-group">
-                        <input id="pw" type="password" placeholder="비밀번호" required name="member_pw">
+                        <input id="pw" type="password" placeholder="비밀번호" name="member_pw">
                     </div>
                     <div class="u-form-group">
-                        <input id="pwCheck" type="password" placeholder="비밀번호 확인" required>
+                        <input id="pwCheck" type="password" placeholder="비밀번호 확인">
                     </div>
                     <div class="u-form-group">
-                        <input id="email" type="email" placeholder="이메일" required name="email">
+                        <input id="email" type="email" placeholder="이메일" name="email">
                     </div>
                     <div class="u-form-group">
                         <label name="birth">생일</label>
-                        <input id="birth" type="date" required name="birthday">
+                        <input id="birth" type="date" name="birthday">
                     </div>
                     <div class="u-form-group">
                         <label>남성<input type="radio" name="sex" value="1" checked/></label>
@@ -236,13 +236,13 @@
 	    }
 	    // 아이디 길이, 사용가능 문자
 	    else if (!idReg.test(inputUsername)) {
-	        document.getElementById('signup-error-message').innerHTML = '아이디는 영어 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.';
+	        document.getElementById('signup-error-message').innerHTML = '아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.';
 	        document.getElementById('id').focus();
 	        return;
 	    }
 	    // 비밀번호 길이, 사용가능 문자
 	    else if (!pwReg1.test(inputPassword)) {
-	        document.getElementById('signup-error-message').innerHTML = '비밀번호는 영어 대소문자와 숫자, 특수문자만 사용 가능하며, 7~60자 사이여야 합니다.';
+	        document.getElementById('signup-error-message').innerHTML = '비밀번호는 알파벳 대소문자, 숫자, 특수문자만 사용 가능하며, 7~60자 사이여야 합니다.';
 	        document.getElementById('pw').value = '';
 	        document.getElementById('pwCheck').value = '';
 	        document.getElementById('pw').focus();
@@ -277,7 +277,7 @@
 	});
 	
 	// 회원가입 등록 확인 alert
-	if () {
+	if ("${result}" == "signupSuccess") {
 		alert("회원가입에 성공했습니다.");
 	}
 	
@@ -333,7 +333,7 @@
 		btnLogout = document.querySelector('#btn-logout');
 		
 		// 로그아웃 버튼을 클릭 시 로그아웃
-			btnLogout.addEventListener("click", ()=>{
+		btnLogout.addEventListener("click", ()=>{
 		    window.location = "${ctx}/logout";
 		});
 		

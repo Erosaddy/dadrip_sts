@@ -67,9 +67,10 @@ public class MemberController {
 	public String signup(MemberDTO mDto, RedirectAttributes rttr) throws Exception {
 		log.info("signup...............");
 		log.info("mDto ===============> " + mDto);
-		service.register(mDto);
 		
-		rttr.addFlashAttribute("result", mDto.getNickname());
+		if (service.register(mDto)) {
+			rttr.addFlashAttribute("result", "signupSuccess");
+		}
 		
 		return "redirect:/dadrip/main";
 	}

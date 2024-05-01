@@ -22,13 +22,12 @@ public class MemberDAOImpl implements IMemberDAO {
 	private static final String namespace = "kr.co.dadrip.memberMapper";
 	
 	@Override
-	public void insertMember(MemberDTO mDto) {
-		sqlSession.insert(namespace + ".insertMember", mDto);
+	public int insertMember(MemberDTO mDto) {
+		return sqlSession.insert(namespace + ".insertMember", mDto);
 	}
 	
 	@Override
 	public MemberDTO loginMember(MemberDTO mDto) throws Exception {
-		log.info("mDto =============> " + mDto);
 		return sqlSession.selectOne(namespace + ".loginMember", mDto);
 	}
 
@@ -45,9 +44,7 @@ public class MemberDAOImpl implements IMemberDAO {
 
 	@Override
 	public int deleteMember(String member_id) {
-		int result = sqlSession.delete(namespace + ".deleteMember", member_id);
-		log.info("Delete operation result =================> : " + result);
-		return result;
+		return sqlSession.delete(namespace + ".deleteMember", member_id);
 	}
 
 	@Override
