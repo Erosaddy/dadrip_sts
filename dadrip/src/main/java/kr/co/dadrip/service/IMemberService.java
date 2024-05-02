@@ -14,4 +14,6 @@ public interface IMemberService {
 	public boolean modify(MemberDTO mDto) throws Exception;
 	public boolean delete(String member_id) throws Exception;
 	public List<MemberDTO> memberList() throws Exception;
+	public int idCheck(String member_id) throws Exception;
+	public int emailCheck(String email) throws Exception;
 }

@@ -102,10 +102,10 @@
                 </div>
                 <form name="loginForm" class="email-login" method="post">
                     <div class="u-form-group">
-                        <input id="member_id" type="text" placeholder="아이디" name="member_id">
+                        <input id="member_id" type="text" placeholder="아이디" name="member_id" onkeyup="fnEnterKey()">
                     </div>
                     <div class="u-form-group">
-                        <input id="member_pw" type="password" placeholder="비밀번호" name="member_pw">
+                        <input id="member_pw" type="password" placeholder="비밀번호" name="member_pw" onkeyup="fnEnterKey()">
                     </div>
                     <div class="u-form-group">
                         <p id="login-error-message"></p>
@@ -117,7 +117,10 @@
                 </form>
                 <form name="signUpForm" class="email-signup" method="post">
                     <div class="u-form-group">
-                        <input id="id" type="text" placeholder="아이디" name="member_id">
+                        <input id="id" type="text" placeholder="아이디" name="member_id" oninput = "checkId()">
+						<span class="id_validation" style="display: none">아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.</span>
+						<span class="id_available" style="display: none">사용 가능한 아이디입니다.</span>
+                        <span class="id_occupied" style="display: none">사용중인 아이디입니다.</span>
                     </div>
                     <div class="u-form-group">
                         <input id="nickName" type="text" placeholder="닉네임" name="nickname">
@@ -129,7 +132,10 @@
                         <input id="pwCheck" type="password" placeholder="비밀번호 확인">
                     </div>
                     <div class="u-form-group">
-                        <input id="email" type="email" placeholder="이메일" name="email">
+                        <input id="email" type="email" placeholder="이메일" name="email" oninput = "checkEmail()">
+                        <span class="email_validation" style="display: none">올바른 이메일 형식을 입력해 주세요.</span>
+                        <span class="email_available" style="display: none">사용 가능한 이메일입니다.</span>
+                        <span class="email_occupied" style="display: none">해당 이메일을 사용 중인 계정이 존재합니다.</span>
                     </div>
                     <div class="u-form-group">
                         <label name="birth">생일</label>
@@ -150,8 +156,6 @@
 	<script>
 	//메시지 받기
 	
-	
-	
 	//로그인
 	$("#login").click(function() {
 		// 입력값 알아오기
@@ -171,6 +175,107 @@
 		document.loginForm.action = "${ctx}/login";
 		document.loginForm.submit();
 	});
+	
+	// 엔터 키로 로그인
+	function fnEnterKey() {
+		if (window.event.keyCode == 13) {
+			var inputUsername = document.querySelector('input[type="text"]').value;
+			var inputPassword = document.querySelector('input[type="password"]').value;
+			// 빈값 여부 검사
+			if(inputUsername == '') {
+		        document.getElementById('login-error-message').innerHTML = '아이디를 입력해 주세요.';
+		        document.getElementById('login-error-message').style.display = "block";
+		        return;
+		    } else if(inputPassword == '') {
+		        document.getElementById('login-error-message').innerHTML = '비밀번호를 입력해 주세요.';
+			    document.getElementById('login-error-message').style.display = "block";
+		        return;
+		    }
+			
+			document.loginForm.action = "${ctx}/login";
+			document.loginForm.submit();
+		}
+	}
+	
+	var idAvailability = true;
+	var emailAvailability = true;
+	
+	// 회원가입 시 아이디 유효성 검사
+	function checkId(){
+		const idReg = /^[a-zA-Z0-9]{5,20}$/;	// 아이디 유효성 검사
+        var id = $('#id').val(); //id값이 "id"인 입력란의 값을 저장
+        $.ajax({
+            url:'${ctx}/idCheck', //Controller에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{member_id: id},
+            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
+                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                	if(id == "") {
+                		$('.id_validation').css("display", "none");
+	                	$('.id_available').css("display", "none");
+	                    $('.id_occupied').css("display", "none");
+                    	idAvailability = false;
+                	} else if(!idReg.test(id)) {
+                		$('.id_validation').css("display", "inline-block");
+	                	$('.id_available').css("display", "none");
+	                    $('.id_occupied').css("display", "none");
+                    	idAvailability = false;
+                	} else {
+	                	$('.id_validation').css("display", "none");
+	                	$('.id_available').css("display", "inline-block");
+	                    $('.id_occupied').css("display", "none");
+                    	idAvailability = true;
+                	}
+                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                	$('.id_validation').css("display", "none");
+                	$('.id_occupied').css("display", "inline-block"); 
+                    $('.id_available').css("display", "none");
+                    idAvailability = false;
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+    };
+    
+    function checkEmail(){
+    	const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;	// 이메일 유효성 검사
+        var email = $('#email').val(); //id값이 "id"인 입력란의 값을 저장
+        $.ajax({
+            url:'${ctx}/emailCheck', //Controller에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{email: email},
+            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
+                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                	if (email == "") {
+                		$('.email_validation').css("display", "none");
+                		$('.email_available').css("display", "none");
+	                    $('.email_occupied').css("display", "none");
+	                    emailAvailability = false;
+                	} else if(!emailReg.test(email)) {
+                		$('.email_validation').css("display", "inline-block");
+                		$('.email_available').css("display", "none");
+	                    $('.email_occupied').css("display", "none");
+	                    emailAvailability = false;
+                	} else {
+                		$('.email_validation').css("display", "none");
+	                	$('.email_available').css("display", "inline-block");
+	                    $('.email_occupied').css("display", "none");
+	                    emailAvailability = true;
+                	}
+                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                	$('.email_validation').css("display", "none");
+                    $('.email_available').css("display", "none");
+                	$('.email_occupied').css("display", "inline-block"); 
+                    emailAvailability = false;
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+    };
 
 	//회원가입
 	$("#signUp").click(function() {
@@ -225,6 +330,7 @@
 	        document.getElementById('birth').focus();
 	        return;
 	    }
+	    
 
 	    // 비밀번호 확인 체크
 	    else if (!(inputPassword == inputPasswordCheck)) {
@@ -234,11 +340,11 @@
 	        document.getElementById('pw').focus();
 	        return;
 	    }
-	    // 아이디 길이, 사용가능 문자
-	    else if (!idReg.test(inputUsername)) {
-	        document.getElementById('signup-error-message').innerHTML = '아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.';
-	        document.getElementById('id').focus();
-	        return;
+	 	// 아이디 중복 검사
+	    else if (!idAvailability) {
+	    	document.getElementById('signup-error-message').innerHTML = '아이디를 다시 확인해 주세요..';
+	    	document.getElementById('id').focus();
+	    	return;
 	    }
 	    // 비밀번호 길이, 사용가능 문자
 	    else if (!pwReg1.test(inputPassword)) {
@@ -264,11 +370,11 @@
 	        document.getElementById('pw').focus();
 	        return;
 	    } */
-	    // 이메일 유효성 검사
-	    else if (!emailReg.test(inputEmail)) {
-	        document.getElementById('signup-error-message').innerHTML = '올바른 이메일 형식을 입력해 주세요.';
-	        document.getElementById('email').focus();
-	        return;
+	 	// 이메일 중복 검사
+	    else if (!emailAvailability) {
+	    	document.getElementById('signup-error-message').innerHTML = '이메일을 다시 확인해 주세요.';
+	    	document.getElementById('email').focus();
+	    	return;
 	    }
 	    
 		document.signUpForm.action = "${ctx}/signup";
@@ -280,6 +386,8 @@
 	if ("${result}" == "signupSuccess") {
 		alert("회원가입에 성공했습니다.");
 	}
+	
+	
 	
 	
 	const modal = document.querySelector('#modal');
@@ -370,11 +478,6 @@
         document.getElementById('login-error-message').style.display = "block";
 	}
 	
-	function validateCredentials(inputUsername, inputNickname, inputPassword, inputPasswordCheck, inputEmail, inputBirth) {
-		
-	   
-	    return true;
-	}
 
 	
 	</script>

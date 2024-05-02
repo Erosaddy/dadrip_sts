@@ -39,19 +39,19 @@
 	                    
 	                    <c:choose>
 	                    	<c:when test="${empty memberInfo}">
-			                    <button id="btn-signin-modal" class="btn-signin-modal" value="1">로그인</button>
+			                    <button id="btn-signin-modal" class="btn-signin-modal">로그인</button>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    		<button id="btn-mypage" class="btn-signin-modal" value="2">마이페이지</button>
+	                    		<button id="btn-mypage" class="btn-signin-modal">마이페이지</button>
 	                    	</c:otherwise>
 	                    </c:choose>
 	                    
 	                    <c:choose>
 	                    	<c:when test="${empty memberInfo}">
-                    			<button id="btn-signup-modal" class="btn-signup-modal" value="3">회원가입</button>
+                    			<button id="btn-signup-modal" class="btn-signup-modal">회원가입</button>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    		<button id="btn-logout" class="btn-signup-modal" value="4">로그아웃</button>
+	                    		<button id="btn-logout" class="btn-signup-modal">로그아웃</button>
 	                    	</c:otherwise>
 	                    </c:choose>
                 </div>

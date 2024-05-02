@@ -52,4 +52,14 @@ public class MemberDAOImpl implements IMemberDAO {
 		return sqlSession.selectList(namespace + ".listAllMembers");
 	}
 
+	@Override
+	public int idCheck(String member_id) throws Exception {
+		return sqlSession.selectOne(namespace + ".idCheck", member_id);
+	}
+
+	@Override
+	public int emailCheck(String email) throws Exception {
+		return sqlSession.selectOne(namespace + ".emailCheck", email);
+	}
+
 }

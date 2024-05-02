@@ -13,4 +13,6 @@ public interface IMemberDAO {
 	public int updateMember(MemberDTO mDto)  throws Exception;	// 회원정보 변경
 	public int deleteMember(String member_id)  throws Exception;	// 회원 탈퇴
 	public List<MemberDTO> listAllMembers()  throws Exception;	// 전체회원 조회
+	public int idCheck(String member_id) throws Exception;	// 아이디 중복 체크
+	public int emailCheck(String email) throws Exception;	// 이메일 중복 체크
 }

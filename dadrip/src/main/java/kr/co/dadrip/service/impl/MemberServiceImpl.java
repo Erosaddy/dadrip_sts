@@ -55,6 +55,16 @@ public class MemberServiceImpl implements IMemberService {
 		return mDao.listAllMembers();
 	}
 
+	@Override
+	public int idCheck(String member_id) throws Exception {
+		return mDao.idCheck(member_id);
+	}
+
+	@Override
+	public int emailCheck(String email) throws Exception {
+		return mDao.emailCheck(email);
+	}
+
 	
 
 }

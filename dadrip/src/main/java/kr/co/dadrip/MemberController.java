@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -59,8 +60,27 @@ public class MemberController {
 		
 	}
 	
-//	@RequestMapping()
-//	public 
+	// ajax로 실시간 아이디 중복체크
+	@PostMapping("/idCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam("member_id") String member_id) throws Exception {
+		log.info("member_id =======> " + member_id);
+		int cnt = service.idCheck(member_id);
+		log.info("cnt =================> " + cnt);
+		
+		return cnt;
+	}
+	
+	// ajax로 실시간 이메일 중복체크
+	@PostMapping("/emailCheck")
+	@ResponseBody
+	public int emailCheck(@RequestParam("email") String email) throws Exception {
+		log.info("email =======> " + email);
+		int cnt = service.emailCheck(email);
+		log.info("cnt =================> " + cnt);
+		
+		return cnt;
+	}
 	
 	// 회원가입(메인 화면)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
