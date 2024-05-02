@@ -478,11 +478,24 @@
         document.getElementById('login-error-message').style.display = "block";
 	}
 	
-
+	 // 모달 애니메이션
+	 
+	$(".email-signup").hide();
+	$("#signup-box-link").click(function () {
+	    $(".email-login").fadeOut(100);
+	    $(".email-signup").delay(100).fadeIn(100);
+	    $("#login-box-link").removeClass("active");
+	    $("#signup-box-link").addClass("active");
+	});
+	$("#login-box-link").click(function () {
+	    $(".email-login").delay(100).fadeIn(100);
+	    $(".email-signup").fadeOut(100);
+	    $("#login-box-link").addClass("active");
+	    $("#signup-box-link").removeClass("active");
+	});
 	
 	</script>
     
-    <script src="/resources/js/login.js"></script>
     <script src="/resources/js/bestJokes.js"></script>
 </body>
 </html>
