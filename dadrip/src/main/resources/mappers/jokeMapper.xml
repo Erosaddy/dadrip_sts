@@ -5,10 +5,20 @@
     
 <mapper namespace="JokeMapper">
 
-	<insert id="create">
+
+	<insert id="create" parameterType="kr.co.dadrip.domain.JokeDTO">
+	    INSERT	INTO joke (joke_id, member_id, joke_question, joke_answer)
+	    VALUES	(joke_seq.nextval, #{member_id}, #{joke_question}, #{joke_answer})
+	    <selectKey keyProperty="joke_id" resultType="Integer" order="AFTER">
+	        SELECT joke_seq.currval 
+	        FROM   dual
+	    </selectKey>
+	</insert>
+
+	<!-- <insert id="create">
 		INSERT	INTO joke (joke_id, member_id, joke_question, joke_answer)
 		VALUES	(joke_seq.nextval, #{member_id}, #{joke_question}, #{joke_answer})
-	</insert>
+	</insert> -->
 	
 	<select id="read" resultType="kr.co.dadrip.domain.JokeDTO">
 		SELECT  joke_id, 
