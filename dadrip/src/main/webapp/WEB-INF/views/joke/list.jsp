@@ -140,83 +140,70 @@
 
 
 <script>
-	$(document)
-			.ready(
-					function() {
-						var result = "${result}";
-						console.log("result ==============> " + result);
-						
-						checkModal(result);
+	$(document).ready(function() {
+		var result = "${result}";
+		console.log("result ==============> " + result);
+		
+		checkModal(result);
 
-						/* 뒤로 가면 다시 모달이 뜨기 때문에 막아버리기 */
-						history.replaceState({}, null, null);
+		/* 뒤로 가면 다시 모달이 뜨기 때문에 막아버리기 */
+		history.replaceState({}, null, null);
 
-						function checkModal(result) {
-							if (result == "" || history.state) {
-								return;
-							}
-							if (parseInt(result) > 0) {
-								/* var을 받기 때문에 기초형인 int로 바꿔주는 거시다. */
-								$(".modal-body").html(
-										"게시글 " + parseInt(result)
-												+ "번이 등록되었습니다.");
-							}
+		function checkModal(result) {
+			if (result == "" || history.state) {
+				return;
+			}
+			if (parseInt(result) > 0) {
+				/* var을 받기 때문에 기초형인 int로 바꿔주는 거시다. */
+				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
+			}
+			$("#myModal").modal("show");
+		}
 
-							$("#myModal").modal("show");
-						}
+		$("#regBtn").on("click", function() {
+			self.location = "${ctx}/joke/register";
+		});
 
-						$("#regBtn").on("click", function() {
-							self.location = "${ctx}/joke/register";
-						});
+		var actionForm = $("#actionForm");
 
-						var actionForm = $("#actionForm");
+		$(".paginate_button a").on("click", function(e) {
+			e.preventDefault();
+			console.log("click");
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.submit();
+		});
 
-						$(".paginate_button a").on(
-								"click",
-								function(e) {
-									e.preventDefault();
-									console.log("click");
-									actionForm.find("input[name='pageNum']")
-									.val($(this).attr("href"));
-									actionForm.submit();
-								});
+		$(".move").on("click", function(e) {
+			e.preventDefault();
+			actionForm.append("<input type='hidden' name='joke_id' value='" + $(this).attr("href") + "'>");
+			actionForm.attr("action", "${ctx}/joke/read");
+			actionForm.submit();
+		});
 
-						$(".move")
-								.on(
-										"click",
-										function(e) {
-											e.preventDefault();
-											actionForm.append("<input type='hidden' name='joke_id' value='" + $(this).attr("href") + "'>");
-											actionForm.attr("action", "${ctx}/joke/read");
-											actionForm.submit();
-										});
+		var searchForm = $("#searchForm");
+		$("#searchForm button").on("click", function(e) {
+			if (!searchForm.find("option:selected")
+					.val()) {
+				alert("검색 종류를 선택하세요");
 
-						var searchForm = $("#searchForm");
-						$("#searchForm button").on(
-								"click",
-								function(e) {
-									if (!searchForm.find("option:selected")
-											.val()) {
-										alert("검색 종류를 선택하세요");
+				return false;
+			}
 
-										return false;
-									}
+			if (!searchForm.find(
+					"input[name='keyword']").val()) {
+				alert("검색어를 입력하세요");
 
-									if (!searchForm.find(
-											"input[name='keyword']").val()) {
-										alert("검색어를 입력하세요");
+				return false;
+			}
 
-										return false;
-									}
+			searchForm.find("input[name='pageNum']")
+					.val("1");
 
-									searchForm.find("input[name='pageNum']")
-											.val("1");
+			e.preventDefault();
+			searchForm.submit();
+		});
 
-									e.preventDefault();
-									searchForm.submit();
-								});
-
-					});
+	});
 </script>
 
 <%@include file="../includes/footer.jsp"%>

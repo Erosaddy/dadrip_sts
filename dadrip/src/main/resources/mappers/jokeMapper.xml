@@ -44,7 +44,7 @@
 		WHERE	joke_id = #{joke_id}
 	</delete>
 	
-	<select id="listAllJokes" resultType="kr.co.dadrip.domain.JokeDTO">
+	<select id="listAllJokesWithPaging" resultType="kr.co.dadrip.domain.JokeDTO">
 	<!-- 부등호를 문자로 인식하도록 해주는 CDATA -->
 		<![CDATA[	
 			SELECT	joke_id, 
@@ -54,9 +54,20 @@
 					joke_question, 
 					joke_answer, 
 					view_count
-			FROM	joke
-			WHERE	joke_id > 0
-			ORDER BY joke_id DESC, created_on DESC
+			FROM	(
+						SELECT /*+ INDEX_DESC(joke IDX_joke_jokeId_PK) */
+							rownum rn,
+							joke_id, 
+							member_id, 
+							created_on, 
+							modified_on, 
+							joke_question, 
+							joke_answer, 
+							view_count
+						FROM joke
+						WHERE rownum <= #{pageNum} * #{amount}
+					)
+			WHERE	rn > (#{pageNum}-1) * #{amount}
 		]]>
 	</select>
 	

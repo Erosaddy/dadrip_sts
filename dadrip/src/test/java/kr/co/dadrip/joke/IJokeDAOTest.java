@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.JokeDTO;
 import kr.co.dadrip.persistence.IJokeDAO;
 import lombok.extern.log4j.Log4j;
@@ -53,8 +54,16 @@ public class IJokeDAOTest {
 //	}
 	
 	@Test
-	public void testListAllJokes() throws Exception {
-		List<JokeDTO> jokeList = jDao.listAllJokes();
-	}
+	public void testListCriteria() throws Exception {
+	    Criteria cri = new Criteria();
 
+	    // 10개씩 3페이지
+	    cri.setPageNum(3);
+	    cri.setAmount(10);
+
+	    List<JokeDTO> list = jDao.listAllJokes(cri);
+
+	    list.forEach(joke -> log.info(joke.getJoke_id() + " : " + joke.getJoke_question()));
+	}
+	
 }

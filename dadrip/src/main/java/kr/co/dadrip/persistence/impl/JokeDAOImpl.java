@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.JokeDTO;
 import kr.co.dadrip.persistence.IJokeDAO;
 
@@ -36,8 +37,8 @@ public class JokeDAOImpl implements IJokeDAO {
 	}
 
 	@Override
-	public List<JokeDTO> listAllJokes() throws Exception {
-		return sqlSession.selectList("JokeMapper.listAllJokes");
+	public List<JokeDTO> listAllJokes(Criteria cri) throws Exception {
+		return sqlSession.selectList("JokeMapper.listAllJokesWithPaging", cri);
 	}
 
 }

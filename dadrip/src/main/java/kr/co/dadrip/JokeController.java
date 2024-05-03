@@ -1,10 +1,5 @@
 package kr.co.dadrip;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.JokeDTO;
 import kr.co.dadrip.service.IJokeService;
-import kr.co.dadrip.service.impl.JokeServiceImpl;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -26,10 +21,10 @@ public class JokeController {
 	private IJokeService service;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listAllJokes(Model model) throws Exception {
+	public void listAllJokes(Criteria cri, Model model) throws Exception {
 		log.info("show all modal.................");
 		
-		model.addAttribute("list", service.listAllJokes());
+		model.addAttribute("list", service.listAllJokes(cri));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
