@@ -64,9 +64,7 @@ public class MemberController {
 	@PostMapping("/idCheck")
 	@ResponseBody
 	public int idCheck(@RequestParam("member_id") String member_id) throws Exception {
-		log.info("member_id =======> " + member_id);
 		int cnt = service.idCheck(member_id);
-		log.info("cnt =================> " + cnt);
 		
 		return cnt;
 	}
@@ -75,9 +73,7 @@ public class MemberController {
 	@PostMapping("/emailCheck")
 	@ResponseBody
 	public int emailCheck(@RequestParam("email") String email) throws Exception {
-		log.info("email =======> " + email);
 		int cnt = service.emailCheck(email);
-		log.info("cnt =================> " + cnt);
 		
 		return cnt;
 	}
@@ -86,7 +82,6 @@ public class MemberController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(MemberDTO mDto, RedirectAttributes rttr) throws Exception {
 		log.info("signup...............");
-		log.info("mDto ===============> " + mDto);
 		
 		if (service.register(mDto)) {
 			rttr.addFlashAttribute("result", "signupSuccess");
