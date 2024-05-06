@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@include file="../includes/header.jsp" %>
+<!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
 	.uploadResult {
 		width: 100%;

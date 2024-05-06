@@ -3,6 +3,7 @@ package kr.co.dadrip.persistence;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.MemberDTO;
 
 public interface IMemberDAO {

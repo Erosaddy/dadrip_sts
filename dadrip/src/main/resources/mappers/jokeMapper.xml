@@ -44,6 +44,26 @@
 		WHERE	joke_id = #{joke_id}
 	</delete>
 	
+	<sql id="criteria">
+	    <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+	        <foreach item="type" collection="typeArr">
+	            <trim prefix="OR">
+	                <choose>
+	                    <when test="type == 'T'.toString()">
+	                        title LIKE '%'||#{keyword}||'%'
+	                    </when>
+	                    <when test="type == 'C'.toString()">
+	                        content LIKE '%'||#{keyword}||'%'
+	                    </when>
+	                    <when test="type == 'W'.toString()">
+	                        writer LIKE '%'||#{keyword}||'%'
+	                    </when>
+	                </choose>
+	            </trim>
+	        </foreach>
+	    </trim>
+	</sql>
+	
 	<select id="listAllJokesWithPaging" resultType="kr.co.dadrip.domain.JokeDTO">
 	<!-- 부등호를 문자로 인식하도록 해주는 CDATA -->
 		<![CDATA[	
@@ -65,10 +85,24 @@
 							joke_answer, 
 							view_count
 						FROM joke
-						WHERE rownum <= #{pageNum} * #{amount}
+						WHERE 
+		]]>
+		
+		<include refid="criteria"></include>
+		
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount}
 					)
 			WHERE	rn > (#{pageNum}-1) * #{amount}
 		]]>
+		
+		
+	</select>
+	
+	<select id="getTotalCnt" resultType="int">
+	    SELECT  count(*)
+	    FROM    joke
+	    WHERE   joke_id > 0
 	</select>
 	
 </mapper>

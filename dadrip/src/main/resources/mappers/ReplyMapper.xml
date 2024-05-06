@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dadrip.mapper.ReplyMapper">
+
+	<select id="getTime2" resultType="string">
+		SELECT	sysdate
+		FROM	dual
+	</select>
+	
+	<insert id="insert">
+	    INSERT INTO reply(reply_id, member_id, joke_id, content)
+	    VALUES (reply_seq.nextval, #{member_id}, #{joke_id}, #{content})
+	</insert>
+	
+	<select id="read" resultType="kr.co.dadrip.domain.ReplyDTO">
+		SELECT	*
+		FROM	reply
+		WHERE	reply_id = #{reply_id}
+	</select>
+	
+	<update id="update">
+		UPDATE	reply
+		SET		content = #{content}, modified_on = sysdate
+   		WHERE	reply_id = #{reply_id}
+	</update>
+	
+	<delete id="delete">
+		DELETE
+		FROM	reply
+		WHERE	reply_id = #{reply_id}
+	</delete>
+	
+	<select id="getAllRepliesWithPaging" resultType="kr.co.dadrip.domain.ReplyDTO">
+    	<![CDATA[
+		    SELECT	reply_id,
+		            member_id,
+		            joke_id,
+		            parent_reply_id,
+		            created_on,
+		            modified_on,
+		            content,
+		            like_count,
+		            dislike_count
+		    FROM	(SELECT /*+ INDEX(reply IDX_reply_replyId_PK) */        
+		            	rownum rn,
+		            	reply_id,
+			            member_id,
+			            joke_id,
+			            parent_reply_id,
+			            created_on,
+			            modified_on,
+			            content,
+			            like_count,
+			            dislike_count
+				    FROM	reply
+				    WHERE	joke_id = #{joke_id}
+				    AND 	reply_id > 0
+				    AND		rownum <= #{cri.pageNum} * #{cri.amount})
+		    WHERE	rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<select id="getCountByJokeId" resultType="int">
+	    <![CDATA[
+	        SELECT	count(reply_id)
+	        FROM	reply
+	        WHERE	joke_id = #{joke_id}
+	    ]]>
+	</select>
+
+</mapper>

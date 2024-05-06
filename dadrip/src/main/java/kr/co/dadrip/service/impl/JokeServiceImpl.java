@@ -44,6 +44,10 @@ public class JokeServiceImpl implements IJokeService {
 	public List<JokeDTO> listAllJokes(Criteria cri) throws Exception {
 		return jDao.listAllJokes(cri);
 	}
-	
+
+	@Override
+	public int getTotalCnt(Criteria cri) throws Exception {
+	    return jDao.getTotalCnt(cri);
+	}
 
 }

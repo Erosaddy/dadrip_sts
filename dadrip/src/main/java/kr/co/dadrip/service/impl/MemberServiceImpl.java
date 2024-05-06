@@ -8,16 +8,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.MemberDTO;
 import kr.co.dadrip.persistence.IMemberDAO;
 import kr.co.dadrip.service.IMemberService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
+@RequiredArgsConstructor
 public class MemberServiceImpl implements IMemberService {
-	@Autowired
-	private IMemberDAO mDao;
+	
+	private final IMemberDAO mDao;
 	
 	@Override
 	public boolean register(MemberDTO mDto) throws Exception {
@@ -64,7 +67,4 @@ public class MemberServiceImpl implements IMemberService {
 	public int emailCheck(String email) throws Exception {
 		return mDao.emailCheck(email);
 	}
-
-	
-
 }

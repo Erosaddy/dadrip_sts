@@ -41,4 +41,9 @@ public class JokeDAOImpl implements IJokeDAO {
 		return sqlSession.selectList("JokeMapper.listAllJokesWithPaging", cri);
 	}
 
+	@Override
+	public int getTotalCnt(Criteria cri) throws Exception {
+	    return sqlSession.selectOne("JokeMapper.getTotalCnt", cri);
+	}
+	
 }

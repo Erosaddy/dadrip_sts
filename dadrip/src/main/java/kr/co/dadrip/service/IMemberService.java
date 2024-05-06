@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.MemberDTO;
 
 public interface IMemberService {

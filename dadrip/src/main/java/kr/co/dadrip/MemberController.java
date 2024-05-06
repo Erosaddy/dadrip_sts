@@ -22,14 +22,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.dadrip.domain.MemberDTO;
 import kr.co.dadrip.service.IMemberService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
+@RequiredArgsConstructor
 public class MemberController {
 
-	@Autowired
-	private IMemberService service;
+	private final IMemberService service;
 	// 로그인(메인 화면)
 	
 	@PostMapping("/login")

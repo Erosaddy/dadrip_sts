@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
+<!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 <c:set var="contextPath" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }" scope="application" />
 <style>
 	.uploadResult {
@@ -169,11 +172,11 @@
             <div class="modal-body">
             	<div class="form-group">
             		<label>ReplyText</label>
-            		<input class="form-control" name="replytext" value="New Reply!!!!">
+            		<input class="form-control" name="content" value="New Reply!!!!">
             	</div>
             	<div class="form-group">
             		<label>Replier</label>
-            		<input class="form-control" name="replier" value="replier">
+            		<input class="form-control" name="member_id" value="replier">
             	</div>
 				<div class="form-group">
 					<label>Reply Date</label>
@@ -205,7 +208,7 @@ window.onload = function() {
 }; 
 
 $(document).ready(function() {
-	var joke_idValue = "${joke.joke_id}";
+	var jokeIdValue = "${joke.joke_id}";
 	var replyUL = $(".chat");
 	
 	showList(1);
@@ -214,7 +217,7 @@ $(document).ready(function() {
 		console.log("show list " + page);
 		   
 		replyService.getList(
-				{joke_id:joke_idValue, contextPath:"${contextPath}", page: page || 1 }, 
+				{joke_id:jokeIdValue, contextPath:"${contextPath}", page: page || 1 }, 
 				function(replyCnt, list) {
 					console.log("replyCnt: "+ replyCnt );
 					console.log("list: " + list);
@@ -233,12 +236,12 @@ $(document).ready(function() {
 					}
 					 
 					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+						str +="<li class='left clearfix' data-reply_id='"+list[i].reply_id+"'>";
 						str +="  <div><div class='header'><strong class='primary-font'>["
-							+ list[i].rno+"] "+list[i].replier+"</strong>";
+							+ list[i].reply_id+"] "+list[i].member_id+"</strong>";
 						str +="    <small class='pull-right text-muted'>"
-							+ replyService.displayTime(list[i].updatedate)+"</small></div>";
-						str +="    <p>"+list[i].replytext+"</p></div></li>";
+							+ replyService.displayTime(list[i].modified_on)+"</small></div>";
+						str +="    <p>"+list[i].content+"</p></div></li>";
 					}
 					 
 					replyUL.html(str);
@@ -302,8 +305,8 @@ $(document).ready(function() {
      });     
 	
     var modal = $(".modal");
-    var modalInputReplyText = modal.find("input[name='replytext']");
-    var modalInputReplier = modal.find("input[name='replier']");
+    var modalInputReplyText = modal.find("input[name='content']");
+    var modalInputReplier = modal.find("input[name='member_id']");
     var modalInputReplyDate = modal.find("input[name='replyDate']");
     
     var modalModifyBtn = $("#modalModifyBtn");
@@ -328,10 +331,10 @@ $(document).ready(function() {
     // 새로운 댓글 처리
     modalRegisterBtn.on("click", function(e) {
     	var reply = {
-    			replytext: modalInputReplyText.val(),
-    			replier: modalInputReplier.val(),
+    			content: modalInputReplyText.val(),
+    			member_id: modalInputReplier.val(),
     			contextPath:"${contextPath}",
-    			joke_id:joke_idValue
+    			joke_id:jokeIdValue
     		};
     	
         replyService.add(reply, function(result){
@@ -346,15 +349,15 @@ $(document).ready(function() {
     
     $(".chat").on("click", "li", function(e){
     	var reply = {
-    		rno : $(this).data("rno"),
+    		reply_id : $(this).data("reply_id"),
     		contextPath:"${contextPath}"
     	};
 
     	replyService.get(reply, function(reply){
-    		modalInputReplyText.val(reply.replytext);
-    		modalInputReplier.val(reply.replier);
-    		modalInputReplyDate.val(replyService.displayTime(reply.regdate)).attr("readonly","readonly");
-    		modal.data("rno", reply.rno);
+    		modalInputReplyText.val(reply.content);
+    		modalInputReplier.val(reply.member_id);
+    		modalInputReplyDate.val(replyService.displayTime(reply.created_on)).attr("readonly","readonly");
+    		modal.data("reply_id", reply.reply_id);
     		
     		modal.find("button[id !='modalCloseBtn']").hide();
     		modalModifyBtn.show();
@@ -367,8 +370,8 @@ $(document).ready(function() {
     modalModifyBtn.on("click", function(e){
     	console.log("contextPath : " + "${contextPath}");
     	var reply = {
-    			rno:modal.data("rno"), 
-    			replytext: modalInputReplyText.val(),
+    			reply_id:modal.data("reply_id"), 
+    			content: modalInputReplyText.val(),
     			contextPath:"${contextPath}"
     		};
     	
@@ -382,7 +385,7 @@ $(document).ready(function() {
 
     modalRemoveBtn.on("click", function (e) {
     	var reply = {
-    			rno : modal.data("rno"), 
+    			rno : modal.data("reply_id"), 
     			contextPath:"${contextPath}"
     		};
     	
@@ -478,5 +481,6 @@ $(document).ready(function() {
 	});
 
 </script>
+
 
 <%@include file="../includes/footer.jsp"%>

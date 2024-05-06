@@ -39,5 +39,6 @@
 	<context:component-scan base-package="kr.co.dadrip.persistence"></context:component-scan>
 	<context:component-scan base-package="kr.co.dadrip.service"></context:component-scan>
 	<context:component-scan base-package="kr.co.dadrip"></context:component-scan>
+	<mybatis-spring:scan base-package="kr.co.dadrip.mapper"/>
 	
 </beans>

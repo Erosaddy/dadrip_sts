@@ -4,7 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
-<link rel="stylesheet" href="/resources/css/board.css">
+<!-- <link rel="stylesheet" href="/resources/css/board.css"> -->
+<!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Tables</h1>
@@ -100,12 +103,10 @@
 				</div>
 
 				<form id="actionForm" action="${ctx }/joke/list" method="get">
-					<input type="hidden" name="pageNum"
-						value="${pageMaker.cri.pageNum }"> <input type="hidden"
-						name="amount" value="${pageMaker.cri.amount }"> <input
-						type="hidden" name="type" value="${pageMaker.cri.type }">
-					<input type="hidden" name="keyword"
-						value="${pageMaker.cri.keyword }">
+					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+					<input type="hidden" name="amount" value="${pageMaker.cri.amount }"> 
+					<input type="hidden" name="type" value="${pageMaker.cri.type }">
+					<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
 				</form>
 
 				<!-- 모달 -->

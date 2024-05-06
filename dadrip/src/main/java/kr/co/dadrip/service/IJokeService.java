@@ -11,4 +11,5 @@ public interface IJokeService {
 	public boolean update(JokeDTO jDto) throws Exception;
 	public boolean delete(Integer joke_id) throws Exception;
 	public List<JokeDTO> listAllJokes(Criteria cri) throws Exception;
+	public int getTotalCnt(Criteria cri) throws Exception;
 }

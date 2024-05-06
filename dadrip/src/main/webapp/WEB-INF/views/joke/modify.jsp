@@ -3,11 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
+<!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <div class="row">
 <c:set var="contextPath" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }" scope="application" />
   <div class="col-lg-12">
-    <h1 class="page-header">Board Modify</h1>
+    <h1 class="page-header">Joke Modify</h1>
   </div>
   <!-- /.col-lg-12 -->
 </div>
