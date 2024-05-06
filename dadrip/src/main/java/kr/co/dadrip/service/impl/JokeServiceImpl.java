@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.JokeDTO;
@@ -25,9 +27,11 @@ public class JokeServiceImpl implements IJokeService {
 		jDao.create(jDto);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public JokeDTO read(Integer joke_id) throws Exception {
-		return jDao.read(joke_id);
+	    jDao.updateViewCnt(joke_id);
+	    return jDao.read(joke_id);
 	}
 
 	@Override

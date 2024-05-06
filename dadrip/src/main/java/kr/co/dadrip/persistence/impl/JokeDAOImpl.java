@@ -1,6 +1,8 @@
 package kr.co.dadrip.persistence.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,20 @@ public class JokeDAOImpl implements IJokeDAO {
 	@Override
 	public int getTotalCnt(Criteria cri) throws Exception {
 	    return sqlSession.selectOne("JokeMapper.getTotalCnt", cri);
+	}
+	
+	@Override
+	public void updateViewCnt(Integer joke_id) throws Exception {
+		sqlSession.update("JokeMapper.updateViewCnt", joke_id);
+	}
+
+	@Override
+	public void updateReplyCnt(Integer joke_id, int amount) throws Exception {
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("bno", joke_id);
+	    paramMap.put("amount", amount);
+
+	    sqlSession.update("JokeMapper.updateReplyCnt", paramMap);
 	}
 	
 }

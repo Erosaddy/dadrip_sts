@@ -201,7 +201,7 @@
 window.onload = function() {
 	history.pushState(null, null, location.href);
     window.onpopstate = function() {
-	alert("");
+	alert("sss");
     	
         history.go(1);
 	};
@@ -218,13 +218,13 @@ $(document).ready(function() {
 		   
 		replyService.getList(
 				{joke_id:jokeIdValue, contextPath:"${contextPath}", page: page || 1 }, 
-				function(replyCnt, list) {
-					console.log("replyCnt: "+ replyCnt );
+				function(reply_count, list) {
+					console.log("reply_count: "+ reply_count );
 					console.log("list: " + list);
 					console.log(list);
 					
 					if(page == -1){
-						pageNum = Math.ceil(replyCnt/10.0);
+						pageNum = Math.ceil(reply_count/10.0);
 						showList(pageNum);
 						return;
 					}
@@ -246,25 +246,25 @@ $(document).ready(function() {
 					 
 					replyUL.html(str);
 					 
-					showReplyPage(replyCnt);
+					showReplyPage(reply_count);
 		});//end function
 	}//end showList
 	
     var pageNum = 1;
     var replyPageFooter = $(".panel-footer");
     
-    function showReplyPage(replyCnt) {
+    function showReplyPage(reply_count) {
     	var endNum = Math.ceil(pageNum / 10.0) * 10;
     	var startNum = endNum - 9;
     	
     	var prev = startNum != 1;
     	var next = false;
     	
-    	if(endNum * 10 >= replyCnt) {
-    		endNum = Math.ceil(replyCnt/10.0);
+    	if(endNum * 10 >= reply_count) {
+    		endNum = Math.ceil(reply_count/10.0);
     	}
     	
-    	if(endNum * 10 < replyCnt) {
+    	if(endNum * 10 < reply_count) {
     		next = true;
     	}
     	

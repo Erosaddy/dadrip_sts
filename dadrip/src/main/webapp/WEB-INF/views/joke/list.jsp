@@ -32,18 +32,18 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
-							<!-- <th>조회수</th> -->
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${list }" var="joke">
 							<tr>
 								<td>${joke.joke_id }</td>
-								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }<%-- &nbsp;&nbsp;<b>[${joke.replycnt }]</b> --%></a></td>
+								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
 								<td>${joke.member_id }</td>
 								<td><fmt:formatDate value="${joke.created_on }"
 										pattern="yyyy-MM-dd HH:mm" /></td>
-								<%-- <td>${joke.viewcnt }</td> --%>
+								<td>${joke.view_count }</td>
 							</tr>
 						</c:forEach>
 					</tbody>

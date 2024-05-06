@@ -19,4 +19,6 @@ public class JokeDTO {
 	private String joke_answer;
 	private int view_count;
 	
+	private int reply_count;
+	
 }

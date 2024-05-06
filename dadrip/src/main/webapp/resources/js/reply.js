@@ -34,7 +34,7 @@ var replyService = (function() {
 		$.getJSON(contextPath + "/replies/pages/" + joke_id + "/" + page,
 			function(data) {
 				if (callback) {
-					callback(data.replyCnt, data.list);
+					callback(data.reply_count, data.list);
 				}
 			}).fail(function(xhr, status, err) {
 				if (error) {
