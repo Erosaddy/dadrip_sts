@@ -121,8 +121,8 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Files</div>
-      <!-- /.panel-heading -->
+      <!-- <div class="panel-heading">Files</div>
+      /.panel-heading
       <div class="panel-body">
         
         <div class="uploadResult"> 
@@ -130,9 +130,10 @@
           </ul>
         </div>
       </div>
-      <!--  end panel-body -->
-    </div>
-    <!--  end panel-body -->
+       end panel-body
+    </div> -->
+    
+    <!--  end panel-heading -->
   </div>
   <!-- end panel -->
 </div>
@@ -198,14 +199,14 @@
 
 <script type="text/javascript" src="${contextPath}/resources/js/reply.js"></script>
 <script type="text/javascript">
-window.onload = function() {
+/* window.onload = function() {
 	history.pushState(null, null, location.href);
     window.onpopstate = function() {
 	alert("sss");
     	
         history.go(1);
 	};
-}; 
+};  */
 
 $(document).ready(function() {
 	var jokeIdValue = "${joke.joke_id}";
@@ -413,7 +414,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script>
+<!-- <script>
 $(document).ready(function() {
 	  (function() {
 	  	var joke_id = "${joke.joke_id}";
@@ -481,6 +482,6 @@ $(document).ready(function() {
 	});
 
 </script>
-
+ -->
 
 <%@include file="../includes/footer.jsp"%>

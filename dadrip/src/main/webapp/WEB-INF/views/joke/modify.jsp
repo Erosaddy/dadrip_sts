@@ -121,23 +121,22 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Files</div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <div class="form-group uploadDiv">
+     <!--  <div class="panel-heading">Files</div>
+        <div class="panel-body">
+          <div class="form-group uploadDiv">
             <input type="file" name="uploadFile" multiple="multiple">
-        </div>
+          </div>
         
-        <div class="uploadResult"> 
-          <ul>
+          <div class="uploadResult"> 
+            <ul>
           
-          </ul>
-        </div>
-      </div>
+            </ul>
+          </div>
+        </div> -->
       <!--  end panel-body -->
   
     </div>
-    <!--  end panel-body -->
+    <!--  end panel-heading -->
   </div>
   <!-- end panel -->
 </div>
@@ -200,7 +199,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script>
+<!-- <script>
 $(document).ready(function() {
   (function() {
     
@@ -343,6 +342,6 @@ $(document).ready(function() {
   }
   
 });
-</script>
+</script> -->
 
 <%@include file="../includes/footer.jsp"%>

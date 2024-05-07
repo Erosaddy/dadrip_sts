@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dadrip.mapper.ReplyMapper">
+
+	<insert id="insert">
+		INSERT INTO vote(vote_id, joke_id, member_id, vote_type)
+	    VALUES (vote_seq.nextval, #{joke_id}, #{member_id}, #{vote_type})
+	</insert>
+
+	<select id="checkVote" resultType="string">
+		SELECT	vote_type
+		FROM	vote
+		WHERE	member_id = #{member_id}
+		AND		joke_id = #{joke_id}
+	</select>
+	
+	<delete id="delete">
+		DELETE
+		FROM	vote
+		WHERE	member_id = #{member_id}
+		AND		joke_id = #{joke_id}
+	</delete>
+	
+</mapper>

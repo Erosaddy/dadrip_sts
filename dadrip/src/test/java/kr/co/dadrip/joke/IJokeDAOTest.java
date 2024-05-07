@@ -53,17 +53,28 @@ public class IJokeDAOTest {
 //		log.info("DELETE COUNT =======> : " + jDao.delete(6));
 //	}
 	
+//	@Test
+//	public void testListCriteria() throws Exception {
+//	    Criteria cri = new Criteria();
+//
+//	    // 10개씩 3페이지
+//	    cri.setPageNum(3);
+//	    cri.setAmount(10);
+//
+//	    List<JokeDTO> list = jDao.listAllJokes(cri);
+//
+//	    list.forEach(joke -> log.info(joke.getJoke_id() + " : " + joke.getJoke_question()));
+//	}
+	
 	@Test
-	public void testListCriteria() throws Exception {
+	public void testSearch() throws Exception {
 	    Criteria cri = new Criteria();
-
-	    // 10개씩 3페이지
-	    cri.setPageNum(3);
-	    cri.setAmount(10);
+	    cri.setKeyword("수정");
+	    cri.setType("TC");
 
 	    List<JokeDTO> list = jDao.listAllJokes(cri);
 
-	    list.forEach(joke -> log.info(joke.getJoke_id() + " : " + joke.getJoke_question()));
+	    list.forEach(board -> log.info(board));
 	}
 	
 }

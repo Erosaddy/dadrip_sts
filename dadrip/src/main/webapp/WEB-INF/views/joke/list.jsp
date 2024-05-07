@@ -51,7 +51,7 @@
 
 				<div class="row">
 					<div class="col-lg-12">
-						<form id="searchForm" action="${ctx }joke/list" method="get">
+						<form id="searchForm" action="${ctx }/joke/list" method="get">
 							<select name="type">
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null ? 'selected' : ''}" />>-------</option>
@@ -70,10 +70,10 @@
 								<option value="TCW"
 									<c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}" />>제목
 									+ 내용 + 작성자</option>
-							</select> <input type="text" name="keyword" placeholder="검색어"
-								value="${pageMaker.cri.keyword }"> <input type="hidden"
-								name="pageNum" value="${pageMaker.cri.pageNum }"> <input
-								type="hidden" name="amount" value="${pageMaker.cri.amount }">
+							</select>
+								<input type="text" name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
+								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
+								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 							<button class="btn btn-default">Search</button>
 						</form>
 					</div>
@@ -102,7 +102,7 @@
 					</ul>
 				</div>
 
-				<form id="actionForm" action="${ctx }/joke/list" method="get">
+				<form id="actionForm" action="${ctx}/joke/list" method="get">
 					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount }"> 
 					<input type="hidden" name="type" value="${pageMaker.cri.type }">

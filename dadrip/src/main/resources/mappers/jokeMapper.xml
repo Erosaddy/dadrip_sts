@@ -51,13 +51,13 @@
 	            <trim prefix="OR">
 	                <choose>
 	                    <when test="type == 'T'.toString()">
-	                        title LIKE '%'||#{keyword}||'%'
+	                        joke_question LIKE '%'||#{keyword}||'%'
 	                    </when>
 	                    <when test="type == 'C'.toString()">
-	                        content LIKE '%'||#{keyword}||'%'
+	                        joke_answer LIKE '%'||#{keyword}||'%'
 	                    </when>
 	                    <when test="type == 'W'.toString()">
-	                        writer LIKE '%'||#{keyword}||'%'
+	                        member_id LIKE '%'||#{keyword}||'%'
 	                    </when>
 	                </choose>
 	            </trim>
@@ -113,10 +113,23 @@
 	    SET		view_count = view_count + 1
 	    WHERE	joke_id = #{joke_id}
 	</update>
+	
 	<update id="updateReplyCnt">
 	    UPDATE	joke
 	    SET		reply_count = reply_count + #{amount}
 	    WHERE	joke_id = #{joke_id}
+	</update>
+	
+	<update id="updateLikeCnt">
+		UPDATE	joke
+		SET		like_count = like_count + #{amount}
+		WHERE	joke_id = #{joke_id}
+	</update>
+	
+	<update id="updateDislikeCnt">
+		UPDATE	joke
+		SET		dislike_count = dislike_count + #{amount}
+		WHERE	joke_id = #{joke_id}
 	</update>
 	
 </mapper>
