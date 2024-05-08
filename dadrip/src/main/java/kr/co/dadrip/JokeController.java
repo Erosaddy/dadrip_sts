@@ -59,7 +59,6 @@ public class JokeController {
 		model.addAttribute("joke", service.read(joke_id));
 	}
 	
-	
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPOST(JokeDTO jDto, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) throws Exception {
 		log.info("modifyPOST...................");
@@ -87,4 +86,5 @@ public class JokeController {
 		
 		return "redirect:/joke/list";
 	}
+	
 }

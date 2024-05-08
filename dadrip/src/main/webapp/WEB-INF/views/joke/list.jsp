@@ -33,6 +33,8 @@
 							<th>작성자</th>
 							<th>작성일</th>
 							<th>조회수</th>
+							<th>좋아요</th>
+							<th>싫어요</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,6 +46,8 @@
 								<td><fmt:formatDate value="${joke.created_on }"
 										pattern="yyyy-MM-dd HH:mm" /></td>
 								<td>${joke.view_count }</td>
+								<td>${joke.like_count }</td>
+								<td>${joke.dislike_count }</td>
 							</tr>
 						</c:forEach>
 					</tbody>

@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 @RequiredArgsConstructor
-public class ReplyServiceImpl implements IReplyService{
+public class ReplyServiceImpl implements IReplyService {
 
 	private final ReplyMapper mapper;
 	

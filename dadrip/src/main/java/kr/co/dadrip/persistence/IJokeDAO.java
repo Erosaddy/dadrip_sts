@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.dadrip.domain.Criteria;
 import kr.co.dadrip.domain.JokeDTO;
+import kr.co.dadrip.domain.VoteDTO;
 
 public interface IJokeDAO {
 
@@ -16,4 +17,7 @@ public interface IJokeDAO {
 	
 	public void updateViewCnt(Integer joke_id) throws Exception;
 	public void updateReplyCnt(Integer joke_id, int amount) throws Exception;
+	
+	public void updateLikeCnt(Integer joke_id, int amount) throws Exception;
+	public void updateDislikeCnt(Integer joke_id, int amount) throws Exception;
 }

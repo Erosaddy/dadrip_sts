@@ -61,5 +61,23 @@ public class JokeDAOImpl implements IJokeDAO {
 
 	    sqlSession.update("JokeMapper.updateReplyCnt", paramMap);
 	}
+
+	@Override
+	public void updateLikeCnt(Integer joke_id, int amount) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("joke_id", joke_id);
+	    paramMap.put("amount", amount);
+
+	    sqlSession.update("JokeMapper.updateLikeCnt", paramMap);
+	}
+
+	@Override
+	public void updateDislikeCnt(Integer joke_id, int amount) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("joke_id", joke_id);
+	    paramMap.put("amount", amount);
+
+	    sqlSession.update("JokeMapper.updateDislikeCnt", paramMap);		
+	}
 	
 }

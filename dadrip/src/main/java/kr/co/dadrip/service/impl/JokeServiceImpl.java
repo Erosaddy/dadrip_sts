@@ -54,4 +54,14 @@ public class JokeServiceImpl implements IJokeService {
 	    return jDao.getTotalCnt(cri);
 	}
 
+	@Override
+	public void updateLikeCnt(Integer joke_id, int amount) throws Exception {
+		
+	}
+
+	@Override
+	public void updateDislikeCnt(Integer joke_id, int amount) throws Exception {
+		
+	}
+
 }
