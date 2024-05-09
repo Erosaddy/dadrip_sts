@@ -44,15 +44,24 @@ public class VoteController {
 							: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	// member_id로 현재 로그인한 회원이 해당 글에 좋아요를 했나 안 했나 조회
+	// vote_id로 데이터 조회
 	@GetMapping(value = "/{vote_id}",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<VoteDTO> checkVote(@PathVariable("vote_id") int vote_id) {
+	public ResponseEntity<VoteDTO> selectVote(@PathVariable("vote_id") int vote_id) {
 	    log.info("check vote_id : " + vote_id);
 	
-	    return new ResponseEntity<>(service.checkVote(vote_id), HttpStatus.OK);
+	    return new ResponseEntity<>(service.selectVote(vote_id), HttpStatus.OK);
 	}
 	
+	// joke_id와 member_id로 데이터 조회
+	@GetMapping(value = "/{joke_id}/{member_id}",
+			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<VoteDTO> checkVote(@PathVariable("joke_id") String joke_id, @PathVariable("member_id") String member_id) {
+	    log.info("check joke_id : " + joke_id);
+	    log.info("check member_id : " + member_id);
+	
+	    return new ResponseEntity<>(service.checkVote(joke_id, member_id), HttpStatus.OK);
+	}
 	// 좋아요 / 싫어요 삭제
 	@DeleteMapping(value = "/{vote_id}",
 	        produces = {MediaType.TEXT_PLAIN_VALUE})

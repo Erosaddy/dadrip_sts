@@ -43,11 +43,16 @@
 								<td>${joke.joke_id }</td>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
 								<td>${joke.member_id }</td>
-								<td><fmt:formatDate value="${joke.created_on }"
-										pattern="yyyy-MM-dd HH:mm" /></td>
+								<td><fmt:formatDate value="${joke.created_on }" pattern="yyyy-MM-dd HH:mm" /></td>
 								<td>${joke.view_count }</td>
-								<td>${joke.like_count }</td>
-								<td>${joke.dislike_count }</td>
+								<td>${joke.like_count }
+						        	<ul class="like">
+						        	</ul>
+							    </td>
+								<td>${joke.dislike_count }
+									<ul class="dislike">
+						        	</ul>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -143,6 +148,7 @@
 </div>
 <!-- /.row -->
 
+<script type="text/javascript" src="${contextPath}/resources/js/vote.js"></script>
 
 <script>
 	$(document).ready(function() {
@@ -209,6 +215,213 @@
 		});
 
 	});
+	
+	
 </script>
+
+<script type="text/javascript">
+/* window.onload = function() {
+	history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+	alert("sss");
+    	
+        history.go(1);
+	};
+};  */
+
+$(document).ready(function() {
+	var jokeIdValue = "${joke.joke_id}";
+	var memberIdValue = "${memberInfo.member_id }";
+	var voteUL = $(".like");
+	
+	showVote();
+	
+	function showVote() {
+		console.log("show votes");
+		   
+		replyService.getList(
+				{joke_id:jokeIdValue, member_id:memberIdValue, contextPath:"${contextPath}"}, 
+				function() {
+					
+					var str="<div>";
+					 
+					str += "";
+					
+					/* str +="<li class='left clearfix' data-reply_id='"+list[i].reply_id+"'>";
+					str +="  <div><div class='header'><strong class='primary-font'>["
+						+ list[i].reply_id+"] "+list[i].member_id+"</strong>";
+					str +="    <small class='pull-right text-muted'>"
+						+ replyService.displayTime(list[i].modified_on)+"</small></div>";
+					str +="    <p>"+list[i].content+"</p></div></li>"; */
+					 
+					voteUL.html(str);
+					 
+		});//end function
+	}//end showList
+	
+/*     var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
+    
+    function showReplyPage(reply_count) {
+    	var endNum = Math.ceil(pageNum / 10.0) * 10;
+    	var startNum = endNum - 9;
+    	
+    	var prev = startNum != 1;
+    	var next = false;
+    	
+    	if(endNum * 10 >= reply_count) {
+    		endNum = Math.ceil(reply_count/10.0);
+    	}
+    	
+    	if(endNum * 10 < reply_count) {
+    		next = true;
+    	}
+    	
+    	var str = "<ul class='pagination pull-right'>";
+    	
+    	if(prev) {
+    		str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+    	}
+    	
+    	for(var i = startNum ; i <= endNum; i++) {
+    		var active = pageNum == i? "active":"";
+    		
+    		str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+    	}
+    	
+    	if(next) {
+    		str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+    	}
+    	
+    	str += "</ul></div>";
+    	
+    	console.log(str);
+    	
+    	replyPageFooter.html(str);
+    }
+     
+    replyPageFooter.on("click","li a", function(e) {
+    	e.preventDefault();
+    	console.log("page click");
+    	
+    	var targetPageNum = $(this).attr("href");
+    	
+    	console.log("targetPageNum: " + targetPageNum);
+    	
+    	pageNum = targetPageNum;
+    	
+    	showList(pageNum);
+     });     
+	
+    var modal = $(".modal");
+    var modalInputReplyText = modal.find("input[name='content']");
+    var modalInputReplier = modal.find("input[name='member_id']");
+    var modalInputReplyDate = modal.find("input[name='replyDate']");
+    
+    var modalModifyBtn = $("#modalModifyBtn");
+    var modalRemoveBtn = $("#modalRemoveBtn");
+    var modalRegisterBtn = $("#modalRegisterBtn");
+    
+    $("#modalCloseBtn").on("click", function(e){
+    	modal.modal("hide");
+    });
+    
+    
+    $("#addReplyBtn").on("click", function(e){
+    	modal.find("input").val("");
+    	modalInputReplyDate.closest("div").hide();
+    	modal.find("button[id !='modalCloseBtn']").hide();
+    	
+    	modalRegisterBtn.show();
+    	
+    	$(".modal").modal("show");
+    });
+ */    
+    // 새로운 댓글 처리
+    modalRegisterBtn.on("click", function(e) {
+    	var reply = {
+    			content: modalInputReplyText.val(),
+    			member_id: modalInputReplier.val(),
+    			contextPath:"${contextPath}",
+    			joke_id:jokeIdValue
+    		};
+    	
+        replyService.add(reply, function(result){
+        	alert(result);
+        	
+        	modal.find("input").val("");
+        	modal.modal("hide"); 
+        	
+        	showList(-1);
+        });
+	});
+    
+    $(".chat").on("click", "li", function(e){
+    	var reply = {
+    		reply_id : $(this).data("reply_id"),
+    		contextPath:"${contextPath}"
+    	};
+
+    	replyService.get(reply, function(reply){
+    		modalInputReplyText.val(reply.content);
+    		modalInputReplier.val(reply.member_id);
+    		modalInputReplyDate.val(replyService.displayTime(reply.created_on)).attr("readonly","readonly");
+    		modal.data("reply_id", reply.reply_id);
+    		
+    		modal.find("button[id !='modalCloseBtn']").hide();
+    		modalModifyBtn.show();
+    		modalRemoveBtn.show();
+    		
+    		$(".modal").modal("show");
+    	});
+    });
+    
+    modalModifyBtn.on("click", function(e){
+    	console.log("contextPath : " + "${contextPath}");
+    	var reply = {
+    			reply_id:modal.data("reply_id"), 
+    			content: modalInputReplyText.val(),
+    			contextPath:"${contextPath}"
+    		};
+    	
+    	replyService.update(reply, function(result) {
+    		alert(result);
+    		
+     	    modal.modal("hide");
+     	    showList(pageNum);
+     	});
+    });
+
+    modalRemoveBtn.on("click", function (e) {
+    	var reply = {
+    			rno : modal.data("reply_id"), 
+    			contextPath:"${contextPath}"
+    		};
+    	
+    	replyService.remove(reply, function(result) {
+    		alert(result);
+    		
+    		modal.modal("hide");
+    		showList(pageNum);
+    	});
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var operForm = $("#operForm"); 
+		$("button[data-oper='modify']").on("click", function(e){
+	  	operForm.attr("action","${contextPath}/joke/modify").submit();
+	});
+	
+	$("button[data-oper='list']").on("click", function(e){
+		operForm.find("#joke_id").remove();
+		operForm.attr("action","${contextPath}/joke/list")
+		operForm.submit();
+	});
+});
+</script>
+
+
 
 <%@include file="../includes/footer.jsp"%>

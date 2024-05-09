@@ -9,10 +9,17 @@
 	    VALUES (vote_seq.nextval, #{joke_id}, #{member_id}, #{vote_type})
 	</insert>
 
-	<select id="checkVote" resultType="kr.co.dadrip.domain.VoteDTO">
+	<select id="selectVote" resultType="kr.co.dadrip.domain.VoteDTO">
 		SELECT	*
 		FROM	vote
 		WHERE	vote_id = #{vote_id}
+	</select>
+	
+	<select id="checkVote" resultType="kr.co.dadrip.domain.VoteDTO">
+		SELECT	*
+		FROM	vote
+		WHERE	joke_id = #{joke_id}
+		AND		member_id = #{member_id}
 	</select>
 	
 	<delete id="delete">

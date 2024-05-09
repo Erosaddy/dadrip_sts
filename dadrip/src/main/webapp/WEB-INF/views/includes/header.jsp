@@ -57,6 +57,7 @@
 </head>
 <body>
  <c:set var="ctx" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath}" scope="application"/>
+ <c:set var="contextPath" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath}" scope="application"/>
  <header>
         <nav>
             <div class="container">

@@ -1,16 +1,16 @@
 /**
  * 
  */
-console.log("Reply Module........");
+console.log("Vote Module........");
 
-var replyService = (function() {
-	function add(reply, callback, error) {
-		console.log("add reply.................");
+var voteService = (function() {
+	function add(vote, callback, error) {
+		console.log("add vote.................");
 		
 		$.ajax({
 			type : "post",
-			url : reply.contextPath + "/replies/new",
-			data : JSON.stringify(reply),
+			url : vote.contextPath + "/vote/insert",
+			data : JSON.stringify(vote),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -25,22 +25,22 @@ var replyService = (function() {
 		})
 	}
 	
-	// 댓글 목록
-	function getList(param, callback, error) {
+	// 투표 목록
+	function getList(param, error) {
 		var joke_id = param.joke_id;
-		var page = param.page || 1;
+		var member_id = param.member_id
 		var contextPath = param.contextPath;
 
-		$.getJSON(contextPath + "/replies/pages/" + joke_id + "/" + page,
-			function(data) {
-				if (callback) {
-					callback(data.reply_count, data.list);
-				}
-			}).fail(function(xhr, status, err) {
-				if (error) {
-					error();
-				}
-			});
+		$.getJSON(contextPath + "/vote/" + joke_id + "/" + member_id,
+		function(data) {
+			if (callback) {
+				callback(data.reply_count, data.list);
+			}
+		}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
 	}
 	
 	// 댓글 삭제

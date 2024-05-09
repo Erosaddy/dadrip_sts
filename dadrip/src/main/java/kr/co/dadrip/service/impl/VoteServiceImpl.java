@@ -1,5 +1,8 @@
 package kr.co.dadrip.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,16 +41,25 @@ public class VoteServiceImpl implements IVoteService {
 	}
 	
 	@Override
-	public VoteDTO checkVote(int vote_id) {
+	public VoteDTO selectVote(int vote_id) {
 	
-		return mapper.checkVote(vote_id);
+		return mapper.selectVote(vote_id);
+	}
+	
+	@Override
+	public VoteDTO checkVote(String joke_id, String member_id) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("joke_id", joke_id);
+		paramMap.put("member_id", member_id);
+		
+		return mapper.checkVote(paramMap);
 	}
 	
 	@Transactional
 	@Override
 	public int deleteVote(int vote_id) {
 		// vote_id로 DTO 가져오기
-		VoteDTO vDto = mapper.checkVote(vote_id);
+		VoteDTO vDto = mapper.selectVote(vote_id);
 		// 좋아요인지 싫어요인지 판별하여 joke 테이블의 해당 컬럼에 1 빼기
 		try {
 			if (vDto.getVote_type().equals("1")) {
