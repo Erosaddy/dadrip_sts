@@ -7,6 +7,7 @@
 <!-- <link rel="stylesheet" href="/resources/css/board.css"> -->
 <!-- Bootstrap Core CSS -->
     <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Tables</h1>
@@ -229,139 +230,150 @@
 };  */
 
 $(document).ready(function() {
-	// Select all joke rows
-    var jokeRows = $("tr");
-	var memberIdValue = $('#SessionMemberId').val();
-	console.log("memberIdValue........." + memberIdValue);
+	var jokeIdValue = "${joke.joke_id}";
+	var memberIdValue = "${memberInfo.member_id }";
+	var likeUL = $(".like");
+	var dislikeUL = $(".dislike");
 	
-    jokeRows.each(function(index) {
-        // Get the joke_id for the current joke
-        var jokeIdValue = $(this).find("td:first").text().trim();
-        
-        // Select the like and dislike UL elements within the current row
-        var likeUL = $(this).find(".like");
-        var dislikeUL = $(this).find(".dislike");
-        
-        // Log the joke_id for testing
-        console.log("joke_id =======> " + jokeIdValue);
-        
-        // Call showVote function for each joke
-        showVote(jokeIdValue, likeUL, dislikeUL);
-    });
-    
-	function showVote(jokeIdValue, likeUL, dislikeUL) {
+	console.log("joke_id =======> " + jokeIdValue);
+	console.log("member_id ===========> " + memberIdValue);
+	
+	showVote();
+	
+	function showVote() {
 		console.log("show votes");
-		if (memberIdValue == null || memberIdValue == "") {
-			// 회원가입이 되지 않았을 때. 좋아요/싫어요 둘 다 빈 그림 보여주기
-			likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			likeUL.html(likeStr);
-			dislikeUL.html(dislikeStr);
-		} else {
-			voteService.getList(
+		   
+		voteService.getList(
 				{joke_id:jokeIdValue, 
 				 member_id:memberIdValue, 
 				 contextPath:"${contextPath}"}
 				, 
-				function(vote_id, vote_type, joke_id) {
+				function() {
+					console.log("vote_type: "+ vote_type);
 					var likeStr="";
 					var dislikeStr="";
 					
-					if (vote_type == "1") {
-						// 좋아요에 투표되어있다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						
-					} else if (vote_type == "2") {
-						// 싫어요에 투표되어있다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						
+					if (vote_type == null || vote_type == "") {
+						// 회원가입이 되지 않았을 때. 좋아요/싫어요 둘 다 빈 그림 보여주기
+						likeStr = "<li><img src=\"/resources/images/emptyLikeBtn.jpg\" alt=\"empty like button\"></li>";
+						dislikeStr = "<li><img src=\"/resources/images/emptyDislikeBtn.jpg\" alt=\"empty dislike button\"></li>";
+						likeUL.html(likeStr);
+						dislikeUL.html(dislikeStr);
 					} else {
-						// 좋아요 / 싫어요 모두 선택하지 않았다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						
+						if (vote_type == "1") {
+							// 좋아요에 투표되어있다는 의미. 좋아요 쪽에 색칠된 그림을 보여주고 싫어요에는 색칠되지 않은 그림 보이기.
+							likeStr = "<li><img src=\"/resources/images/filledLikeBtn.jpg\" alt=\"filled like button\"></li>";
+							dislikeStr = "<li><img src=\"/resources/images/emptyDislikeBtn.jpg\" alt=\"empty dislike button\"></li>";
+							likeUL.html(likeStr);
+							dislikeUL.html(dislikeStr);
+						} else {
+							// 싫어요에 투표되어있다는 의미. 싫어요 쪽에 색칠된 그림을 보여주고 좋아요에는 색칠되지 않은 그림 보이기.
+							likeStr = "<li><img src=\"/resources/images/emptyLikeBtn.jpg\" alt=\"empty like button\"></li>";
+							dislikeStr = "<li><img src=\"/resources/images/filledDislikeBtn.jpg\" alt=\"filled dislike button\"></li>";
+							likeUL.html(likeStr);
+							dislikeUL.html(dislikeStr);
+						}
 					}
-					likeUL.html(likeStr);
-					dislikeUL.html(dislikeStr);
-				});//end function
-		}
-	}//end showVote
+		});//end function
+	}//end showList
 	
-	
-	//좋아요 버튼 누르기
-
-	// 넘어가야 하는 정보는 vote_id, vote_type, member_id
-    $('.like').on("click", "div", function(e) {
+/*     var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
+    
+    function showReplyPage(reply_count) {
+    	var endNum = Math.ceil(pageNum / 10.0) * 10;
+    	var startNum = endNum - 9;
     	
-    	if ($(this).data("vote_type") == "1") {
-    		// 1. 좋아요가 이미 눌려있었다면 좋아요 지우기(remove)
-    		
-    		var vote = {
-        			vote_id: $(this).data("vote_id"),
-        			contextPath:"${contextPath}"
-        		};
-    		
-    		voteService.remove(vote, function(result) {
-    			console.log(result);
-    		});
-    		
-    		// 좋아요 그림 색 지우기
-       		$(this).find('img')
-       			.attr('src', '/resources/images/emptyLikeBtn.png')
-       			.attr('alt', 'empty like button');
-        		
-    	} else if ($(this).data("vote_type") == "2") {
-    		// 2. 좋아요가 비어있지만 싫어요는 눌려있다면 vote_type을 2에서 1로 수정(update)
-    		
-    		var vote = {
-    				joke_id: $(this).data("joke_id"),
-        			member_id: memberIdValue,
-        			vote_type: "1",
-        			vote_id: $(this).data("vote_id"),
-        			contextPath:"${contextPath}"
-        		};
-    		
-    		voteService.update(vote, function(result) {
-    			console.log(result);
-    		});
-    		
-    		// 싫어요 그림 색 지우기
-    		$(this).closest('tr').find('.dislike').find('img')
-				.attr('src', '/resources/images/emptyDislikeBtn.png')
-				.attr('alt', 'empty dislike button');
-    		
-    		// 좋아요 그림 색 입히기
-    		$(this).find('img')
-				.attr('src', '/resources/images/filledLikeBtn.png')
-				.attr('alt', 'filled like button');
-    		
-    	} else {
-    		// 3. 좋아요가 비어있고 싫어요도 비어있다면 좋아요 추가(add)
-    		
-    		var vote = {
-    				// 위에서 사용중인 농담 번호 찾기 로직은 싫어요든 좋아요든 어떤 결과값이 있어야만 번호를 찾아올 수 있다는 한계가 있다.
-    				// 설계상의 문제지만 새롭게 만들기엔 시간이 부족하기 때문에 임시방편으로 다른 방법을 사용해 번호를 찾아오도록 했다.
-    				joke_id: $(this).closest('tr').find('td:first').text(),	
-        			member_id: memberIdValue,
-        			vote_type: "1",
-        			contextPath:"${contextPath}"
-        		};
-    		
-    		voteService.add(vote, function(result) {
-        		console.log(result);
-    		});
-    		
-    		// 좋아요 그림 색 입히기
-    		$(this).find('img')
-				.attr('src', '/resources/images/filledLikeBtn.png')
-				.attr('alt', 'filled like button');
-    		
+    	var prev = startNum != 1;
+    	var next = false;
+    	
+    	if(endNum * 10 >= reply_count) {
+    		endNum = Math.ceil(reply_count/10.0);
     	}
     	
+    	if(endNum * 10 < reply_count) {
+    		next = true;
+    	}
+    	
+    	var str = "<ul class='pagination pull-right'>";
+    	
+    	if(prev) {
+    		str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+    	}
+    	
+    	for(var i = startNum ; i <= endNum; i++) {
+    		var active = pageNum == i? "active":"";
+    		
+    		str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+    	}
+    	
+    	if(next) {
+    		str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+    	}
+    	
+    	str += "</ul></div>";
+    	
+    	console.log(str);
+    	
+    	replyPageFooter.html(str);
+    }
+     
+    replyPageFooter.on("click","li a", function(e) {
+    	e.preventDefault();
+    	console.log("page click");
+    	
+    	var targetPageNum = $(this).attr("href");
+    	
+    	console.log("targetPageNum: " + targetPageNum);
+    	
+    	pageNum = targetPageNum;
+    	
+    	showList(pageNum);
+     });     
+	
+    var modal = $(".modal");
+    var modalInputReplyText = modal.find("input[name='content']");
+    var modalInputReplier = modal.find("input[name='member_id']");
+    var modalInputReplyDate = modal.find("input[name='replyDate']");
+    
+    var modalModifyBtn = $("#modalModifyBtn");
+    var modalRemoveBtn = $("#modalRemoveBtn");
+    var modalRegisterBtn = $("#modalRegisterBtn");
+    
+    $("#modalCloseBtn").on("click", function(e){
+    	modal.modal("hide");
+    });
+    
+    
+    $("#addReplyBtn").on("click", function(e){
+    	modal.find("input").val("");
+    	modalInputReplyDate.closest("div").hide();
+    	modal.find("button[id !='modalCloseBtn']").hide();
+    	
+    	modalRegisterBtn.show();
+    	
+    	$(".modal").modal("show");
+    });
+ */    
+    // 새로운 댓글 처리
+    /* modalRegisterBtn.on("click", function(e) {
+    	var reply = {
+    			content: modalInputReplyText.val(),
+    			member_id: modalInputReplier.val(),
+    			contextPath:"${contextPath}",
+    			joke_id:jokeIdValue
+    		};
+    	
+        voteService.add(reply, function(result){
+        	alert(result);
+        	
+        	modal.find("input").val("");
+        	modal.modal("hide"); 
+        	
+        	showList(-1);
+        });
 	});
-    /*
+    
     $(".chat").on("click", "li", function(e){
     	var reply = {
     		reply_id : $(this).data("reply_id"),

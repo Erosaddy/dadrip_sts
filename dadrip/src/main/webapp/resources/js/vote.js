@@ -25,8 +25,9 @@ var voteService = (function() {
 		})
 	}
 	
-	// 투표 목록
-	function getList(param, error) {
+	// 현재 사용자의 투표 현황
+	function getList(param, callback, error) {
+		
 		var joke_id = param.joke_id;
 		var member_id = param.member_id
 		var contextPath = param.contextPath;
@@ -34,20 +35,20 @@ var voteService = (function() {
 		$.getJSON(contextPath + "/vote/" + joke_id + "/" + member_id,
 		function(data) {
 			if (callback) {
-				callback(data.reply_count, data.list);
+				callback(data.vote_id, data.vote_type, data.joke_id);
 			}
 		}).fail(function(xhr, status, err) {
-			if (error) {
-				error();
+			if (err) {
+				callback(null);
 			}
 		});
 	}
 	
 	// 댓글 삭제
-	function remove(reply, callback, error) {
+	function remove(vote, callback, error) {
 		$.ajax({
 			type : "delete",
-			url : reply.contextPath + "/replies/" + reply.reply_id,
+			url : vote.contextPath + "/vote/" + vote.vote_id,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -62,13 +63,13 @@ var voteService = (function() {
 	}
 
 	// 댓글 수정
-	function update(reply, callback, error) {
-		console.log("RNO: " + reply.reply_id);
+	function update(vote, callback, error) {
+		console.log("joke_id: " + vote.vote_id);
 		
 		$.ajax({
 			type : "put",
-			url : reply.contextPath + "/replies/" + reply.reply_id,
-			data : JSON.stringify(reply),
+			url : vote.contextPath + "/vote/" + vote.vote_id,
+			data : JSON.stringify(vote),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {

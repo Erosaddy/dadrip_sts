@@ -72,7 +72,6 @@
                 </div>
                 <div>
                     <input type="search" placeholder="search for dad jokes" class="search">
-	                    
 	                    <c:choose>
 	                    	<c:when test="${empty memberInfo}">
 			                    <button id="btn-signin-modal" class="btn-signin-modal">로그인</button>
@@ -97,6 +96,7 @@
 							<p>${memberInfo.nickname }님 안녕하세요!</p>
 	                    </c:when>
 	                </c:choose>
+	                <input type="hidden" value="${memberInfo.member_id }" id="SessionMemberId">
                 </div>
             </div>
         </nav>
