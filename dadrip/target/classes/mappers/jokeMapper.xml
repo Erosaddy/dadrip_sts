@@ -28,7 +28,9 @@
 				joke_question, 
 				joke_answer, 
 				view_count,
-				reply_count
+				reply_count,
+				like_count,
+				dislike_count
 		FROM    joke
 		WHERE   joke_id = #{joke_id}
 	</select>
@@ -75,7 +77,9 @@
 					joke_question, 
 					joke_answer, 
 					view_count,
-					reply_count
+					reply_count,
+					like_count,
+					dislike_count
 			FROM	(
 						SELECT /*+ INDEX_DESC(joke IDX_joke_jokeId_PK) */
 							rownum rn,
@@ -86,7 +90,9 @@
 							joke_question, 
 							joke_answer, 
 							view_count,
-							reply_count
+							reply_count,
+							like_count,
+							dislike_count
 						FROM joke
 						WHERE 
 		]]>

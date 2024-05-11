@@ -63,7 +63,7 @@ var replyService = (function() {
 
 	// 댓글 수정
 	function update(reply, callback, error) {
-		console.log("RNO: " + reply.reply_id);
+		console.log("reply_id: " + reply.reply_id);
 		
 		$.ajax({
 			type : "put",

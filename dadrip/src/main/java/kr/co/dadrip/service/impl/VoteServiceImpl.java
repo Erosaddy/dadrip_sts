@@ -41,25 +41,22 @@ public class VoteServiceImpl implements IVoteService {
 	}
 	
 	@Override
-	public VoteDTO selectVote(int vote_id) {
-	
-		return mapper.selectVote(vote_id);
-	}
-	
-	@Override
-	public VoteDTO checkVote(String joke_id, String member_id) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("joke_id", joke_id);
-		paramMap.put("member_id", member_id);
+	public VoteDTO checkVote(int joke_id, String member_id) {
+		VoteDTO vDto = new VoteDTO();
+		vDto.setJoke_id(joke_id);
+		vDto.setMember_id(member_id);
 		
-		return mapper.checkVote(paramMap);
+		return mapper.checkVote(vDto);
 	}
 	
 	@Transactional
 	@Override
-	public int deleteVote(int vote_id) {
-		// vote_id로 DTO 가져오기
-		VoteDTO vDto = mapper.selectVote(vote_id);
+	public int deleteVote(int joke_id, String member_id) {
+		// joke_id와 member_id로 DTO 가져오기
+		VoteDTO vDto = new VoteDTO();
+		vDto.setJoke_id(joke_id);
+		vDto.setMember_id(member_id);
+		vDto = mapper.checkVote(vDto);
 		// 좋아요인지 싫어요인지 판별하여 joke 테이블의 해당 컬럼에 1 빼기
 		try {
 			if (vDto.getVote_type().equals("1")) {
@@ -71,20 +68,25 @@ public class VoteServiceImpl implements IVoteService {
 			e.printStackTrace();
 		}
 		
-		return mapper.delete(vote_id);
+		return mapper.delete(vDto);
 	}
 
 	@Transactional
 	@Override
 	public int modifyVote(VoteDTO vDto) {
 		
+		VoteDTO tempDto = new VoteDTO();
+		tempDto.setJoke_id(vDto.getJoke_id());
+		tempDto.setMember_id(vDto.getMember_id());
+		mapper.checkVote(tempDto);
+		
 		try {
 			if (vDto.getVote_type().equals("1")) {
-				jDao.updateDislikeCnt(vDto.getJoke_id(), -1);
-				jDao.updateLikeCnt(vDto.getJoke_id(), +1);
+				jDao.updateDislikeCnt(tempDto.getJoke_id(), -1);
+				jDao.updateLikeCnt(tempDto.getJoke_id(), +1);
 			} else {
-				jDao.updateLikeCnt(vDto.getJoke_id(), -1);
-				jDao.updateDislikeCnt(vDto.getJoke_id(), +1);
+				jDao.updateLikeCnt(tempDto.getJoke_id(), -1);
+				jDao.updateDislikeCnt(tempDto.getJoke_id(), +1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

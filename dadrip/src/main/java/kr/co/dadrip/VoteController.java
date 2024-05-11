@@ -44,44 +44,34 @@ public class VoteController {
 							: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	// vote_id로 데이터 조회
-	@GetMapping(value = "/{vote_id}",
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<VoteDTO> selectVote(@PathVariable("vote_id") int vote_id) {
-	    log.info("check vote_id : " + vote_id);
-	
-	    return new ResponseEntity<>(service.selectVote(vote_id), HttpStatus.OK);
-	}
-	
 	// joke_id와 member_id로 데이터 조회
 	@GetMapping(value = "/{joke_id}/{member_id}",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<VoteDTO> checkVote(@PathVariable("joke_id") String joke_id, @PathVariable("member_id") String member_id) {
+	public ResponseEntity<VoteDTO> checkVote(@PathVariable("joke_id") int joke_id, @PathVariable("member_id") String member_id) {
 	    log.info("check joke_id : " + joke_id);
 	    log.info("check member_id : " + member_id);
 	
 	    return new ResponseEntity<>(service.checkVote(joke_id, member_id), HttpStatus.OK);
 	}
 	// 좋아요 / 싫어요 삭제
-	@DeleteMapping(value = "/{vote_id}",
+	@DeleteMapping(value = "/{joke_id}/{member_id}",
 	        produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> delete(@PathVariable("vote_id") int vote_id) {
-		log.info("remove vote_id : " + vote_id);
+	public ResponseEntity<String> delete(@PathVariable("joke_id") int joke_id, @PathVariable("member_id") String member_id) {
+		log.info("check joke_id : " + joke_id);
+	    log.info("check member_id : " + member_id);
 		
-	    return service.deleteVote(vote_id) == 1
+	    return service.deleteVote(joke_id, member_id) == 1
 	                                ? new ResponseEntity<>("success", HttpStatus.OK)
 	                                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	// 좋아요 / 싫어요 수정
-	@RequestMapping(value = "/{vote_id}",
+	@RequestMapping(value = "/{joke_id}/{member_id}",
 			method = {RequestMethod.PUT, RequestMethod.PATCH},
 	        consumes = "application/json",
 	        produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody VoteDTO vDto, @PathVariable("vote_id") int vote_id) {
-		vDto.setVote_id(vote_id);
+	public ResponseEntity<String> modify(@RequestBody VoteDTO vDto) {
 
-	    log.info("reply_id : " + vote_id);
 	    log.info("modify : " + vDto);
 
 	    return service.modifyVote(vDto) == 1

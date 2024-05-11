@@ -44,11 +44,17 @@
 								<td>${joke.member_id }</td>
 								<td><fmt:formatDate value="${joke.created_on }" pattern="yyyy-MM-dd HH:mm" /></td>
 								<td>${joke.view_count }</td>
-								<td>${joke.like_count }
+								<td>
+									<div id="likeCountTd">
+										${joke.like_count }
+									</div>
 						        	<ul class="like">
 						        	</ul>
 							    </td>
-								<td>${joke.dislike_count }
+								<td>
+									<div id="dislikeCountTd">
+										${joke.dislike_count }
+									</div>
 									<ul class="dislike">
 						        	</ul>
 								</td>
@@ -147,7 +153,7 @@
 </div>
 <!-- /.row -->
 
-<script type="text/javascript" src="${contextPath}/resources/js/vote.js"></script>
+
 
 <script>
 	$(document).ready(function() {
@@ -237,7 +243,6 @@ $(document).ready(function() {
     jokeRows.each(function(index) {
         // Get the joke_id for the current joke
         var jokeIdValue = $(this).find("td:first").text().trim();
-        
         // Select the like and dislike UL elements within the current row
         var likeUL = $(this).find(".like");
         var dislikeUL = $(this).find(".dislike");
@@ -250,11 +255,10 @@ $(document).ready(function() {
     });
     
 	function showVote(jokeIdValue, likeUL, dislikeUL) {
-		console.log("show votes");
 		if (memberIdValue == null || memberIdValue == "") {
-			// 회원가입이 되지 않았을 때. 좋아요/싫어요 둘 다 빈 그림 보여주기
-			likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			// 회원가입이 되지 않았을 때. 좋아요 / 싫어요 둘 다 빈 그림 보여주기
+			likeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
 			likeUL.html(likeStr);
 			dislikeUL.html(dislikeStr);
 		} else {
@@ -266,21 +270,24 @@ $(document).ready(function() {
 				function(vote_id, vote_type, joke_id) {
 					var likeStr="";
 					var dislikeStr="";
-					
+					/* console.log("returned vote_type from getList =========> " + vote_type); */
 					if (vote_type == "1") {
 						// 좋아요에 투표되어있다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
 						
 					} else if (vote_type == "2") {
 						// 싫어요에 투표되어있다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
 						
 					} else {
 						// 좋아요 / 싫어요 모두 선택하지 않았다는 의미.
-						likeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-vote_id=\"" + vote_id + "\" data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						// 결과값에서 받아올 수 없으니 별개로 지정
+						var jokeId = $('.like').closest('tr').find("td:first").text();
+						console.log("jokeId ==========> " + jokeId);
+						likeStr = "<div data-joke_id=\"" + jokeId + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + jokeId + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
 						
 					}
 					likeUL.html(likeStr);
@@ -292,34 +299,47 @@ $(document).ready(function() {
 	
 	//좋아요 버튼 누르기
 
-	// 넘어가야 하는 정보는 vote_id, vote_type, member_id
-    $('.like').on("click", "div", function(e) {
+	// 넘어가야 하는 정보는 joke_id, vote_type, member_id
+    $(document).on("click", ".like div", function(e) {
     	
-    	if ($(this).data("vote_type") == "1") {
-    		// 1. 좋아요가 이미 눌려있었다면 좋아요 지우기(remove)
-    		
+    	var voteType = $(this).data("vote_type");
+    	var jokeIdValue = $(this).closest('tr').find("td:first").text();
+   	 	var likeUL = $(this).closest('tr').find(".like");
+        var dislikeUL = $(this).closest('tr').find(".dislike");
+        
+        // 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
+        var likeCountTd = $(this).closest('tr').find("td:eq(5)").find("#likeCountTd");
+        var likeCountValue = parseInt($(this).closest('tr').find("td:eq(5)").find("#likeCountTd").text());
+        var dislikeCountTd = $(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd");
+        var dislikeCountValue = parseInt($(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd").text());
+        	
+    	if (voteType == "1") {
+		// 1. 좋아요가 이미 눌려있었다면 좋아요 지우기(remove)
     		var vote = {
-        			vote_id: $(this).data("vote_id"),
+        			joke_id: jokeIdValue,
+        			member_id: memberIdValue,
         			contextPath:"${contextPath}"
         		};
     		
     		voteService.remove(vote, function(result) {
     			console.log(result);
     		});
-    		
-    		// 좋아요 그림 색 지우기
-       		$(this).find('img')
-       			.attr('src', '/resources/images/emptyLikeBtn.png')
-       			.attr('alt', 'empty like button');
-        		
-    	} else if ($(this).data("vote_type") == "2") {
+            
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
+			
+			$(likeCountTd).html(likeCountValue - 1);
+			
+    	} else if (voteType == "2") {
     		// 2. 좋아요가 비어있지만 싫어요는 눌려있다면 vote_type을 2에서 1로 수정(update)
     		
     		var vote = {
-    				joke_id: $(this).data("joke_id"),
+    				joke_id: jokeIdValue,
         			member_id: memberIdValue,
         			vote_type: "1",
-        			vote_id: $(this).data("vote_id"),
         			contextPath:"${contextPath}"
         		};
     		
@@ -327,23 +347,22 @@ $(document).ready(function() {
     			console.log(result);
     		});
     		
-    		// 싫어요 그림 색 지우기
-    		$(this).closest('tr').find('.dislike').find('img')
-				.attr('src', '/resources/images/emptyDislikeBtn.png')
-				.attr('alt', 'empty dislike button');
-    		
-    		// 좋아요 그림 색 입히기
-    		$(this).find('img')
-				.attr('src', '/resources/images/filledLikeBtn.png')
-				.attr('alt', 'filled like button');
-    		
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
+			
+			$(likeCountTd).html(likeCountValue + 1);
+			$(dislikeCountTd).html(dislikeCountValue - 1);
+			
     	} else {
     		// 3. 좋아요가 비어있고 싫어요도 비어있다면 좋아요 추가(add)
-    		
+    		console.log("jokeIdValue ===========> " + jokeIdValue);
     		var vote = {
     				// 위에서 사용중인 농담 번호 찾기 로직은 싫어요든 좋아요든 어떤 결과값이 있어야만 번호를 찾아올 수 있다는 한계가 있다.
     				// 설계상의 문제지만 새롭게 만들기엔 시간이 부족하기 때문에 임시방편으로 다른 방법을 사용해 번호를 찾아오도록 했다.
-    				joke_id: $(this).closest('tr').find('td:first').text(),	
+    				joke_id: jokeIdValue,	
         			member_id: memberIdValue,
         			vote_type: "1",
         			contextPath:"${contextPath}"
@@ -353,14 +372,104 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		// 좋아요 그림 색 입히기
-    		$(this).find('img')
-				.attr('src', '/resources/images/filledLikeBtn.png')
-				.attr('alt', 'filled like button');
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
     		
+			$(likeCountTd).html(likeCountValue + 1);
     	}
     	
 	});
+
+	
+  //싫어요 버튼 누르기
+
+	// 넘어가야 하는 정보는 joke_id, vote_type, member_id
+    $(document).on("click", ".dislike div", function(e) {
+    	
+    	var voteType = $(this).data("vote_type");
+    	var jokeIdValue = $(this).closest('tr').find("td:first").text();
+   	 	var likeUL = $(this).closest('tr').find(".like");
+        var dislikeUL = $(this).closest('tr').find(".dislike");
+        
+     // 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
+        var likeCountTd = $(this).closest('tr').find("td:eq(5)").find("#likeCountTd");
+        var likeCountValue = parseInt($(this).closest('tr').find("td:eq(5)").find("#likeCountTd").text());
+        var dislikeCountTd = $(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd");
+        var dislikeCountValue = parseInt($(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd").text());
+        
+    	if (voteType == "2") {
+		// 1. 싫어요가 이미 눌려있었다면 싫어요 지우기(remove)
+    		var vote = {
+        			joke_id: jokeIdValue,
+        			member_id: memberIdValue,
+        			contextPath:"${contextPath}"
+        		};
+    		
+    		voteService.remove(vote, function(result) {
+    			console.log(result);
+    		});
+            
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
+			
+			$(dislikeCountTd).html(dislikeCountValue - 1);
+			
+    	} else if (voteType == "1") {
+    		// 2. 싫어요가 비어있지만 좋아요는 눌려있다면 vote_type을 1에서 2로 수정(update)
+    		
+    		var vote = {
+    				joke_id: jokeIdValue,
+        			member_id: memberIdValue,
+        			vote_type: "2",
+        			contextPath:"${contextPath}"
+        		};
+    		
+    		voteService.update(vote, function(result) {
+    			console.log(result);
+    		});
+    		
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
+			
+			$(dislikeCountTd).html(dislikeCountValue + 1);
+			$(likeCountTd).html(likeCountValue - 1);
+            
+    	} else {
+    		// 3. 좋아요가 비어있고 싫어요도 비어있다면 싫어요 추가(add)
+    		console.log("jokeIdValue ===========> " + jokeIdValue);
+    		var vote = {
+    				// 위에서 사용중인 농담 번호 찾기 로직은 싫어요든 좋아요든 어떤 결과값이 있어야만 번호를 찾아올 수 있다는 한계가 있다.
+    				// 설계상의 문제지만 새롭게 만들기엔 시간이 부족하기 때문에 임시방편으로 다른 방법을 사용해 번호를 찾아오도록 했다.
+    				joke_id: jokeIdValue,	
+        			member_id: memberIdValue,
+        			vote_type: "2",
+        			contextPath:"${contextPath}"
+        		};
+    		
+    		voteService.add(vote, function(result) {
+        		console.log(result);
+    		});
+    		
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+
+			$(likeUL).html(likeStr);
+			$(dislikeUL).html(dislikeStr);
+    		
+			$(dislikeCountTd).html(dislikeCountValue + 1);
+    	}
+    	
+	});
+
     /*
     $(".chat").on("click", "li", function(e){
     	var reply = {
@@ -428,6 +537,6 @@ $(document).ready(function() {
 });
 </script>
 
-
+<script type="text/javascript" src="${contextPath}/resources/js/vote.js"></script>
 
 <%@include file="../includes/footer.jsp"%>

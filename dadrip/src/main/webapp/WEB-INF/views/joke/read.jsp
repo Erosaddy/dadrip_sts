@@ -386,7 +386,7 @@ $(document).ready(function() {
 
     modalRemoveBtn.on("click", function (e) {
     	var reply = {
-    			rno : modal.data("reply_id"), 
+    			reply_id : modal.data("reply_id"), 
     			contextPath:"${contextPath}"
     		};
     	

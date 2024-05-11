@@ -29,6 +29,7 @@ var voteService = (function() {
 	function getList(param, callback, error) {
 		
 		var joke_id = param.joke_id;
+		console.log("joke_id in joke.js ======> " + joke_id);
 		var member_id = param.member_id
 		var contextPath = param.contextPath;
 
@@ -46,9 +47,12 @@ var voteService = (function() {
 	
 	// 댓글 삭제
 	function remove(vote, callback, error) {
+		console.log("remove vote.................");
+		console.log("joke_id in js ========> " + vote.joke_id);
+		console.log("member_id in js ========> " + vote.member_id);
 		$.ajax({
 			type : "delete",
-			url : vote.contextPath + "/vote/" + vote.vote_id,
+			url : vote.contextPath + "/vote/" + vote.joke_id + "/" + vote.member_id,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -64,11 +68,10 @@ var voteService = (function() {
 
 	// 댓글 수정
 	function update(vote, callback, error) {
-		console.log("joke_id: " + vote.vote_id);
-		
+		console.log("modify vote.........");
 		$.ajax({
 			type : "put",
-			url : vote.contextPath + "/vote/" + vote.vote_id,
+			url : vote.contextPath + "/vote/" + vote.joke_id + "/" + vote.member_id,
 			data : JSON.stringify(vote),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
