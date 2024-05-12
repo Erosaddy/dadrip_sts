@@ -29,7 +29,6 @@ var favoriteService = (function() {
 	function getList(param, callback, error) {
 		
 		var joke_id = param.joke_id;
-		console.log("joke_id in favorite.js" + joke_id);
 		var member_id = param.member_id
 		var contextPath = param.contextPath;
 
@@ -48,8 +47,6 @@ var favoriteService = (function() {
 	// 댓글 삭제
 	function remove(favorite, callback, error) {
 		console.log("remove favorite.................");
-		console.log("joke_id in favorite.js ========> " + favorite.joke_id);
-		console.log("member_id in favorite.js ========> " + favorite.member_id);
 		$.ajax({
 			type : "delete",
 			url : favorite.contextPath + "/favorite/" + favorite.joke_id + "/" + favorite.member_id,

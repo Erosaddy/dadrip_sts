@@ -241,7 +241,7 @@
 
 $(document).ready(function() {
 	// Select all joke rows
-    var jokeRows = $("tr");
+    var jokeRows = $("tbody tr");
 	var memberIdValue = $('#SessionMemberId').val();
 	console.log("memberIdValue........." + memberIdValue);
 	
@@ -292,7 +292,6 @@ $(document).ready(function() {
 					} else {
 						// 좋아요 / 싫어요 모두 선택하지 않았다는 의미.
 						// 결과값에서 받아올 수 없으니 별개로 지정
-						console.log("jokeId ==========> " + jokeIdValue);
 						likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
@@ -319,14 +318,12 @@ $(document).ready(function() {
 				, 
 				function(favorite_id, joke_id) {
 					
-					console.log("favorite_id ========> " + favorite_id);
 					if (favorite_id != null) {
 						// 찜이 되어있다는 의미.
 						favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + joke_id + "\"><button type=\"button\"><img src=\"/resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 					} else {
 						// 찜이 되어있지 않다는 의미.
 						// 결과값에서 정보를 받아올 수 없으니 별개로 지정
-						console.log("jokeId ==========> " + jokeIdValue);
 						favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 					}
 					favoriteUL.html(favoriteStr);
@@ -449,7 +446,7 @@ $(document).ready(function() {
    	 	var likeUL = $(this).closest('tr').find(".like");
         var dislikeUL = $(this).closest('tr').find(".dislike");
         
-     // 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
+     	// 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
         var likeCountTd = $(this).closest('tr').find("td:eq(5)").find("#likeCountTd");
         var likeCountValue = parseInt($(this).closest('tr').find("td:eq(5)").find("#likeCountTd").text());
         var dislikeCountTd = $(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd");

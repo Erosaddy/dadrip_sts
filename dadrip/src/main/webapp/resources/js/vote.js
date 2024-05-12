@@ -29,7 +29,6 @@ var voteService = (function() {
 	function getList(param, callback, error) {
 		
 		var joke_id = param.joke_id;
-		console.log("joke_id in vote.js ======> " + joke_id);
 		var member_id = param.member_id
 		var contextPath = param.contextPath;
 
