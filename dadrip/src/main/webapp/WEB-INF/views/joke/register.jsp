@@ -208,16 +208,15 @@ $(document).ready(function() {
 
         <form role="form" action="${contextPath}/joke/register" method="post">
           <div class="form-group">
-            <label>Joke Question</label> <input class="form-control" name="joke_question">
+            <label>아재개그 질문</label> <input class="form-control" name="joke_question">
           </div>
 
           <div class="form-group">
-            <label>Joke Answer</label>
-            <textarea class="form-control" rows="3" name="joke_answer"></textarea>
+            <label>답</label> <input class="form-control" name="joke_answer">
           </div>
 
           <div class="form-group">
-            <label>Member Id</label> <input class="form-control" name="member_id">
+            <label>작성자</label> <input class="form-control" name="member_id" value="${memberInfo.member_id }" readonly>
           </div>
           <button type="submit" class="btn btn-default">Submit
             Button</button>
@@ -234,12 +233,12 @@ $(document).ready(function() {
 </div>
 <!-- /.row -->
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
 
       <div class="panel-heading">File Attach</div>
-      <!-- /.panel-heading -->
+      /.panel-heading
       <div class="panel-body">
         <div class="form-group uploadDiv">
             <input type="file" name="uploadFile" multiple>
@@ -253,12 +252,12 @@ $(document).ready(function() {
         
         
       </div>
-      <!--  end panel-body -->
+       end panel-body
 
     </div>
-    <!--  end panel-body -->
+     end panel-body
   </div>
-  <!-- end panel -->
+  end panel
 </div>
-
+ -->
 <%@include file="../includes/footer.jsp"%>

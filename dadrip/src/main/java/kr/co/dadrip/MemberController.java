@@ -43,15 +43,23 @@ public class MemberController {
 			rttr.addFlashAttribute("result", "loginFail");
 		}
 		
-		return "redirect:/dadrip/main";
+		// 로그인 성공시 항상 메인 페이지로 리다이렉트되는 것이 아니라 로그인한 페이지로 다시 돌아가도록 설정
+		session.setAttribute("prevPage", request.getHeader("Referer"));
+
+		String prevPage = (String) session.getAttribute("prevPage");
+		if (prevPage != null) {
+		    return "redirect:" + prevPage;
+		} else {
+		    return "redirect:/dadrip/main"; // 이전 페이지 정보가 없을 경우에는 메인 페이지로 이동
+		}
+		
 	}
 	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 
 		HttpSession session = request.getSession(false); 
-        // session이 null이 아니라는건 기존에 세션이 존재했었다는 뜻이므로
-        // 세션이 null이 아니라면 session.invalidate()로 세션 삭제해주기.
+        // session이 null이 아니라는건 기존에 세션이 존재했었다는 뜻이므로 세션이 null이 아니라면 session.invalidate()로 세션 삭제해주기
 		if(session != null) {
 			session.removeAttribute("memberInfo");
 			session.invalidate();

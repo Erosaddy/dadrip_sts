@@ -1,16 +1,16 @@
 /**
  * 
  */
-console.log("Vote Module........");
+console.log("Favorite Module........");
 
-var voteService = (function() {
-	function add(vote, callback, error) {
-		console.log("add vote.................");
+var favoriteService = (function() {
+	function add(favorite, callback, error) {
+		console.log("add favorite.................");
 		
 		$.ajax({
 			type : "post",
-			url : vote.contextPath + "/vote/insert",
-			data : JSON.stringify(vote),
+			url : favorite.contextPath + "/favorite/insert",
+			data : JSON.stringify(favorite),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -25,18 +25,18 @@ var voteService = (function() {
 		})
 	}
 	
-	// 현재 사용자의 투표 현황
+	// 현재 사용자의 찜 현황
 	function getList(param, callback, error) {
 		
 		var joke_id = param.joke_id;
-		console.log("joke_id in vote.js ======> " + joke_id);
+		console.log("joke_id in favorite.js" + joke_id);
 		var member_id = param.member_id
 		var contextPath = param.contextPath;
 
-		$.getJSON(contextPath + "/vote/" + joke_id + "/" + member_id,
+		$.getJSON(contextPath + "/favorite/" + joke_id + "/" + member_id,
 		function(data) {
 			if (callback) {
-				callback(data.vote_id, data.vote_type, data.joke_id);
+				callback(data.favorite_id, data.joke_id);
 			}
 		}).fail(function(xhr, status, err) {
 			if (err) {
@@ -46,13 +46,13 @@ var voteService = (function() {
 	}
 	
 	// 댓글 삭제
-	function remove(vote, callback, error) {
-		console.log("remove vote.................");
-		console.log("joke_id in js ========> " + vote.joke_id);
-		console.log("member_id in js ========> " + vote.member_id);
+	function remove(favorite, callback, error) {
+		console.log("remove favorite.................");
+		console.log("joke_id in favorite.js ========> " + favorite.joke_id);
+		console.log("member_id in favorite.js ========> " + favorite.member_id);
 		$.ajax({
 			type : "delete",
-			url : vote.contextPath + "/vote/" + vote.joke_id + "/" + vote.member_id,
+			url : favorite.contextPath + "/favorite/" + favorite.joke_id + "/" + favorite.member_id,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -66,26 +66,6 @@ var voteService = (function() {
 		});
 	}
 
-	// 댓글 수정
-	function update(vote, callback, error) {
-		console.log("modify vote.........");
-		$.ajax({
-			type : "put",
-			url : vote.contextPath + "/vote/" + vote.joke_id + "/" + vote.member_id,
-			data : JSON.stringify(vote),
-			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
-				if (callback) {
-					callback(result);
-				}
-			},
-			error : function(xhr, status, er) {
-				if (error) {
-					error(er);
-				}
-			}
-		});
-	}
 	
 	// 댓글 조회
 	function get(reply, callback, error) {
@@ -132,7 +112,6 @@ var voteService = (function() {
 		get : get,
 		getList : getList,
 		remove : remove,
-		update : update,
 		displayTime : displayTime
 	}
 })();

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dadrip.mapper.FavoriteMapper">
+
+	<insert id="insert">
+		INSERT INTO favorite(favorite_id, joke_id, member_id)
+	    VALUES (favorite_seq.nextval, #{joke_id}, #{member_id})
+	</insert>
+	
+	<select id="checkFavorite" resultType="kr.co.dadrip.domain.FavoriteDTO">
+		SELECT	*
+		FROM	favorite
+		WHERE	joke_id = #{joke_id}
+		AND		member_id = #{member_id}
+	</select>
+	
+	<delete id="delete">
+		DELETE
+		FROM	favorite
+		WHERE	joke_id = #{joke_id}
+		AND		member_id = #{member_id}
+	</delete>
+
+</mapper>

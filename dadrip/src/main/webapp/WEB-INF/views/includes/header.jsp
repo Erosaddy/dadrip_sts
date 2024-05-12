@@ -10,10 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-	<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
-	<meta http-equiv="Expires" content="-1">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Cache-Control" content="no-cache">
+	
 
     <!-- MetisMenu CSS -->
     <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -67,7 +64,7 @@
                     </a>
                 </div>
                 <div class="navigation">
-                    <a href="jokeList.html" class="px-10 text-bold">아재개그 목록</a>
+                    <a href="http://localhost:9090/joke/list" class="px-10 text-bold">아재개그 목록</a>
                     <a href="#" class="px-10 text-bold">아재력 테스트</a>
                 </div>
                 <div>
