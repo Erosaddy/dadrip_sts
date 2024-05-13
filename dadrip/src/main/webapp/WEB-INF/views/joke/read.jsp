@@ -44,7 +44,7 @@
 		width:100%;
 		height:100%;
 		background-color: gray; 
-		z-index: 100;
+		z-index: 1000;
 		background:rgba(255,255,255,0.5);
 	}
 	

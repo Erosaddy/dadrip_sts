@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
@@ -203,8 +202,7 @@
 
 		var searchForm = $("#searchForm");
 		$("#searchForm button").on("click", function(e) {
-			if (!searchForm.find("option:selected")
-					.val()) {
+			if (!searchForm.find("option:selected").val()) {
 				alert("검색 종류를 선택하세요");
 
 				return false;
@@ -277,7 +275,7 @@ $(document).ready(function() {
 				 member_id: memberIdValue, 
 				 contextPath: "${contextPath}"}
 				, 
-				function(vote_id, vote_type, joke_id) {
+				function(vote_type, joke_id) {
 					
 					if (vote_type == "1") {
 						// 좋아요에 투표되어있다는 의미.
@@ -338,7 +336,9 @@ $(document).ready(function() {
     $(document).on("click", ".like div", function(e) {
     	
     	// 로그인되지 않은 사용자의 좋아요 / 싫어요를 막고 로그인 모달로 유도
-    	loginCheck();
+    	if(!loginCheck()) {
+    		return;
+    	}
     	
     	// 본인의 글에 좋아요 클릭 막기
     	if (memberIdValue == $(this).closest('tr').find("td:eq(2)").text()) {
@@ -433,7 +433,9 @@ $(document).ready(function() {
     $(document).on("click", ".dislike div", function(e) {
     	
     	// 로그인되지 않은 사용자의 좋아요 / 싫어요를 막고 로그인 모달로 유도
-    	loginCheck();
+    	if(!loginCheck()) {
+    		return;
+    	}
     	
     	// 본인의 글에 싫어요 클릭 막기
     	if (memberIdValue == $(this).closest('tr').find("td:eq(2)").text()) {
@@ -526,7 +528,9 @@ $(document).ready(function() {
     $(document).on("click", ".favorite div", function(e) {
     	
     	// 로그인되지 않은 사용자의 찜을 막고 로그인 모달로 유도
-    	loginCheck();
+    	if(!loginCheck()) {
+    		return;
+    	}
     	
     	var favoriteId = $(this).data("favorite_id");
     	var jokeIdValue = $(this).closest('tr').find("td:first").text();
@@ -577,8 +581,9 @@ $(document).ready(function() {
 			    $("#login-box-link").addClass("active");
 			    $("#signup-box-link").removeClass("active");
 			
-			return;
+			return false;
 		}
+	    return true;
   	}
 
     /*

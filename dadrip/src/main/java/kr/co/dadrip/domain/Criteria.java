@@ -9,6 +9,8 @@ public class Criteria {
 	
 	private String type;
 	private String keyword;
+
+	private String timeScope;
 	
 	public Criteria() {
 		this(1, 10);

@@ -26,7 +26,7 @@ public class JokeController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void listAllJokes(Criteria cri, Model model) throws Exception {
-		log.info("show all modal.................");
+		log.info("show all jokes.................");
 		
 		model.addAttribute("list", service.listAllJokes(cri));
 		
@@ -34,6 +34,18 @@ public class JokeController {
 	    log.info("total : " + total);
 
 	    model.addAttribute("pageMaker", new PageDTO(cri, total));
+	}
+	
+	@RequestMapping(value = "/listBest", method = RequestMethod.GET)
+	public void listBestJokes(Criteria cri, Model model) throws Exception {
+		log.info("show all best jokes.................");
+		
+		model.addAttribute("listBest", service.listBestJokes(cri));
+		
+		int total = service.getTotalCnt(cri);
+	    log.info("total : " + total);
+
+	    model.addAttribute("pageMakerBest", new PageDTO(cri, total));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)

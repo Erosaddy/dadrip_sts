@@ -13,6 +13,7 @@ public interface IJokeDAO {
 	public int update(JokeDTO jDto) throws Exception;
 	public int delete(Integer joke_id) throws Exception;
 	public List<JokeDTO> listAllJokes(Criteria cri) throws Exception;
+	public List<JokeDTO> listBestJokes(Criteria cri) throws Exception;
 	public int getTotalCnt(Criteria cri) throws Exception;
 	
 	public void updateViewCnt(Integer joke_id) throws Exception;

@@ -35,7 +35,7 @@ var voteService = (function() {
 		$.getJSON(contextPath + "/vote/" + joke_id + "/" + member_id,
 		function(data) {
 			if (callback) {
-				callback(data.vote_id, data.vote_type, data.joke_id);
+				callback(data.vote_type, data.joke_id);
 			}
 		}).fail(function(xhr, status, err) {
 			if (err) {

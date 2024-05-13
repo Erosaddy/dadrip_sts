@@ -42,6 +42,11 @@ public class JokeDAOImpl implements IJokeDAO {
 	public List<JokeDTO> listAllJokes(Criteria cri) throws Exception {
 		return sqlSession.selectList("JokeMapper.listAllJokesWithPaging", cri);
 	}
+	
+	@Override
+	public List<JokeDTO> listBestJokes(Criteria cri) throws Exception {
+		return sqlSession.selectList("JokeMapper.listBestJokes", cri);
+	}
 
 	@Override
 	public int getTotalCnt(Criteria cri) throws Exception {
