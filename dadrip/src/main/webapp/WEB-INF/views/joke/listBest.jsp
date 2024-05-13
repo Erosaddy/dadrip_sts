@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
@@ -18,12 +17,24 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Joke List Page
+				<%-- <c:choose>
+                	<c:when test="${pageMakerBest.cri.asd eq 'today'}">
+                  		<p>Today's Best</p>
+                	</c:when>
+                	<c:when test="${pageMakerBest.cri.asd eq 'week'}">
+                  		<p>Weekly Best</p>
+                	</c:when>
+                	<c:when test="${pageMakerBest.cri.asd eq 'month'}">
+                  		<p>Monthly Best</p>
+                	</c:when>
+                	<c:otherwise>
+                		<p>All-time Best</p>
+                	</c:otherwise>
+                </c:choose> --%>
 				<button id="regBtn" type="button"
 					class="btn btn-xs pull-right btn-primary">Post</button>
 			</div>
 
-			<div class="panel-body">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -34,10 +45,11 @@
 							<th>조회수</th>
 							<th>좋아요</th>
 							<th>싫어요</th>
+							<th>찜</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${list }" var="joke">
+						<c:forEach items="${listBest }" var="joke">
 							<tr>
 								<td>${joke.joke_id }</td>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -69,29 +81,43 @@
 
 				<div class="row">
 					<div class="col-lg-12">
-						<form id="searchForm" action="${ctx }/joke/list" method="get">
+						<form id="searchForm" action="${ctx }/joke/listBest" method="get">
 							<select name="type">
 								<option value=""
-									<c:out value="${pageMaker.cri.type == null ? 'selected' : ''}" />>-------</option>
+									<c:out value="${pageMakerBest.cri.type == null ? 'selected' : ''}" />>-------</option>
 								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}" />>제목</option>
+									<c:out value="${pageMakerBest.cri.type eq 'T' ? 'selected' : ''}" />>제목</option>
 								<option value="C"
-									<c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}" />>내용</option>
+									<c:out value="${pageMakerBest.cri.type eq 'C' ? 'selected' : ''}" />>내용</option>
 								<option value="W"
-									<c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}" />>작성자</option>
+									<c:out value="${pageMakerBest.cri.type eq 'W' ? 'selected' : ''}" />>작성자</option>
 								<option value="TC"
-									<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}" />>제목
+									<c:out value="${pageMakerBest.cri.type eq 'TC' ? 'selected' : ''}" />>제목
 									+ 내용</option>
 								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}" />>제목
+									<c:out value="${pageMakerBest.cri.type eq 'TW' ? 'selected' : ''}" />>제목
 									+ 작성자</option>
 								<option value="TCW"
-									<c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}" />>제목
+									<c:out value="${pageMakerBest.cri.type eq 'TWC' ? 'selected' : ''}" />>제목
 									+ 내용 + 작성자</option>
 							</select>
-								<input type="text" name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
-								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
-								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+							
+							<select name="timeScope">
+								<option value=""
+									<c:out value="${pageMakerBest.cri.timeScope == null ? 'selected' : ''}" />>-------</option>
+								<option value="day"
+									<c:out value="${pageMakerBest.cri.timeScope eq 'day' ? 'selected' : ''}" />>오늘의 베스트</option>
+								<option value="week"
+									<c:out value="${pageMakerBest.cri.timeScope eq 'week' ? 'selected' : ''}" />>이번주 베스트</option>
+								<option value="month"
+									<c:out value="${pageMakerBest.cri.timeScope eq 'month' ? 'selected' : ''}" />>이번달 베스트</option>
+								<option value=""
+									<c:out value="${pageMakerBest.cri.timeScope eq '' ? 'selected' : ''}" />>올타임 베스트</option>
+							</select>
+							
+								<input type="text" name="keyword" placeholder="검색어" value="${pageMakerBest.cri.keyword }">
+								<input type="hidden" name="pageNum" value="${pageMakerBest.cri.pageNum }"> 
+								<input type="hidden" name="amount" value="${pageMakerBest.cri.amount }">
 							<button class="btn btn-default">Search</button>
 						</form>
 					</div>
@@ -100,31 +126,32 @@
 				<div class="text-center">
 					<ul class="pagination">
 
-						<c:if test="${pageMaker.prev }">
+						<c:if test="${pageMakerBest.prev }">
 							<li class="paginate_button previous"><a
-								href="${pageMaker.startPage - 1}"> < </a></li>
+								href="${pageMakerBest.startPage - 1}"> < </a></li>
 						</c:if>
 
-						<c:forEach var="num" begin="${pageMaker.startPage }"
-							end="${pageMaker.endPage }">
+						<c:forEach var="num" begin="${pageMakerBest.startPage }"
+							end="${pageMakerBest.endPage }">
 							<li
-								class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }"><a
+								class="paginate_button ${pageMakerBest.cri.pageNum == num ? 'active' : '' }"><a
 								href="${num }">${num }</a></li>
 						</c:forEach>
 
-						<c:if test="${pageMaker.next }">
+						<c:if test="${pageMakerBest.next }">
 							<li class="paginate_button next"><a
-								href="${pageMaker.endPage + 1}"> > </a></li>
+								href="${pageMakerBest.endPage + 1}"> > </a></li>
 						</c:if>
 
 					</ul>
 				</div>
 
-				<form id="actionForm" action="${ctx}/joke/list" method="get">
-					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-					<input type="hidden" name="amount" value="${pageMaker.cri.amount }"> 
-					<input type="hidden" name="type" value="${pageMaker.cri.type }">
-					<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+				<form id="actionForm" action="${ctx}/joke/listBest" method="get">
+					<input type="hidden" name="pageNum" value="${pageMakerBest.cri.pageNum }">
+					<input type="hidden" name="amount" value="${pageMakerBest.cri.amount }"> 
+					<input type="hidden" name="type" value="${pageMakerBest.cri.type }">
+					<input type="hidden" name="keyword" value="${pageMakerBest.cri.keyword }">
+					<input type="hidden" name="timeScope" value="${pageMakerBest.cri.timeScope }">
 				</form>
 
 				<!-- 모달 -->
@@ -202,8 +229,7 @@
 
 		var searchForm = $("#searchForm");
 		$("#searchForm button").on("click", function(e) {
-			if (!searchForm.find("option:selected")
-					.val()) {
+			if (!searchForm.find("option:selected").val()) {
 				alert("검색 종류를 선택하세요");
 
 				return false;
@@ -240,7 +266,7 @@
 
 $(document).ready(function() {
 	// Select all joke rows
-    var jokeRows = $("tr");
+    var jokeRows = $("tbody tr");
 	var memberIdValue = $('#SessionMemberId').val();
 	console.log("memberIdValue........." + memberIdValue);
 	
@@ -252,47 +278,47 @@ $(document).ready(function() {
         var dislikeUL = $(this).find(".dislike");
         var favoriteUL = $(this).find(".favorite");
         
-        // Log the joke_id for testing
-        console.log("joke_id =======> " + jokeIdValue);
-        
         // Call showVote function for each joke
         showVote(jokeIdValue, likeUL, dislikeUL);
+        showFavorite(jokeIdValue, favoriteUL);
     });
     
+    // vote 관련 정보 보이기
 	function showVote(jokeIdValue, likeUL, dislikeUL) {
+		
+    	var likeStr="";
+		var dislikeStr="";
+    	
 		if (memberIdValue == null || memberIdValue == "") {
+			
 			// 회원가입이 되지 않았을 때. 좋아요 / 싫어요 둘 다 빈 그림 보여주기
-			likeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+			likeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 			likeUL.html(likeStr);
 			dislikeUL.html(dislikeStr);
 		} else {
 			voteService.getList(
-				{joke_id:jokeIdValue, 
-				 member_id:memberIdValue, 
-				 contextPath:"${contextPath}"}
+				{joke_id: jokeIdValue, 
+				 member_id: memberIdValue, 
+				 contextPath: "${contextPath}"}
 				, 
-				function(vote_id, vote_type, joke_id) {
-					var likeStr="";
-					var dislikeStr="";
-					/* console.log("returned vote_type from getList =========> " + vote_type); */
+				function(vote_type, joke_id) {
+					
 					if (vote_type == "1") {
 						// 좋아요에 투표되어있다는 의미.
-						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					} else if (vote_type == "2") {
 						// 싫어요에 투표되어있다는 의미.
-						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					} else {
 						// 좋아요 / 싫어요 모두 선택하지 않았다는 의미.
 						// 결과값에서 받아올 수 없으니 별개로 지정
-						var jokeId = $('.like').closest('tr').find("td:first").text();
-						console.log("jokeId ==========> " + jokeId);
-						likeStr = "<div data-joke_id=\"" + jokeId + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + jokeId + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					}
 					likeUL.html(likeStr);
@@ -301,6 +327,35 @@ $(document).ready(function() {
 		}
 	}//end showVote
 	
+	// favorite 관련 정보 보이기
+	function showFavorite(jokeIdValue, favoriteUL) {
+		var favoriteStr="";
+		
+		if (memberIdValue == null || memberIdValue == "") {
+			// 회원가입이 되지 않았을 때. 좋아요 / 싫어요 둘 다 빈 그림 보여주기
+			favoriteStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			favoriteUL.html(favoriteStr);
+		} else {
+			favoriteService.getList(
+				{joke_id: jokeIdValue, 
+				 member_id: memberIdValue, 
+				 contextPath: "${contextPath}"}
+				, 
+				function(favorite_id, joke_id) {
+					
+					if (favorite_id != null) {
+						// 찜이 되어있다는 의미.
+						favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + joke_id + "\"><button type=\"button\"><img src=\"/resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+					} else {
+						// 찜이 되어있지 않다는 의미.
+						// 결과값에서 정보를 받아올 수 없으니 별개로 지정
+						favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+					}
+					favoriteUL.html(favoriteStr);
+				});//end function
+		}
+	}//end showFavorite
+	
 	
 	//좋아요 버튼 누르기
 
@@ -308,7 +363,9 @@ $(document).ready(function() {
     $(document).on("click", ".like div", function(e) {
     	
     	// 로그인되지 않은 사용자의 좋아요 / 싫어요를 막고 로그인 모달로 유도
-    	voteLoginCheck();
+    	if(!loginCheck()) {
+    		return;
+    	}
     	
     	// 본인의 글에 좋아요 클릭 막기
     	if (memberIdValue == $(this).closest('tr').find("td:eq(2)").text()) {
@@ -339,8 +396,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
             
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -361,8 +418,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
     		
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -372,7 +429,6 @@ $(document).ready(function() {
 			
     	} else {
     		// 3. 좋아요가 비어있고 싫어요도 비어있다면 좋아요 추가(add)
-    		console.log("jokeIdValue ===========> " + jokeIdValue);
     		var vote = {
     				// 위에서 사용중인 농담 번호 찾기 로직은 싫어요든 좋아요든 어떤 결과값이 있어야만 번호를 찾아올 수 있다는 한계가 있다.
     				// 설계상의 문제지만 새롭게 만들기엔 시간이 부족하기 때문에 임시방편으로 다른 방법을 사용해 번호를 찾아오도록 했다.
@@ -386,8 +442,8 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -395,7 +451,7 @@ $(document).ready(function() {
 			$(likeCountTd).html(likeCountValue + 1);
     	}
     	
-	});
+	}); // 좋아요 버튼 누르기 끝
 
 	
   //싫어요 버튼 누르기
@@ -404,7 +460,9 @@ $(document).ready(function() {
     $(document).on("click", ".dislike div", function(e) {
     	
     	// 로그인되지 않은 사용자의 좋아요 / 싫어요를 막고 로그인 모달로 유도
-    	voteLoginCheck();
+    	if(!loginCheck()) {
+    		return;
+    	}
     	
     	// 본인의 글에 싫어요 클릭 막기
     	if (memberIdValue == $(this).closest('tr').find("td:eq(2)").text()) {
@@ -417,7 +475,7 @@ $(document).ready(function() {
    	 	var likeUL = $(this).closest('tr').find(".like");
         var dislikeUL = $(this).closest('tr').find(".dislike");
         
-     // 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
+     	// 좋아요 혹은 싫어요 클릭시 숫자를 바로 바꿔주는 데 사용할 변수(빠른 반응성을 위해 데이터베이스에서 가져오는 것이 아니라 화면에서 바로 변경)
         var likeCountTd = $(this).closest('tr').find("td:eq(5)").find("#likeCountTd");
         var likeCountValue = parseInt($(this).closest('tr').find("td:eq(5)").find("#likeCountTd").text());
         var dislikeCountTd = $(this).closest('tr').find("td:eq(6)").find("#dislikeCountTd");
@@ -435,8 +493,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
             
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -457,8 +515,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
     		
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -468,7 +526,6 @@ $(document).ready(function() {
             
     	} else {
     		// 3. 좋아요가 비어있고 싫어요도 비어있다면 싫어요 추가(add)
-    		console.log("jokeIdValue ===========> " + jokeIdValue);
     		var vote = {
     				// 위에서 사용중인 농담 번호 찾기 로직은 싫어요든 좋아요든 어떤 결과값이 있어야만 번호를 찾아올 수 있다는 한계가 있다.
     				// 설계상의 문제지만 새롭게 만들기엔 시간이 부족하기 때문에 임시방편으로 다른 방법을 사용해 번호를 찾아오도록 했다.
@@ -482,8 +539,8 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 36px; height: 36px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 36px; height: 36px;\"></button></div>";
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -491,9 +548,56 @@ $(document).ready(function() {
 			$(dislikeCountTd).html(dislikeCountValue + 1);
     	}
     	
-	});
+	});	// 싫어요 버튼 누르기 끝
   
-  	function voteLoginCheck() {
+  //찜 버튼 누르기
+  
+    $(document).on("click", ".favorite div", function(e) {
+    	
+    	// 로그인되지 않은 사용자의 찜을 막고 로그인 모달로 유도
+    	if(!loginCheck()) {
+    		return;
+    	}
+    	
+    	var favoriteId = $(this).data("favorite_id");
+    	var jokeIdValue = $(this).closest('tr').find("td:first").text();
+   	 	var favoriteUL = $(this).closest('tr').find(".favorite");
+        
+    	if (favoriteId != "") {
+		// 1. 찜이 이미 눌려있었다면 찜 지우기(remove)
+    		var favorite = {
+        			joke_id: jokeIdValue,
+        			member_id: memberIdValue,
+        			contextPath:"${contextPath}"
+        		};
+    		
+    		favoriteService.remove(favorite, function(result) {
+    			console.log(result);
+    		});
+            
+    		favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+
+    	} else {
+    		// 2. 찜이 없다면 찜 추가(add)
+    		var favorite = {
+    				joke_id: jokeIdValue,	
+        			member_id: memberIdValue,
+        			contextPath:"${contextPath}"
+        		};
+    		
+    		favoriteService.add(favorite, function(result) {
+        		console.log(result);
+    		});
+    		
+    		favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+
+    	}
+    	
+		$(favoriteUL).html(favoriteStr);
+    	
+	}); // 찜 버튼 누르기 끝
+  
+  	function loginCheck() {
 	    if (memberIdValue == "") {
 			alert("로그인해야 이용 가능한 서비스입니다.");
 			
@@ -504,8 +608,9 @@ $(document).ready(function() {
 			    $("#login-box-link").addClass("active");
 			    $("#signup-box-link").removeClass("active");
 			
-			return;
+			return false;
 		}
+	    return true;
   	}
 
     /*
@@ -569,12 +674,13 @@ $(document).ready(function() {
 	
 	$("button[data-oper='list']").on("click", function(e){
 		operForm.find("#joke_id").remove();
-		operForm.attr("action","${contextPath}/joke/list")
+		operForm.attr("action","${contextPath}/joke/listBest")
 		operForm.submit();
 	});
 });
 </script>
 
-<script type="text/javascript" src="${contextPath}/resources/js/vote.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/voteBest.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/favoriteBest.js"></script>
 
 <%@include file="../includes/footer.jsp"%>
