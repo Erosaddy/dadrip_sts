@@ -100,7 +100,7 @@ public class MemberController {
 	}
 	
 	// 회원 정보 보기(마이페이지)
-	@GetMapping({"/mypage", "mypage/modify"})
+	@GetMapping({"member/mypage", "member/modify"})
 	public void mypage(@RequestParam("member_id") String member_id, Model model) throws Exception {
 		log.info("mypage | mypage/modify...............");
 		model.addAttribute("member", service.memberInfo(member_id));
@@ -117,7 +117,7 @@ public class MemberController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		return "redirect:/mypage";
+		return "redirect:member/mypage";
 	}
 	
 	// 회원 탈퇴(마이페이지 -> 수정 화면)

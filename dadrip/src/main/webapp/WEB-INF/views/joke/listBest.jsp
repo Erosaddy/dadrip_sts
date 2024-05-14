@@ -3,9 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
+<style>
+	h3 {
+	display: inline;
+	}
+</style>
 <!-- <link rel="stylesheet" href="/resources/css/board.css"> -->
 <!-- Bootstrap Core CSS -->
     <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Tables</h1>
@@ -17,20 +23,20 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<%-- <c:choose>
-                	<c:when test="${pageMakerBest.cri.asd eq 'today'}">
-                  		<p>Today's Best</p>
+				<c:choose>
+                	<c:when test="${pageMakerBest.cri.timeScope eq 'day'}">
+                  		<h3>Today's Best</h3>
                 	</c:when>
-                	<c:when test="${pageMakerBest.cri.asd eq 'week'}">
-                  		<p>Weekly Best</p>
+                	<c:when test="${pageMakerBest.cri.timeScope eq 'week'}">
+                  		<h3>Weekly Best</h3>
                 	</c:when>
-                	<c:when test="${pageMakerBest.cri.asd eq 'month'}">
-                  		<p>Monthly Best</p>
+                	<c:when test="${pageMakerBest.cri.timeScope eq 'month'}">
+                  		<h3>Monthly Best</h3>
                 	</c:when>
                 	<c:otherwise>
-                		<p>All-time Best</p>
+                		<h3>All-time Best</h3>
                 	</c:otherwise>
-                </c:choose> --%>
+                </c:choose>
 				<button id="regBtn" type="button"
 					class="btn btn-xs pull-right btn-primary">Post</button>
 			</div>
@@ -101,23 +107,11 @@
 									<c:out value="${pageMakerBest.cri.type eq 'TWC' ? 'selected' : ''}" />>제목
 									+ 내용 + 작성자</option>
 							</select>
-							
-							<select name="timeScope">
-								<option value=""
-									<c:out value="${pageMakerBest.cri.timeScope == null ? 'selected' : ''}" />>-------</option>
-								<option value="day"
-									<c:out value="${pageMakerBest.cri.timeScope eq 'day' ? 'selected' : ''}" />>오늘의 베스트</option>
-								<option value="week"
-									<c:out value="${pageMakerBest.cri.timeScope eq 'week' ? 'selected' : ''}" />>이번주 베스트</option>
-								<option value="month"
-									<c:out value="${pageMakerBest.cri.timeScope eq 'month' ? 'selected' : ''}" />>이번달 베스트</option>
-								<option value=""
-									<c:out value="${pageMakerBest.cri.timeScope eq '' ? 'selected' : ''}" />>올타임 베스트</option>
-							</select>
-							
+								
 								<input type="text" name="keyword" placeholder="검색어" value="${pageMakerBest.cri.keyword }">
 								<input type="hidden" name="pageNum" value="${pageMakerBest.cri.pageNum }"> 
 								<input type="hidden" name="amount" value="${pageMakerBest.cri.amount }">
+								<input type="hidden" name="timeScope" value="${pageMakerBest.cri.timeScope }">
 							<button class="btn btn-default">Search</button>
 						</form>
 					</div>

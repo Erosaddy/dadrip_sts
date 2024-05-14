@@ -57,13 +57,13 @@
         <nav>
             <div class="container">
                 <div class="logo">
-                    <a href="http://localhost:9090/dadrip/main">
+                    <a href="${ctx }/dadrip/main">
                         <img src="/resources/images/Dadrip_logo.PNG" alt="Dadrip logo">
                     </a>
                 </div>
                 <div class="navigation">
-                    <a href="http://localhost:9090/joke/list" class="px-10 text-bold">아재개그 목록</a>
-                    <a href="#" class="px-10 text-bold">아재력 테스트</a>
+                    <a href="${ctx }/joke/main" class="px-10 text-bold">아재개그 목록</a>
+                    <a href="${ctx }" class="px-10 text-bold">아재력 테스트</a>
                 </div>
                 <div>
                     <input type="search" placeholder="search for dad jokes" class="search">
@@ -153,11 +153,13 @@
 	                        <span class="email_occupied" style="display: none">해당 이메일을 사용 중인 계정이 존재합니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
-	                        <label name="birth">생일</label>
+	                        <label name="birth">생일&nbsp;(선택)</label>
 	                        <input id="birth" type="date" name="birthday">
 	                    </div>
 	                    <div class="u-form-group">
-	                        <label>남성<input type="radio" name="sex" value="1" checked/></label>
+	                    	성별&nbsp;(선택)
+	                    	<label>미입력<input type="radio" name="sex" value="" checked /></label>
+	                        <label>남성<input type="radio" name="sex" value="1" /></label>
 	                        <label>여성<input type="radio" name="sex" value="2" /></label>
 	                    </div>
 	                    <div class="u-form-group">
@@ -170,6 +172,8 @@
 	    </div> <!-- 숨겨진 로그인/회원가입 모달 끝 -->
         
     </header>
+    
+    
     
     <script>
 	
@@ -344,13 +348,8 @@
 	        document.getElementById('signup-error-message').innerHTML = '이메일을 입력해 주세요.';
 	        document.getElementById('email').focus();
 	        return;
-	    } else if (inputBirth == '') {
-	        document.getElementById('signup-error-message').innerHTML = '생년월일을 선택해 주세요.';
-	        document.getElementById('birth').focus();
-	        return;
-	    }
+	    } 
 	    
-
 	    // 비밀번호 확인 체크
 	    else if (!(inputPassword == inputPasswordCheck)) {
 	        document.getElementById('signup-error-message').innerHTML = '확인용 비밀번호가 입력하신 비밀번호와 일치하지 않습니다.';
@@ -451,11 +450,20 @@
 		});
 		
 	}
+	
+	// 마이페이지
 	if(btnMypageBtn != null) {
 		btnMypage = document.querySelector('#btn-mypage');
 		
+		var memberIdValue = $('#SessionMemberId').val();
+		
+		btnMypage.addEventListener("click", ()=>{
+		    window.location = "${ctx}/member/mypage?member_id=" + memberIdValue;
+		});
+		
 	}
 	
+	// 로그아웃
 	if(btnLogoutBtn != null) {
 		btnLogout = document.querySelector('#btn-logout');
 		

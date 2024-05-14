@@ -24,6 +24,26 @@ public class JokeController {
 	@Setter(onMethod_ = { @Autowired })
 	private IJokeService service;
 	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public void jokeMain(Criteria cri, Model model) throws Exception {
+		log.info("show joke main.................");
+		
+		model.addAttribute("list", service.listAllJokes(cri));
+		cri.setTimeScope("day");
+		model.addAttribute("listDay", service.listBestJokes(cri));
+		cri.setTimeScope("week");
+		model.addAttribute("listWeek", service.listBestJokes(cri));
+		cri.setTimeScope("month");
+		model.addAttribute("listMonth", service.listBestJokes(cri));
+		cri.setTimeScope("");
+		model.addAttribute("listAlltime", service.listBestJokes(cri));
+		
+		int total = service.getTotalCnt(cri);
+	    log.info("total : " + total);
+
+	    model.addAttribute("pageMaker", new PageDTO(cri, total));
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void listAllJokes(Criteria cri, Model model) throws Exception {
 		log.info("show all jokes.................");
