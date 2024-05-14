@@ -1,0 +1,51 @@
+/* 2-1. ================ header ================= */
+
+header {
+	background-color: rgb(255, 255, 255);
+	display: flow-root;
+}
+
+header {
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.33);
+}
+
+.logo a img{
+    width: 120px;
+    display: absolute;
+}
+
+.container {
+    width: 1100px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+}
+
+.navigation {
+    padding-right: 100px;
+}
+
+.search {
+    background-color: #F1F1F1;
+    width: 250px;
+    height: 36px;
+    text-indent: 10px;
+}
+
+.btn-signin-modal{
+    width: 86px;
+    height: 36px;
+    border: 1px solid #5c5be5;
+    background: #fff;
+    color: #5c5be5;
+    font-weight: 600;
+}
+
+.btn-signup-modal{
+	width: 86px;
+    height: 36px;
+    background: #5c5be5;
+    color: #fff;
+    font-weight: 600;
+}

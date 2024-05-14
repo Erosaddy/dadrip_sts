@@ -1,0 +1,52 @@
+[
+    {
+        "joke_id": "5",
+        "joke_date": "2024-04-13",
+        "joke_question": "핫도그가 잠을 설치면?",
+        "joke_answer": "통모짜 핫도그",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3561"
+    },
+    {
+        "joke_id": "6",
+        "joke_date": "2024-04-13",
+        "joke_question": "부산앞바다의 반대말은??",
+        "joke_answer": "부산엄마다",
+        "user_id": "narihwa113",
+        "joke_likes": "400",
+        "joke_dislikes": "10",
+        "views": "1423"
+    },
+    {
+        "joke_id": "7",
+        "joke_date": "2024-04-11",
+        "joke_question": "가장 지루한 중학교는?",
+        "joke_answer": "로딩중",
+        "user_id": "zxz7648",
+        "joke_likes": "24",
+        "joke_dislikes": "11",
+        "views": "35466"
+    },
+    {
+        "joke_id": "8",
+        "joke_date": "2024-04-13",
+        "joke_question": "정삼각형의 동생 이름은?",
+        "joke_answer": "정삼각",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3242"
+    },
+    {
+        "joke_id": "1",
+        "joke_date": "2024-04-13",
+        "joke_question": "비실이가 총을 쏘면?",
+        "joke_answer": "탕비실",
+        "user_id": "zxz7648",
+        "joke_likes": "28",
+        "joke_dislikes": "16",
+        "views": "3561"
+    }
+]

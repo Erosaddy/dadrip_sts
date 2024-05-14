@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* 2. ================개별요소 적용 클래스================= */
+
+/* 2-2. ================ main ================= */
+
+body {
+    background-color: #F5F0ED;
+}
+
+main {
+    width: 100%;
+}
+
+main #container {
+    width: 1024px;
+    height: fit-content;
+    top: 10px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #F5F0ED;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.bestBox {
+    background-color: white;
+    padding: 10px;
+}
+
+.bestBox div p {
+    font-size: .9rem;
+    display: inline;
+}
+
+.bestBox div p:last-child {
+    color: #388aff;
+    padding-left: 20px;
+}
+
+.bestBox h3 {
+    color: #388aff;
+    display: inline;
+}
+
+.bestBox p:first-of-type {
+    display: inline;
+}
+
+#box-header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+b {
+	color: #388aff;
+}
