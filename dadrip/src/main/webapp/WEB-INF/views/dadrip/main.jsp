@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="/resources/css/leaderboard.css">
     
@@ -38,43 +39,32 @@
                 <div id="leaderboard">
                     <div class="ribbon"></div>
                     <table id="jokes-table">
-                        <tr>
-                            <td class="number">1</td>
-                            <td class="name">
-                                <p></p>
-                                <p></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="number">2</td>
-                            <td class="name">
-                                <p></p>
-                                <p></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="number">3</td>
-                            <td class="name">
-                                <p></p>
-                                <p></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="number">4</td>
-                            <td class="name">
-                                <p></p>
-                                <p></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="number">5</td>
-                            <td class="name">
-                                <p></p>
-                                <p></p>
-                            </td>
-                        </tr>
-                    </table>
-                    
+					    <c:set var="index" value="1" />
+					    
+					    <c:forEach items="${listDay}" var="joke" varStatus="status">
+					        <c:if test="${status.index < 5}">
+					            <tr>
+					                <td class="number">${status.index + 1}</td>
+					                <td class="name">
+					                    <p>${joke.joke_question}</p>
+					                    <p>${joke.joke_answer}</p>
+					                </td>
+					            </tr>
+					        </c:if>
+					    </c:forEach>
+					    
+					    <!-- 추가로 빈 칸을 채움 -->
+					    <c:forEach begin="${fn:length(listDay) + 1}" end="5" var="i">
+					        <tr>
+					            <td class="number">${i}</td>
+					            <td class="name">
+					                <p></p>
+					                <p></p>
+					            </td>
+					        </tr>
+					    </c:forEach>
+					</table>
+					
                 </div>
 
             </div>
@@ -85,7 +75,12 @@
     <footer>
 
     </footer>
-    <script src="/resources/js/bestJokes.js"></script>
+    
+    <script>
+    	
+    </script>
+    
+    <!-- <script src="/resources/js/bestJokes.js"></script> -->
     <script>
 	    $(document).ready(function () {
 	        // result 변수가 정의되어 있는지 확인

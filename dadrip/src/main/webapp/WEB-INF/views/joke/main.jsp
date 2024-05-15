@@ -177,6 +177,13 @@
             
         </div> <!-- #container 끝 -->
         
+        <form id="actionForm" action="${ctx}/joke/list" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount }"> 
+			<input type="hidden" name="type" value="${pageMaker.cri.type }">
+			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		</form>
+        
     </main>
     <footer>
 
@@ -184,5 +191,16 @@
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+    
+    	var actionForm = $("#actionForm");
+    	
+   	 	$(".move").on("click", function(e) {
+			e.preventDefault();
+			actionForm.append("<input type='hidden' name='joke_id' value='" + $(this).attr("href") + "'>");
+			actionForm.attr("action", "${ctx}/joke/read");
+			actionForm.submit();
+		});
+    </script>    
     
 <%@include file="../includes/footer.jsp"%>
