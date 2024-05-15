@@ -5,7 +5,7 @@
 <%@include file="../includes/header.jsp"%>
 <!-- Bootstrap Core CSS -->
     <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+	<link rel="stylesheet" href="/resources/css/leaderboard.css">
 <c:set var="contextPath" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }" scope="application" />
 <style>
 	.uploadResult {

@@ -55,7 +55,7 @@
  <c:set var="contextPath" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath}" scope="application"/>
  <header>
         <nav>
-            <div class="container">
+            <div class="header-nav-container">
                 <div class="logo">
                     <a href="${ctx }/dadrip/main">
                         <img src="/resources/images/Dadrip_logo.PNG" alt="Dadrip logo">
@@ -63,7 +63,7 @@
                 </div>
                 <div class="navigation">
                     <a href="${ctx }/joke/main" class="px-10 text-bold">아재개그 목록</a>
-                    <a href="${ctx }" class="px-10 text-bold">아재력 테스트</a>
+                    <%-- <a href="${ctx }" class="px-10 text-bold">아재력 테스트</a> --%>
                 </div>
                 <div>
                     <input type="search" placeholder="search for dad jokes" class="search">
