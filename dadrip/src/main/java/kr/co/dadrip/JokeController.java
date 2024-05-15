@@ -26,7 +26,7 @@ public class JokeController {
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void jokeMain(Criteria cri, Model model) throws Exception {
-		log.info("show joke main.................");
+		log.info("show joke main................");
 		
 		model.addAttribute("list", service.listAllJokes(cri));
 		cri.setTimeScope("day");
