@@ -108,23 +108,35 @@ public class MemberController {
 	}
 	
 	// 회원 정보 수정(마이페이지 -> 수정 화면)
-	@PostMapping("/mypage/modify")
+	@PostMapping("/member/modify")
 	public String modifyPOST(MemberDTO mDto, RedirectAttributes rttr) throws Exception {
-		log.info("mypage/modify...............");
+		log.info("member/modify...............");
 		log.info("mDto ============> " + mDto);
 		
 		if(service.modify(mDto)) {
 			rttr.addFlashAttribute("result", "success");
+			rttr.addAttribute("member_id", mDto.getMember_id());
 		}
 		
-		return "redirect:member/mypage";
+		return "redirect:/member/mypage";
 	}
 	
 	// 회원 탈퇴(마이페이지 -> 수정 화면)
-	@PostMapping("/mypage/delete")
-	public String delete(@RequestParam("member_id") String member_id, RedirectAttributes rttr) {
+	@PostMapping("/member/delete")
+	public String delete(@RequestParam("member_id") String member_id, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
 		
-		return "redirect:/mypage";
+		HttpSession session = request.getSession(false); 
+        // session이 null이 아니라는건 기존에 세션이 존재했었다는 뜻이므로 세션이 null이 아니라면 session.invalidate()로 세션 삭제해주기
+		if(session != null) {
+			session.removeAttribute("memberInfo");
+			session.invalidate();
+		}
+		
+		if(service.delete(member_id)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		return "redirect:/dadrip/main";
 	}
 	
 	// 전체 회원 조회(메인 화면, 운영자만 보이기(운영자 입장이니 내비게이션에 만들면 된다)

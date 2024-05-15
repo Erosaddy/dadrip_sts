@@ -191,3 +191,9 @@
   padding-bottom: 10px;
 }
 
+.u-form-group span p{
+  color: red;
+  font-size: .7rem;
+  padding-bottom: 10px;
+}
+

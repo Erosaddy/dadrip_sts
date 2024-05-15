@@ -86,11 +86,6 @@
 	                    </c:choose>
                 </div>
                 <div>
-                	<c:choose>
-	                	<c:when test="${not empty memberInfo}">
-							<p>${memberInfo.nickname }님 안녕하세요!</p>
-	                    </c:when>
-	                </c:choose>
 	                <input type="hidden" value="${memberInfo.member_id }" id="SessionMemberId">
                 </div>
             </div>
@@ -106,14 +101,14 @@
 	                    <button class="modal-close">X</button>
 	                </div>
 	                <div class="social-login">
-	                    <a href="#">
+	                    <!-- <a href="#">
 	                        <i class="fa fa-facebook fa-lg"></i>
 	                        페이스북으로 로그인하기
 	                    </a>
 	                    <a href="#">
 	                        <i class="fa fa-google-plus fa-lg"></i>
 	                        구글로 로그인하기
-	                    </a>
+	                    </a> -->
 	                </div>
 	                <form name="loginForm" class="email-login" method="post">
 	                    <div class="u-form-group">
@@ -132,7 +127,7 @@
 	                </form>
 	                <form name="signUpForm" class="email-signup" method="post">
 	                    <div class="u-form-group">
-	                        <input id="id" type="text" placeholder="아이디" name="member_id" oninput = "checkId()">
+	                        <input id="id" type="text" placeholder="아이디" name="member_id" onblur = "checkId()">
 							<span class="id_validation" style="display: none">아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.</span>
 							<span class="id_available" style="display: none">사용 가능한 아이디입니다.</span>
 	                        <span class="id_occupied" style="display: none">사용중인 아이디입니다.</span>
@@ -147,14 +142,14 @@
 	                        <input id="pwCheck" type="password" placeholder="비밀번호 확인">
 	                    </div>
 	                    <div class="u-form-group">
-	                        <input id="email" type="email" placeholder="이메일" name="email" oninput = "checkEmail()">
+	                        <input id="email" type="email" placeholder="이메일" name="email" onblur = "checkEmail()">
 	                        <span class="email_validation" style="display: none">올바른 이메일 형식을 입력해 주세요.</span>
 	                        <span class="email_available" style="display: none">사용 가능한 이메일입니다.</span>
 	                        <span class="email_occupied" style="display: none">해당 이메일을 사용 중인 계정이 존재합니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
 	                        <label name="birth">생일&nbsp;(선택)</label>
-	                        <input id="birth" type="date" name="birthday">
+	                        <input id="birth" type="text" placeholder="생년월일 8자리 (정보수집을 원하지 않으면 입력하지 않고 제출)" name="birthday">
 	                    </div>
 	                    <div class="u-form-group">
 	                    	성별&nbsp;(선택)
@@ -299,7 +294,46 @@
             }
         });
     };
+    
+    
+ // 생년월일 유효성 검사 함수
+    function isValidDate(inputBirth) {
+        // 8자리 숫자 확인
+        if (!/^\d{8}$/.test(inputBirth)) {
+            return false;
+        }
 
+        // 연도, 월, 일 분리
+        var year = parseInt(inputBirth.substring(0, 4), 10);
+        var month = parseInt(inputBirth.substring(4, 6), 10);
+        var day = parseInt(inputBirth.substring(6, 8), 10);
+        
+        // 현재 년도 계산
+        var currentYear = new Date().getFullYear();
+        
+        // 년 범위 검사
+        if (year < 1900 || year > currentYear) {
+            return false;
+        }
+
+        // 월 범위 검사
+        if (month < 1 || month > 12) {
+            return false;
+        }
+
+        // 일 범위 검사
+        var daysInMonth = [31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if (day < 1 || day > daysInMonth[month - 1]) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    }
+    
 	//회원가입
 	$("#signUp").click(function() {
 		
@@ -380,19 +414,18 @@
 	        document.getElementById('pw').focus();
 	        return;
 	    }
-	    // 비밀번호 동일 문자 3번 이상 반복 금지
-	    /* else if (!pwReg3.test(inputPassword)) {
-	        document.getElementById('signup-error-message').innerHTML = '비밀번호에 동일한 문자를 연속 3번 이상 사용할 수 없습니다.';
-	        document.getElementById('pw').value = '';
-	        document.getElementById('pwCheck').value = '';
-	        document.getElementById('pw').focus();
-	        return;
-	    } */
 	 	// 이메일 중복 검사
 	    else if (!emailAvailability) {
 	    	document.getElementById('signup-error-message').innerHTML = '이메일을 다시 확인해 주세요.';
 	    	document.getElementById('email').focus();
 	    	return;
+	    }
+	    // 생년월일 유효성 검사
+	    else if (inputBirth !== '' && !isValidDate(inputBirth)) {
+	        document.getElementById('signup-error-message').innerHTML = '생년월일 정보가 올바르지 않습니다. 1900에서 현재 년도 사이의 유효한 날짜를 입력해주세요.';
+	        document.getElementById('birth').value = '';
+	        document.getElementById('birth').focus();
+	        return;
 	    }
 	    
 		document.signUpForm.action = "${ctx}/signup";
@@ -405,9 +438,7 @@
 		alert("회원가입에 성공했습니다.");
 	}
 	
-	
-	
-	
+	// 로그인 여부에 따른 모달 조작
 	const modal = document.querySelector('#modal');
 
 	const btnSignInModalBtn = document.querySelector('#btn-signin-modal');

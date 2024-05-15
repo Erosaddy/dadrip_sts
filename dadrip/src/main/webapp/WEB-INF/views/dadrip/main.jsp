@@ -85,10 +85,16 @@
     <footer>
 
     </footer>
-    
-	 
-    
     <script src="/resources/js/bestJokes.js"></script>
+    <script>
+	    $(document).ready(function () {
+	        // result 변수가 정의되어 있는지 확인
+	        var result = '${result}' || '';
+	        
+	        if (result === 'success') {
+	            alert('회원 탈퇴되었습니다.');
+	        }
+	    });
+    </script>
     
-</body>
-</html>
+<%@include file="../includes/footer.jsp"%>

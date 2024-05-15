@@ -11,58 +11,7 @@
 <c:set var="contextPath"
 	value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }"
 	scope="application" />
-<style>
-.uploadResult {
-	width: 100%;
-	background-color: gray;
-}
 
-.uploadResult ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-	align-items: center;
-}
-
-.uploadResult ul li {
-	list-style: none;
-	padding: 10px;
-	align-content: center;
-	text-align: center;
-}
-
-.uploadResult ul li img {
-	width: 100px;
-}
-
-.uploadResult ul li span {
-	color: white;
-}
-
-.bigPictureWrapper {
-	position: absolute;
-	display: none;
-	justify-content: center;
-	align-items: center;
-	top: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: gray;
-	z-index: 1000;
-	background: rgba(255, 255, 255, 0.5);
-}
-
-.bigPicture {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.bigPicture img {
-	width: 600px;
-}
-</style>
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Mypage</h1>
@@ -75,34 +24,30 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 
-			<div class="panel-heading">${memberInfo.member_id}님의 회원 정보</div>
+			<div class="panel-heading">${member.member_id}님의 회원 정보</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 
 				<div class="form-group">
-					<label>아이디</label> <input class="form-control" name="member_id"
-						value="${memberInfo.member_id }" readonly="readonly">
+					<label>아이디</label> <div>${member.member_id }</div>
 				</div>
 
 				<div class="form-group">
-					<label>닉네임</label> <input class="form-control" name="nickname"
-						value="${memberInfo.nickname }" readonly="readonly">
+					<label>닉네임</label> <div>${member.nickname }</div>
 				</div>
 
 				<div class="form-group">
-					<label>이메일</label> <input class="form-control" name="email"
-						value="${memberInfo.email }" readonly="readonly">
+					<label>이메일</label> <div>${member.email }</div>
 				</div>
 
 				<div class="form-group">
 					<label>생일</label>
 					<c:choose>
-						<c:when test="${memberInfo.birthday != null}">
-							<fmt:formatDate value="${memberInfo.birthday}" pattern="yyyy/MM/dd" var="formattedDate"/>
-							<input class="form-control" name="email" value="${formattedDate}" readonly="readonly">
+						<c:when test="${member.birthday != null}">
+							<div id="showBirth">${member.birthday}</div>
 						</c:when>
 						<c:otherwise>
-							<input class="form-control" name="email" value="미입력" readonly="readonly">
+							<div id="showBirth">미입력</div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -110,27 +55,22 @@
 				<div class="form-group">
 					<label>성별</label>
 					<c:choose>
-						<c:when test="${memberInfo.sex == 1}">
-							<input class="form-control" name="sex" value="남성" readonly="readonly">
+						<c:when test="${member.sex == 1}">
+							<div>남성</div>
 						</c:when>
-						<c:when test="${memberInfo.sex == 2}">
-							<input class="form-control" name="sex" value="여성" readonly="readonly">
+						<c:when test="${member.sex == 2}">
+							<div>여성</div>
 						</c:when>
 						<c:otherwise>
-							<input class="form-control" name="sex" value="미입력" readonly="readonly">
+							<div>미입력</div>
 						</c:otherwise>
 					</c:choose>
 				</div>
 
-				<button data-oper="modify" class="btn btn-default">Modify</button>
-				<button data-oper="list" class="btn btn-info">List</button>
+				<button data-oper="modify" class="btn btn-default">회원 정보 수정</button>
 
-				<form id="operForm" action="${contextPath}/joke/modify" method="get">
-					<input type="hidden" id="joke_id" name="joke_id" value="${joke.joke_id}"> 
-					<input type="hidden" id="pageNum" name="pageNum" value="${cri.pageNum}"> 
-					<input type="hidden" id="amount" name="amount" value="${cri.amount}">
-					<input type="hidden" name="type" value="${cri.type}"> 
-					<input type="hidden" name="keyword" value="${cri.keyword}">
+				<form id="operForm" action="${contextPath}/member/modify" method="get">
+					<input type="hidden" name="member_id" value="${member.member_id}">
 				</form>
 			</div>
 			<!--  end panel-body -->
@@ -156,18 +96,48 @@
 	<!-- /.row -->
 
 	<script type="text/javascript">
+	
+		function convertToDateFormat(dateString) {
+	        // 문자열에서 연, 월, 일을 추출
+	        const year = dateString.substring(0, 4);
+	        const month = dateString.substring(5, 7);
+	        const day = dateString.substring(8, 10);
+	
+	        // yyyyMMdd 형식으로 변환
+	        return year + "년 " + month + "월 " + day + "일";
+	    }
+	
 		$(document).ready(function() {
+			
+            const dateString = $('#showBirth').html();
+            
+			if (dateString != '미입력') {
+				const formattedDate = convertToDateFormat(dateString);
+            	
+				if (formattedDate) {
+	                $('#showBirth').html(formattedDate);
+	            }
+			}
+			
+			// 수정 버튼 클릭시 수정 페이지로 이동
 			var operForm = $("#operForm");
 			$("button[data-oper='modify']").on("click", function(e) {
-				operForm.attr("action", "${contextPath}/joke/modify").submit();
-			});
-
-			$("button[data-oper='list']").on("click", function(e) {
-				operForm.find("#joke_id").remove();
-				operForm.attr("action", "${contextPath}/joke/list")
-				operForm.submit();
+				operForm.attr("action", "${contextPath}/member/modify").submit();
 			});
 		});
 	</script>
-
+	
+	<script>
+	    $(document).ready(function () {
+	        // result 변수가 정의되어 있는지 확인
+	        var result = '${result}' || '';
+	        
+	        setTimeout(() => {
+	        	if (result === 'success') {
+		            alert('회원 정보를 수정했습니다.');
+		        }
+			}, 100);
+	    });
+    </script>
+	
 	<%@include file="../includes/footer.jsp"%>

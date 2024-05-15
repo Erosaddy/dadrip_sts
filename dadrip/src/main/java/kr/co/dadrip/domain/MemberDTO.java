@@ -17,8 +17,7 @@ public class MemberDTO {
 	private String nickname;
 	private String member_pw;
 	private String email;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birthday;
+	private String birthday;
 	private String sex;
 	private Date registered_on;
 	

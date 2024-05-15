@@ -95,7 +95,7 @@
                         FROM	joke j
                         LEFT JOIN (
 		                            SELECT	JOKE_ID,
-		                            		COUNT(*) AS like_count  
+		                            		COUNT(*) AS like_count
 		                            FROM 	vote
 		                            WHERE	VOTE_TYPE = '1'
         ]]>
