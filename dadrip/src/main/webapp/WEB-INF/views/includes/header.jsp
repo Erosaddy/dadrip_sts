@@ -128,8 +128,9 @@
 	                <form name="signUpForm" class="email-signup" method="post">
 	                    <div class="u-form-group">
 	                        <input id="id" type="text" placeholder="아이디" name="member_id" onblur = "checkId()">
+	                        <!-- <div style="height: 10px;"></div> -->
 							<span class="id_validation" style="display: none; color: red; font-size: .7rem;">아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.</span>
-							<span class="id_available" style="display: none; color: red; font-size: .7rem;">사용 가능한 아이디입니다.</span>
+							<span class="id_available" style="display: none; color: green; font-size: .7rem;">사용 가능한 아이디입니다.</span>
 	                        <span class="id_occupied" style="display: none; color: red; font-size: .7rem;">사용중인 아이디입니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
@@ -144,7 +145,7 @@
 	                    <div class="u-form-group">
 	                        <input id="email" type="email" placeholder="이메일" name="email" onblur = "checkEmail()">
 	                        <span class="email_validation" style="display: none; color: red; font-size: .7rem;">올바른 이메일 형식을 입력해 주세요.</span>
-	                        <span class="email_available" style="display: none; color: red; font-size: .7rem;">사용 가능한 이메일입니다.</span>
+	                        <span class="email_available" style="display: none; color: green; font-size: .7rem;">사용 가능한 이메일입니다.</span>
 	                        <span class="email_occupied" style="display: none; color: red; font-size: .7rem;">해당 이메일을 사용 중인 계정이 존재합니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
