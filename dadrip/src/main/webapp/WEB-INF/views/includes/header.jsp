@@ -128,9 +128,9 @@
 	                <form name="signUpForm" class="email-signup" method="post">
 	                    <div class="u-form-group">
 	                        <input id="id" type="text" placeholder="아이디" name="member_id" onblur = "checkId()">
-							<span class="id_validation" style="display: none">아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.</span>
-							<span class="id_available" style="display: none">사용 가능한 아이디입니다.</span>
-	                        <span class="id_occupied" style="display: none">사용중인 아이디입니다.</span>
+							<span class="id_validation" style="display: none; color: red; font-size: .7rem;">아이디는 알파벳 대소문자와 숫자만 사용 가능하며, 5~20자 사이여야 합니다.</span>
+							<span class="id_available" style="display: none; color: red; font-size: .7rem;">사용 가능한 아이디입니다.</span>
+	                        <span class="id_occupied" style="display: none; color: red; font-size: .7rem;">사용중인 아이디입니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
 	                        <input id="nickName" type="text" placeholder="닉네임" name="nickname">
@@ -143,19 +143,19 @@
 	                    </div>
 	                    <div class="u-form-group">
 	                        <input id="email" type="email" placeholder="이메일" name="email" onblur = "checkEmail()">
-	                        <span class="email_validation" style="display: none">올바른 이메일 형식을 입력해 주세요.</span>
-	                        <span class="email_available" style="display: none">사용 가능한 이메일입니다.</span>
-	                        <span class="email_occupied" style="display: none">해당 이메일을 사용 중인 계정이 존재합니다.</span>
+	                        <span class="email_validation" style="display: none; color: red; font-size: .7rem;">올바른 이메일 형식을 입력해 주세요.</span>
+	                        <span class="email_available" style="display: none; color: red; font-size: .7rem;">사용 가능한 이메일입니다.</span>
+	                        <span class="email_occupied" style="display: none; color: red; font-size: .7rem;">해당 이메일을 사용 중인 계정이 존재합니다.</span>
 	                    </div>
 	                    <div class="u-form-group">
-	                        <label name="birth">생일&nbsp;(선택)</label>
-	                        <input id="birth" type="text" placeholder="생년월일 8자리 (정보수집을 원하지 않으면 입력하지 않고 제출)" name="birthday">
+	                        <label>생일&nbsp;(선택)</label>&nbsp;&nbsp;<span style="color : grey; font-size: .8rem;">※생일을 저장하고 싶지 않은 경우 입력창을 비어있는 채로 두십시오.</span>
+	                        <input id="birth" type="text" placeholder="생년월일 8자리" name="birthday">
 	                    </div>
 	                    <div class="u-form-group">
-	                    	성별&nbsp;(선택)
-	                    	<label>미입력<input type="radio" name="sex" value="" checked /></label>
-	                        <label>남성<input type="radio" name="sex" value="1" /></label>
-	                        <label>여성<input type="radio" name="sex" value="2" /></label>
+	                    	<b style="color: black;">성별&nbsp;(선택)</b>
+	                    	미입력<input type="radio" name="sex" value="" checked />
+	                        남성<input type="radio" name="sex" value="1" />
+	                        여성<input type="radio" name="sex" value="2" />
 	                    </div>
 	                    <div class="u-form-group">
 	                        <p id="signup-error-message"></p>
@@ -234,19 +234,19 @@
 	                    $('.id_occupied').css("display", "none");
                     	idAvailability = false;
                 	} else if(!idReg.test(id)) {
-                		$('.id_validation').css("display", "inline-block");
+                		$('.id_validation').css("display", "block");
 	                	$('.id_available').css("display", "none");
 	                    $('.id_occupied').css("display", "none");
                     	idAvailability = false;
                 	} else {
 	                	$('.id_validation').css("display", "none");
-	                	$('.id_available').css("display", "inline-block");
+	                	$('.id_available').css("display", "block");
 	                    $('.id_occupied').css("display", "none");
                     	idAvailability = true;
                 	}
                 } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
                 	$('.id_validation').css("display", "none");
-                	$('.id_occupied').css("display", "inline-block"); 
+                	$('.id_occupied').css("display", "block"); 
                     $('.id_available').css("display", "none");
                     idAvailability = false;
                 }
@@ -272,20 +272,20 @@
 	                    $('.email_occupied').css("display", "none");
 	                    emailAvailability = false;
                 	} else if(!emailReg.test(email)) {
-                		$('.email_validation').css("display", "inline-block");
+                		$('.email_validation').css("display", "block");
                 		$('.email_available').css("display", "none");
 	                    $('.email_occupied').css("display", "none");
 	                    emailAvailability = false;
                 	} else {
                 		$('.email_validation').css("display", "none");
-	                	$('.email_available').css("display", "inline-block");
+	                	$('.email_available').css("display", "block");
 	                    $('.email_occupied').css("display", "none");
 	                    emailAvailability = true;
                 	}
                 } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
                 	$('.email_validation').css("display", "none");
                     $('.email_available').css("display", "none");
-                	$('.email_occupied').css("display", "inline-block"); 
+                	$('.email_occupied').css("display", "block"); 
                     emailAvailability = false;
                 }
             },

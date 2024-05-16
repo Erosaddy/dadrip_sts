@@ -13,8 +13,23 @@
 		display: inline;
 	}
 	
-	h3 {
-		color: ;
+	.py-5 {
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	
+	.font-14 {
+		font-size: 14px;
+	}
+	
+	#eachJoke {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	#likeCountTd,
+	#dislikeCountTd{
+		opacity: .3;
 	}
 </style>    
     <main>
@@ -25,7 +40,7 @@
                 </div>
                 <hr>
                 <c:forEach items="${listDay }" var="joke">
-	                <div class="">
+	                <div id="eachJoke" class="py-5 font-14">
 						<tr>
 							<span>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -33,13 +48,13 @@
 							<span>
 								<td>
 									<div id="likeCountTd">
-										<img src="/resources/images/emptyLikeBtn.png" alt="empty like button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledLikeBtn.png" alt="filled like button" style="width: 15px; height: 15px;">
 										${joke.like_count }
 									</div>
 							    </td>
 								<td>
 									<div id="dislikeCountTd">
-										<img src="/resources/images/emptyDislikeBtn.png" alt="empty dislike button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledDislikeBtn.png" alt="filled dislike button" style="width: 15px; height: 15px;">
 										${joke.dislike_count }
 									</div>
 								</td>
@@ -57,7 +72,7 @@
                 </div>
                 <hr>
                 <c:forEach items="${listWeek }" var="joke">
-					<div>
+					<div id="eachJoke" class="py-5 font-14">
 						<tr>
 							<span>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -65,13 +80,13 @@
 							<span>
 								<td>
 									<div id="likeCountTd">
-										<img src="/resources/images/emptyLikeBtn.png" alt="empty like button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledLikeBtn.png" alt="filled like button" style="width: 15px; height: 15px;">
 										${joke.like_count }
 									</div>
 							    </td>
 								<td>
 									<div id="dislikeCountTd">
-										<img src="/resources/images/emptyDislikeBtn.png" alt="empty dislike button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledDislikeBtn.png" alt="filled dislike button" style="width: 15px; height: 15px;">
 										${joke.dislike_count }
 									</div>
 								</td>
@@ -88,7 +103,7 @@
                 </div>
                 <hr>
                 <c:forEach items="${listMonth }" var="joke">
-					<div>
+					<div id="eachJoke" class="py-5 font-14">
 						<tr>
 							<span>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -96,13 +111,13 @@
 							<span>
 								<td>
 									<div id="likeCountTd">
-										<img src="/resources/images/emptyLikeBtn.png" alt="empty like button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledLikeBtn.png" alt="filled like button" style="width: 15px; height: 15px;">
 										${joke.like_count }
 									</div>
 							    </td>
 								<td>
 									<div id="dislikeCountTd">
-										<img src="/resources/images/emptyDislikeBtn.png" alt="empty dislike button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledDislikeBtn.png" alt="filled dislike button" style="width: 15px; height: 15px;">
 										${joke.dislike_count }
 									</div>
 								</td>
@@ -119,7 +134,7 @@
                 </div>
                 <hr>
                 <c:forEach items="${listAlltime }" var="joke">
-					<div>
+					<div id="eachJoke" class="py-5 font-14">
 						<tr>
 							<span>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -127,13 +142,13 @@
 							<span>
 								<td>
 									<div id="likeCountTd">
-										<img src="/resources/images/emptyLikeBtn.png" alt="empty like button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledLikeBtn.png" alt="filled like button" style="width: 15px; height: 15px;">
 										${joke.like_count }
 									</div>
 							    </td>
 								<td>
 									<div id="dislikeCountTd">
-										<img src="/resources/images/emptyDislikeBtn.png" alt="empty dislike button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledDislikeBtn.png" alt="filled dislike button" style="width: 15px; height: 15px;">
 										${joke.dislike_count }
 									</div>
 								</td>
@@ -150,7 +165,7 @@
                 </div>
                 <hr>
                 <c:forEach items="${list }" var="joke">
-					<div>
+					<div id="eachJoke" class="py-5 font-14">
 						<tr>
 							<span>
 								<td><a class="move" href="${joke.joke_id }">${joke.joke_question }&nbsp;&nbsp;<b>[${joke.reply_count }]</b></a></td>
@@ -158,13 +173,13 @@
 							<span>
 								<td>
 									<div id="likeCountTd">
-										<img src="/resources/images/emptyLikeBtn.png" alt="empty like button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledLikeBtn.png" alt="filled like button" style="width: 15px; height: 15px;">
 										${joke.like_count }
 									</div>
 							    </td>
 								<td>
 									<div id="dislikeCountTd">
-										<img src="/resources/images/emptyDislikeBtn.png" alt="empty dislike button" style="width: 15px; height: 15px;">
+										<img src="/resources/images/filledDislikeBtn.png" alt="filled dislike button" style="width: 15px; height: 15px;">
 										${joke.dislike_count }
 									</div>
 								</td>

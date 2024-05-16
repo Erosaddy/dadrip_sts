@@ -45,7 +45,7 @@
 					</div>
 	
 					<div class="form-group">
-						<label>생일&nbsp;(선택)</label>&nbsp;&nbsp;<span style="color : grey; font-size: 1.2rem;">※생일 정보를 저장하고 싶지 않은 경우 입력창을 비어있는 채로 두십시오.</span>
+						<label>생일&nbsp;(선택)</label>&nbsp;&nbsp;<span style="color : grey; font-size: .8rem;">※생일 정보를 저장하고 싶지 않은 경우 입력창을 비어있는 채로 두십시오.</span>
 						<c:choose>
 							<c:when test="${member.birthday != null}">
 								<input id="showBirth" class="form-control" name="birthday" value="${member.birthday}" placeholder="생년월일 8자리">
@@ -79,7 +79,7 @@
 					
 					<input type="hidden" class="form-control" name="member_pw" value="${member.member_pw }">
 					
-					<button type="submit" data-oper="modify" class="btn btn-default">정보 수정</button>
+					<button type="submit" data-oper="modify" class="btn btn-primary">정보 수정</button>
 					<button type="submit" data-oper="cancel" class="btn btn-default">수정 취소</button>
          			<button type="submit" data-oper="remove" class="btn btn-danger">회원 탈퇴</button>
 				</form>
