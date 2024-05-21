@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
-@AllArgsConstructor	// constructor with all the 
+@AllArgsConstructor	// constructor with all field members
 @Data	// getter, setter
 @ToString
 public class LombokTestClass {
