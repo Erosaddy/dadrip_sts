@@ -84,7 +84,6 @@
     
     <script>
 	    $(document).ready(function () {
-	        // result 변수가 정의되어 있는지 확인
 	        var result = '${result}' || '';
 	        
 	        if (result === 'success') {

@@ -23,18 +23,17 @@
 
 	<select id="read" resultType="kr.co.dadrip.domain.JokeDTO">
 		SELECT joke_id,
-		member_id,
-		created_on,
-		modified_on,
-		joke_question,
-		joke_answer,
-		view_count,
-		reply_count,
-		like_count,
-		dislike_count
+			   member_id,
+			   created_on,
+			   modified_on,
+			   joke_question,
+			   joke_answer,
+			   view_count,
+			   reply_count,
+			   like_count,
+			   dislike_count
 		FROM joke
-		WHERE joke_id =
-		#{joke_id}
+		WHERE joke_id = #{joke_id}
 	</select>
 
 	<!-- 오늘, 이번주, 이번달, 전체 베스트 글을 조회하는 동적 쿼리문 -->
@@ -105,8 +104,8 @@
         <![CDATA[                    
 	                                GROUP BY JOKE_ID
 	                            ) v ON j.JOKE_ID = v.JOKE_ID
-	                            WHERE COALESCE(v.like_count, 0) > 0
-	                            ORDER BY v.like_count DESC
+	                            WHERE COALESCE(v.like_count, 0) > 4
+	                            ORDER BY v.like_count DESC, j.created_on DESC
 	                            )
 						WHERE
 		]]>
@@ -223,8 +222,7 @@
 
 	<update id="updateDislikeCnt">
 		UPDATE joke
-		SET dislike_count = dislike_count +
-		#{amount}
+		SET dislike_count = dislike_count + #{amount}
 		WHERE joke_id = #{joke_id}
 	</update>
 
