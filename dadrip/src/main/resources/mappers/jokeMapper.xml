@@ -56,69 +56,78 @@
 	</sql>
 
 
+	
 	<select id="listBestJokes" resultType="kr.co.dadrip.domain.JokeDTO">
 		<![CDATA[
-		SELECT	joke_id, 
-				member_id, 
-				created_on, 
-				modified_on, 
-				joke_question, 
-				joke_answer, 
-				view_count,
-				reply_count,
-				like_count,
-				dislike_count
-		FROM	(
-				SELECT	rownum rn,
-						joke_id, 
-						member_id, 
-						created_on, 
-						modified_on, 
-						joke_question, 
-						joke_answer, 
-						view_count,
-						reply_count,
-						like_count,
-						dislike_count
-				FROM	(
-                    	SELECT	j.JOKE_ID,
-	                            j.MEMBER_ID,
-	                            j.CREATED_ON,
-	                            j.MODIFIED_ON,
-	                            j.JOKE_QUESTION,
-	                            j.JOKE_ANSWER,
-	                            j.VIEW_COUNT,
-	                            j.REPLY_COUNT,
-	                            j.DISLIKE_COUNT,
-	                            COALESCE(v.like_count, 0) AS LIKE_COUNT 
-                        FROM	joke j
-                        LEFT JOIN (
-		                            SELECT	JOKE_ID,
-		                            		COUNT(*) AS like_count
-		                            FROM 	vote
-		                            WHERE	VOTE_TYPE = '1'
-        ]]>
-        
-		<include refid="bestJokesCriteria"></include>
-		
-        <![CDATA[                    
-	                                GROUP BY JOKE_ID
-	                            ) v ON j.JOKE_ID = v.JOKE_ID
-	                            WHERE COALESCE(v.like_count, 0) > 4
-	                            ORDER BY v.like_count DESC, j.created_on DESC
-	                            )
-						WHERE
+			SELECT	joke_id, 
+					member_id, 
+					created_on, 
+					modified_on, 
+					joke_question, 
+					joke_answer, 
+					view_count,
+					reply_count,
+					like_count,
+					dislike_count
+			FROM	(
+					SELECT	rownum rn,
+							joke_id, 
+							member_id, 
+							created_on, 
+							modified_on, 
+							joke_question, 
+							joke_answer, 
+							view_count,
+							reply_count,
+							like_count,
+							dislike_count
+					FROM	(
+	                    	SELECT	j.JOKE_ID,
+		                            j.MEMBER_ID,
+		                            j.CREATED_ON,
+		                            j.MODIFIED_ON,
+		                            j.JOKE_QUESTION,
+		                            j.JOKE_ANSWER,
+		                            j.VIEW_COUNT,
+		                            j.REPLY_COUNT,
+		                            j.DISLIKE_COUNT,
+		                            COALESCE(v.like_count, 0) AS LIKE_COUNT,
+		                            COALESCE(fv.filtered_like_count, 0) AS filtered_like_count
+	                        FROM	joke j
+	                        LEFT JOIN (
+			                            SELECT	JOKE_ID,
+			                            		COUNT(*) AS like_count
+			                            FROM 	vote
+			                            WHERE	VOTE_TYPE = '1'
+			                            GROUP BY JOKE_ID
+		                            ) v ON j.JOKE_ID = v.JOKE_ID
+	                        LEFT JOIN (
+	                                    SELECT  JOKE_ID,
+	                                            COUNT(*) AS filtered_like_count
+	                                    FROM    vote
+	                                    WHERE   VOTE_TYPE = '1'
+	                                    
+	                                    ]]>
+	                                    
+	                                    <include refid="bestJokesCriteria"></include>
+	                                    
+	                                    <![CDATA[
+	                                    GROUP BY JOKE_ID
+	                                ) fv ON j.JOKE_ID = fv.JOKE_ID
+	                        WHERE COALESCE(fv.filtered_like_count, 0) > 4
+	                        ORDER BY fv.filtered_like_count DESC, j.created_on DESC
+	                        )
+					WHERE
 		]]>
-		
+			
 		<include refid="searchCriteria"></include>
 		
-        <![CDATA[            
-				rownum <= #{pageNum} * #{amount}
-						)
-				WHERE	rn > (#{pageNum} - 1) * #{amount}
+		<![CDATA[
+					rownum <= #{pageNum} * #{amount}
+					)
+			WHERE	rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
 
 	<update id="update">
 		UPDATE joke
