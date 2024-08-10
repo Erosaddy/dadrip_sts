@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
-<!-- <link rel="stylesheet" href="../resources/css/board.css"> -->
+<!-- <link rel="stylesheet" href="/resources/css/board.css"> -->
 <!-- Bootstrap Core CSS -->
-    <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Tables</h1>
@@ -109,7 +109,7 @@
 							end="${pageMaker.endPage }">
 							<li
 								class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : '' }"><a
-								href="${num }">${num }</a></li>
+								hredf="${num }">${num }</a></li>
 						</c:forEach>
 
 						<c:if test="${pageMaker.next }">
@@ -265,8 +265,8 @@ $(document).ready(function() {
 		if (memberIdValue == null || memberIdValue == "") {
 			
 			// 회원가입이 되지 않았을 때. 좋아요 / 싫어요 둘 다 빈 그림 보여주기
-			likeStr = "<div><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			likeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 			likeUL.html(likeStr);
 			dislikeUL.html(dislikeStr);
 		} else {
@@ -279,19 +279,19 @@ $(document).ready(function() {
 					
 					if (vote_type == "1") {
 						// 좋아요에 투표되어있다는 의미.
-						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"../resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					} else if (vote_type == "2") {
 						// 싫어요에 투표되어있다는 의미.
-						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"../resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + joke_id + "\" data-vote_type=\"" + vote_type + "\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					} else {
 						// 좋아요 / 싫어요 모두 선택하지 않았다는 의미.
 						// 결과값에서 받아올 수 없으니 별개로 지정
-						likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-						dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 						
 					}
 					likeUL.html(likeStr);
@@ -306,7 +306,7 @@ $(document).ready(function() {
 		
 		if (memberIdValue == null || memberIdValue == "") {
 			// 회원가입이 되지 않았을 때. 좋아요 / 싫어요 둘 다 빈 그림 보여주기
-			favoriteStr = "<div><button type=\"button\"><img src=\"../resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			favoriteStr = "<div><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 			favoriteUL.html(favoriteStr);
 		} else {
 			favoriteService.getList(
@@ -318,11 +318,11 @@ $(document).ready(function() {
 					
 					if (favorite_id != null) {
 						// 찜이 되어있다는 의미.
-						favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + joke_id + "\"><button type=\"button\"><img src=\"../resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + joke_id + "\"><button type=\"button\"><img src=\"/resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 					} else {
 						// 찜이 되어있지 않다는 의미.
 						// 결과값에서 정보를 받아올 수 없으니 별개로 지정
-						favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"../resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+						favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 					}
 					favoriteUL.html(favoriteStr);
 				});//end function
@@ -369,8 +369,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
             
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -391,8 +391,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
     		
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"../resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -415,8 +415,8 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"../resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/filledLikeBtn.png\" alt=\"filled like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"1\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -466,8 +466,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
             
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"../resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"\"><button type=\"button\"><img src=\"/resources/images/emptyDislikeBtn.png\" alt=\"empty dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -488,8 +488,8 @@ $(document).ready(function() {
     			console.log(result);
     		});
     		
-            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"../resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+            likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -512,8 +512,8 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"../resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
-			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"../resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
+    		likeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/emptyLikeBtn.png\" alt=\"empty like button\" style=\"width: 25px; height: 25px;\"></button></div>";
+			dislikeStr = "<div data-joke_id=\"" + jokeIdValue + "\" data-vote_type=\"2\"><button type=\"button\"><img src=\"/resources/images/filledDislikeBtn.png\" alt=\"filled dislike button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
 			$(likeUL).html(likeStr);
 			$(dislikeUL).html(dislikeStr);
@@ -548,7 +548,7 @@ $(document).ready(function() {
     			console.log(result);
     		});
             
-    		favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"../resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+    		favoriteStr = "<div data-favorite_id=\"\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/emptyFavoriteBtn.png\" alt=\"empty favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
     	} else {
     		// 2. 찜이 없다면 찜 추가(add)
@@ -562,7 +562,7 @@ $(document).ready(function() {
         		console.log(result);
     		});
     		
-    		favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"../resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
+    		favoriteStr = "<div data-favorite_id=\"favoriteIdPresent\" data-joke_id=\"" + jokeIdValue + "\"><button type=\"button\"><img src=\"/resources/images/filledFavoriteBtn.png\" alt=\"filled favorite button\" style=\"width: 25px; height: 25px;\"></button></div>";
 
     	}
     	
@@ -653,7 +653,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script type="text/javascript" src="${contextPath}../resources/js/vote.js"></script>
-<script type="text/javascript" src="${contextPath}../resources/js/favorite.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/vote.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/favorite.js"></script>
 
 <%@include file="../includes/footer.jsp"%>

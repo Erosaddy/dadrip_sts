@@ -25,7 +25,7 @@ public class FavoriteController {
 
 	private final IFavoriteService service;
 	
-	// 좋아요 / 싫어요 등록
+	// 좋아요 / 싫어요  등록
 	@PostMapping(value = "/insert",
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
