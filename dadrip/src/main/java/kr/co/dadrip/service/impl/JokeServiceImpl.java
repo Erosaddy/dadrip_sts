@@ -69,4 +69,9 @@ public class JokeServiceImpl implements IJokeService {
 		
 	}
 
+	@Override
+	public List<JokeDTO> listBestJokesV2(Criteria cri) throws Exception {
+		return jDao.listBestJokesV2(cri);
+	}
+
 }

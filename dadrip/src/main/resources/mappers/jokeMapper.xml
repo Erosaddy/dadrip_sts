@@ -44,7 +44,41 @@
 				AND voted_on >= SYSDATE - 30
 			</when>
 			<otherwise>
-				<!-- 전체 데이터를 조회할 때는 시간 제약을 두지 않음 -->
+				
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="bestJokesCriteriaV2">
+		<choose>
+			<when test="timeScope == 'day'">
+				best_jokes_today IDX_BESTJOKESTODAY_BESTJOKESID_PK
+			</when>
+			<when test="timeScope == 'week'">
+				best_jokes_week IDX_BESTJOKESWEEK_BESTJOKESID_PK
+			</when>
+			<when test="timeScope == 'month'">
+				best_jokes_month IDX_BESTJOKESMONTH_BESTJOKESID_PK
+			</when>
+			<otherwise>
+				best_jokes_total IDX_BESTJOKESTOTAL_BESTJOKESID_PK
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="bestJokesTableName">
+		<choose>
+			<when test="timeScope == 'day'">
+				best_jokes_today
+			</when>
+			<when test="timeScope == 'week'">
+				best_jokes_week
+			</when>
+			<when test="timeScope == 'month'">
+				best_jokes_month
+			</when>
+			<otherwise>
+				best_jokes_total
 			</otherwise>
 		</choose>
 	</sql>
@@ -131,23 +165,21 @@
 	</delete>
 
 	<sql id="searchCriteria">
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<where>
 			<foreach item="type" collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							joke_question LIKE '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'C'.toString()">
-							joke_answer LIKE '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'W'.toString()">
-							member_id LIKE '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
+				<choose>
+					<when test="type == 'T'.toString()">
+						joke_question LIKE '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString()">
+						joke_answer LIKE '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'W'.toString()">
+						member_id LIKE '%'||#{keyword}||'%'
+					</when>
+				</choose>
 			</foreach>
-		</trim>
+		</where>
 	</sql>
 
 	<select id="listAllJokesWithPaging" resultType="kr.co.dadrip.domain.JokeDTO">
@@ -177,7 +209,7 @@
 							like_count,
 							dislike_count
 						FROM joke
-						WHERE 
+						WHERE
 		]]>
 
 		<include refid="searchCriteria"></include>
@@ -189,6 +221,42 @@
 		]]>
 
 
+	</select>
+	
+	
+	<select id="listBestJokesV2" resultType="kr.co.dadrip.domain.JokeDTO">
+		SELECT
+		    joke_id, 
+		    member_id, 
+		    created_on, 
+		    modified_on, 
+		    joke_question, 
+		    joke_answer, 
+		    view_count,
+		    reply_count,
+		    like_count,
+		    dislike_count
+		FROM
+		    (
+		    SELECT /*+ INDEX(<include refid="bestJokesCriteriaV2"></include>) */
+		        rownum rn,
+		        best_jokes_id,
+		        joke_id, 
+		        member_id, 
+		        created_on, 
+		        modified_on, 
+		        joke_question, 
+		        joke_answer, 
+		        view_count,
+		        reply_count,
+		        like_count,
+		        dislike_count
+		    FROM <include refid="bestJokesTableName"></include> 
+		    WHERE
+		    <include refid="searchCriteria"></include>
+		    <![CDATA[rownum <= #{pageNum} * #{amount}]]>
+			)
+		WHERE	rn > (#{pageNum}-1) * #{amount}
 	</select>
 
 	<select id="getTotalCnt" resultType="int">

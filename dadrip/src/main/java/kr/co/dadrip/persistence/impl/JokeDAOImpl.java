@@ -84,5 +84,10 @@ public class JokeDAOImpl implements IJokeDAO {
 
 	    sqlSession.update("JokeMapper.updateDislikeCnt", paramMap);		
 	}
+
+	@Override
+	public List<JokeDTO> listBestJokesV2(Criteria cri) throws Exception {
+		return sqlSession.selectList("JokeMapper.listBestJokesV2", cri);
+	}
 	
 }
