@@ -28,25 +28,25 @@ public class JokeController {
 	public void jokeMain(Criteria cri, Model model) throws Exception {
 		log.info("show joke main................");
 		
-//		model.addAttribute("list", service.listAllJokes(cri));
-//		cri.setTimeScope("day");
-//		model.addAttribute("listDay", service.listBestJokes(cri));
-//		cri.setTimeScope("week");
-//		model.addAttribute("listWeek", service.listBestJokes(cri));
-//		cri.setTimeScope("month");
-//		model.addAttribute("listMonth", service.listBestJokes(cri));
-//		cri.setTimeScope("");
-//		model.addAttribute("listAlltime", service.listBestJokes(cri));
-		
 		model.addAttribute("list", service.listAllJokes(cri));
 		cri.setTimeScope("day");
-		model.addAttribute("listDay", service.listBestJokesV2(cri));
+		model.addAttribute("listDay", service.listBestJokes(cri));
 		cri.setTimeScope("week");
-		model.addAttribute("listWeek", service.listBestJokesV2(cri));
+		model.addAttribute("listWeek", service.listBestJokes(cri));
 		cri.setTimeScope("month");
-		model.addAttribute("listMonth", service.listBestJokesV2(cri));
+		model.addAttribute("listMonth", service.listBestJokes(cri));
 		cri.setTimeScope("");
-		model.addAttribute("listAlltime", service.listBestJokesV2(cri));
+		model.addAttribute("listAlltime", service.listBestJokes(cri));
+		
+//		model.addAttribute("list", service.listAllJokes(cri));
+//		cri.setTimeScope("day");
+//		model.addAttribute("listDay", service.listBestJokesV2(cri));
+//		cri.setTimeScope("week");
+//		model.addAttribute("listWeek", service.listBestJokesV2(cri));
+//		cri.setTimeScope("month");
+//		model.addAttribute("listMonth", service.listBestJokesV2(cri));
+//		cri.setTimeScope("");
+//		model.addAttribute("listAlltime", service.listBestJokesV2(cri));
 		
 		int total = service.getTotalCnt(cri);
 
@@ -69,7 +69,8 @@ public class JokeController {
 	public void listBestJokes(Criteria cri, Model model) throws Exception {
 		log.info("show all best jokes.................");
 		
-		model.addAttribute("listBest", service.listBestJokesV2(cri));
+		model.addAttribute("listBest", service.listBestJokes(cri));
+//		model.addAttribute("listBest", service.listBestJokesV2(cri));
 		
 		int total = service.getTotalCnt(cri);
 	    log.info("total : " + total);
