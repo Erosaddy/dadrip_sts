@@ -37,7 +37,7 @@ public class JokeController {
 		model.addAttribute("listMonth", service.listBestJokes(cri));
 		cri.setTimeScope("");
 		model.addAttribute("listAlltime", service.listBestJokes(cri));
-		
+
 //		model.addAttribute("list", service.listAllJokes(cri));
 //		cri.setTimeScope("day");
 //		model.addAttribute("listDay", service.listBestJokesV2(cri));
